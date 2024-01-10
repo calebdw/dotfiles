@@ -1,0 +1,46 @@
+[user]
+    name = "Caleb White"
+    email = cdwhite3@pm.me
+[alias]
+    co = checkout
+    cob = checkout -b
+    cm = commit
+    d = diff
+    fp = fetch -p
+    l = log
+    ra = rebase --abort
+    rc = rebase --continue
+    ri = rebase -i
+    st = status
+    br = branch -av
+    brdel = branch -D
+
+    aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
+
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lgb = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --branches
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+[checkout]
+    defaultRemote = origin
+[color]
+    ui = auto
+[core]
+    autocrlf = false
+    excludesFile = ~/.gitignore
+    editor = nvim
+    commentchar = *
+[merge]
+    conflictstyle = zdiff3
+    tool = nvimdiff2
+    ff = false
+[pull]
+    rebase = true
+[push]
+    autoSetupRemote = true
+[rerere]
+    # google `git rerere`, basically git remembers your
+    # partial merge choices and replays them next time
+    enabled = true
+    autoupdate = true
+[init]
+    defaultBranch = master

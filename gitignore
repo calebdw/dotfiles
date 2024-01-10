@@ -1,0 +1,6 @@
+# quickfix files
+*.qf
+*.nvim
+.php-cs-fixer.cache
+.phpactor.*
+.gitconfig
