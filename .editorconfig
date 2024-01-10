@@ -8,6 +8,6 @@ indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
 
-[{*.yml,*.yaml,*.neon*,*.lua,*.scm}]
+[{*.yml,*.yaml,*.neon*,*.lua,*.scm,*xml}]
 indent_style = space
 indent_size = 2
