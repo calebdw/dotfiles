@@ -6,6 +6,7 @@ local map = require('user.util').map
 return { -- General
   'lewis6991/impatient.nvim', -- Super fast loading times through caching---must be loaded first in init.lua
   'nvim-lua/plenary.nvim', -- common dependency
+  'github/copilot.vim',
   -- Subvert - awesome search/replace - :Subvert/child{,ren}/adult{,s}/g
   -- Coercion - turn fooBar into foo_bar (and many others)
   'tpope/vim-abolish',
