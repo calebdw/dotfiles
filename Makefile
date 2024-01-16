@@ -18,7 +18,8 @@ dots:
 	ln -sf $(PWD)/.vimrc ~/
 	ln -sf $(PWD)/gitconfig ~/.gitconfig
 	ln -sf $(PWD)/gitignore ~/.gitignore
-	find ~ -maxdepth 1 -xtype l -delete
+	ln -sf $(PWD)/.gnupg/scdaemon.conf ~/.gnupg/
+	find ~ -maxdepth 2 -xtype l -delete
 
 scripts:
 	cp -asfv $(PWD)/scripts/* ~/bin/
@@ -33,6 +34,7 @@ clean:
         ~/.tmux.conf \
         ~/.vimrc \
         ~/.gitconfig \
-        ~/.gitignore
+        ~/.gitignore \
+        ~/.gnupg/scdaemon.conf
 	rm -rf ~/.config/nvim
 	find ~/bin -type l -lname "$(PWD)/scripts/*" -delete
