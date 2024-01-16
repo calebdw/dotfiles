@@ -1,6 +1,8 @@
 [user]
     name = "Caleb White"
     email = cdwhite3@pm.me
+[includeIf "gitdir:~/projects/"]
+    path = ~/.gitconfig.work
 [alias]
     co = checkout
     cob = checkout -b
