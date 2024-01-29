@@ -2,23 +2,23 @@ local map = require('user.util').map
 
 -- Default servers to install
 local servers = {
-  'ansiblels', -- Ansible
-  'antlersls', -- Statamic/Antlers
+  'ansiblels',     -- Ansible
+  'antlersls',     -- Statamic/Antlers
   -- 'bashls', -- Bash
-  'cmake', -- CMake
-  'clangd', -- C++
-  'cssls', -- CSS
+  'cmake',         -- CMake
+  'clangd',        -- C++
+  'cssls',         -- CSS
   'cssmodules_ls', -- CSS
-  'dockerls', -- Docker
-  'emmet_ls', -- Emmet support
-  'html', -- HTML
-  'jsonls', -- JSON
+  'dockerls',      -- Docker
+  'emmet_ls',      -- Emmet support
+  'html',          -- HTML
+  'jsonls',        -- JSON
   -- 'latex', -- LaTeX
-  'lemminx', -- XM
-  'lua_ls', -- Lua
+  'lemminx',       -- XM
+  'lua_ls',        -- Lua
   -- 'intelephense', -- PHP
-  'ocamllsp', -- OCaml
-  'phpactor', -- PHP
+  'ocamllsp',      -- OCaml
+  'phpactor',      -- PHP
   -- 'psalm', -- PHP
   -- 'jedi_language_server', -- Python
   'pyright', -- Python
@@ -28,10 +28,10 @@ local servers = {
   -- 'remark_ls', -- Markdown
   -- 'sqls', -- SQL
   'rust_analyzer', -- Rust
-  'sqlls', -- SQL
-  'tailwindcss', -- Tailwind CSS
+  'sqlls',         -- SQL
+  'tailwindcss',   -- Tailwind CSS
   -- 'tsserver', -- Javascript / TypeScript
-  'volar', -- Vue
+  'volar',         -- Vue
   -- 'vuels', -- Vue
   -- 'zeta_note', -- Markdown
   -- 'zk', -- Markdown
@@ -39,6 +39,17 @@ local servers = {
 }
 
 return {
+  {
+    "sourcegraph/sg.nvim",
+    opts = {
+      enable_cody = true,
+      accept_tos = true,
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+  },
   {
     'williamboman/mason.nvim',
     opts = {
@@ -276,7 +287,7 @@ return {
     dependencies = {
       'b0o/schemastore.nvim', -- json schemas
       'williamboman/mason.nvim',
-      'folke/neodev.nvim', -- neovim api docs
+      'folke/neodev.nvim',    -- neovim api docs
       'williamboman/mason-lspconfig',
       'lukas-reineke/lsp-format.nvim',
       'hrsh7th/cmp-nvim-lsp',
@@ -343,9 +354,9 @@ return {
     },
     dependencies = { 'williamboman/mason.nvim' },
   },
-  'glepnir/lspsaga.nvim', -- UI for LSP client
+  'glepnir/lspsaga.nvim',        -- UI for LSP client
   'jayp0521/mason-null-ls.nvim', -- mason null-ls
-  { -- ui for lsp progress
+  {                              -- ui for lsp progress
     'j-hui/fidget.nvim',
     tag = 'legacy',
   },

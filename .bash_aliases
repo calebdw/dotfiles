@@ -15,11 +15,9 @@ alias pip='pip3'
 
 alias dockup='docker compose up --build -d'
 alias dockdown='docker compose down'
-alias dockkill='docker kill $(docker ps -q)'
-
-function dockbash(){
-    docker exec -it "$1" bash
-}
+alias dock-stop-all='docker stop $(docker ps -q)'
+alias dock-rm-all='docker rm -f $(docker ps -q)'
+alias dock-sys-prune='docker system prune -f'
 
 function g { grep -R "$1" --include=\*.php --exclude-dir={vendor,storage,uploads,database,migrations-archive}; }
 function gl { grep -Rl "$1" --include=\*.php --exclude-dir={vendor,storage,uploads,database,migrations-archive}; }
