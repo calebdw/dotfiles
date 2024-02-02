@@ -8,7 +8,7 @@ indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
 
-[{*.yml,*.yaml,*.neon*,*.lua,*.scm,*xml}]
+[*.{yml,yaml,neon*,lua,scm,xml,md}]
 indent_size = 2
 
 [**/treesitter/**]
