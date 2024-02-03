@@ -78,6 +78,7 @@ return {
     'neovim/nvim-lspconfig',
     config = function()
       local lsp = require('lspconfig')
+      local configs = require('lspconfig.configs')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
       local runtime_path = vim.split(package.path, ';')
@@ -152,6 +153,9 @@ return {
         }),
       }
 
+      -- local lsp_servers = vim.tbl_values(servers)
+      -- table.insert(lsp_servers, 'blade')
+
       for _, name in pairs(servers) do
         -- apparently this has to be in the loop
         local opts = {
@@ -164,6 +168,19 @@ return {
             'antlers.html', 'antlers', 'html',
           }
         end
+
+        -- if name == 'blade' then
+        --   configs.blade = {
+        --     default_config = {
+        --       cmd = { "laravel-dev-tools", "lsp" },
+        --       filetypes = { 'blade' },
+        --       root_dir = function(fname)
+        --         return lsp.util.find_git_ancestor(fname)
+        --       end,
+        --       settings = {},
+        --     }
+        --   }
+        -- end
 
         if name == 'emmet_ls' then
           opts.filetypes = {
