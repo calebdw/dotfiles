@@ -1,7 +1,6 @@
 [user]
     name = "Caleb White"
     email = cdwhite3@pm.me
-    signingkey = 32077EE10EF10764
 [includeIf "gitdir:~/projects/"]
     path = ~/.gitconfig.work
 [alias]
