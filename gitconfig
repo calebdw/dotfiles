@@ -34,8 +34,8 @@
     commentchar = *
 [commit]
     gpgsign = true
-[includeIf "gitdir:~/projects/"]
-    path = ~/.gitconfig.work
+[tag]
+    gpgSign = true
 [merge]
     conflictstyle = zdiff3
     tool = nvimdiff2
