@@ -1,6 +1,7 @@
 [user]
     name = "Caleb White"
     email = cdwhite3@pm.me
+    signingkey = 32077EE10EF10764
 [includeIf "gitdir:~/projects/"]
     path = ~/.gitconfig.work
 [alias]
@@ -14,6 +15,7 @@
     rc = rebase --continue
     ri = rebase -i
     st = status
+    stag = tag -s
     br = branch -av
     brdel = branch -D
 
@@ -31,6 +33,10 @@
     excludesFile = ~/.gitignore
     editor = nvim
     commentchar = *
+[commit]
+    gpgsign = true
+[includeIf "gitdir:~/projects/"]
+    path = ~/.gitconfig.work
 [merge]
     conflictstyle = zdiff3
     tool = nvimdiff2
