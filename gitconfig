@@ -10,6 +10,7 @@
     d = diff
     fp = fetch -p
     l = log
+    pf = push --force-with-lease
     ra = rebase --abort
     rc = rebase --continue
     ri = rebase -i
