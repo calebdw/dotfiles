@@ -47,6 +47,7 @@ opt.smartcase = true -- case-sensitive when not all lower
 
 -- Wildmenu --
 opt.wildmode = { 'longest', 'list:longest' }
+-- wildmenu?
 -- opt.completeopt = { 'menuone', 'longest', 'preview' }
 opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
