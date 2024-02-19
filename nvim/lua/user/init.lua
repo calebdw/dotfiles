@@ -1,8 +1,3 @@
---[[
-    Use `vim.pretty_print(table)` to show tables,
-    can also use `=table` to show tables
---]]
-
 require('user.autocommands')
 require('user.settings')
 require('user.mappings')

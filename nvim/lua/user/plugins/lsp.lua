@@ -111,7 +111,7 @@ return {
         map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
         map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
         map('n', '<leader>wl', function()
-          vim.pretty_print(vim.lsp.buf.list_workspace_folders())
+          vim.print(vim.lsp.buf.list_workspace_folders())
         end, opts)
         map('n', '<leader>f', function()
           vim.lsp.buf.format({
