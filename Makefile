@@ -1,12 +1,8 @@
 SHELL:=/bin/bash
 
-.PHONY: all nvim dots scripts clean ansible
+.PHONY: all dots scripts clean ansible
 
-all: nvim dots scripts
-
-nvim:
-	cp -asfv $(PWD)/nvim ~/.config/
-	find ~/.config -xtype l -delete
+all: dots scripts
 
 dots:
 	ln -sf $(PWD)/.alacritty.yml ~/
@@ -19,6 +15,7 @@ dots:
 	ln -sf $(PWD)/gitconfig ~/.gitconfig
 	ln -sf $(PWD)/gitignore ~/.gitignore
 	cp -asfv $(PWD)/.gnupg ~/
+	cp -asfv $(PWD)/.config ~/ && find ~/.config -xtype l -delete
 	find ~ -maxdepth 2 -xtype l -delete
 
 scripts:
@@ -27,17 +24,16 @@ scripts:
 
 clean:
 	rm ~/.alacritty.yml \
-        ~/.bash_aliases \
-        ~/.bashrc \
-        ~/.editorconfig \
-        ~/.latexmkrc \
-        ~/.tmux.conf \
-        ~/.vimrc \
-        ~/.gitconfig \
-        ~/.gitignore \
-        ~/.gnupg/scdaemon.conf
-	rm -rf ~/.config/nvim
+		~/.bash_aliases \
+		~/.bashrc \
+		~/.editorconfig \
+		~/.latexmkrc \
+		~/.tmux.conf \
+		~/.vimrc \
+		~/.gitconfig \
+		~/.gitignore \
 	find ~/bin -type l -lname "$(PWD)/scripts/*" -delete
+	find ~/.config -type l -lname "$(PWD)/.config/*" -delete
 	find ~/.gnupg -type l -lname "$(PWD)/.gnupg/*" -delete
 
 ansible:
