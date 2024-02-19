@@ -1,0 +1,5 @@
+---
+- name: 'install git-delete-merged-branches'
+  pip:
+    name: git-delete-merged-branches
+    state: latest

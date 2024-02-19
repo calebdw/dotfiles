@@ -1,0 +1,7 @@
+---
+composer_home_path: '~/.config/composer'
+
+dir_sources: "~{{ ansible_env.USER }}/sources"
+
+
+php_version: 8.2

@@ -1,0 +1,29 @@
+---
+- name: 'add nodejs APT repository'
+  become: true
+  ansible.builtin.deb822_repository:
+    name: nodejs
+    uris: 'https://deb.nodesource.com/node_{{ nodejs_version }}.x'
+    signed_by: 'https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key'
+    suites: nodistro
+    components: main
+    architectures: amd64
+  notify: update apt cache
+
+- name: 'flush handlers'
+  ansible.builtin.meta: flush_handlers
+
+- name: install nodejs and npm
+  become: true
+  apt:
+    state: latest
+    cache_valid_time: 3600
+    name:
+      - nodejs
+
+- name: update npm
+  become: true
+  npm:
+    global: true
+    name: npm
+    state: latest

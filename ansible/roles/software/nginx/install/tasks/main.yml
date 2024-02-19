@@ -1,0 +1,33 @@
+---
+# ppa has brotli module
+# - name: add nginx ppa
+#   apt_repository:
+#     repo: 'ppa:ondrej/nginx'
+
+- name: 'add nginx APT repository'
+  become: true
+  ansible.builtin.deb822_repository:
+    name: nginx
+    uris: 'https://nginx.org/packages/ubuntu'
+    signed_by: 'https://nginx.org/keys/nginx_signing.key'
+    suites: '{{ ansible_distribution_release }}'
+    components: nginx
+  notify: update apt cache
+
+- name: 'flush handlers'
+  ansible.builtin.meta: flush_handlers
+
+- name: 'install nginx'
+  become: true
+  apt:
+    state: latest
+    cache_valid_time: 3600
+    name:
+      - nginx
+
+- name: 'start nginx'
+  become: true
+  service:
+    name: 'nginx'
+    state: started
+    enabled: true # service start on boot

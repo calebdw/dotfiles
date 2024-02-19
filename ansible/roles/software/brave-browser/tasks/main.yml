@@ -1,0 +1,21 @@
+---
+- name: 'add brave APT repository'
+  become: true
+  ansible.builtin.deb822_repository:
+    name: brave
+    uris: 'https://brave-browser-apt-release.s3.brave.com'
+    signed_by: 'https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg'
+    suites: stable
+    components: main
+    architectures: amd64
+  notify: update apt cache
+
+- name: 'flush handlers'
+  ansible.builtin.meta: flush_handlers
+
+- name: 'install Brave Browser'
+  become: true
+  apt:
+    state: latest
+    cache_valid_time: 3600
+    name: 'brave-browser'

@@ -1,0 +1,52 @@
+---
+- name: 'Clone neovim'
+  git:
+    repo: 'https://github.com/neovim/neovim.git'
+    dest: '{{ dir_sources }}/neovim'
+    clone: true
+    update: true
+    force: true
+  register: clone
+
+- when: clone.changed
+  block:
+    - name: 'Clean neovim'
+      command: 'make distclean'
+      args:
+        chdir: '{{ dir_sources }}/neovim'
+
+    - name: 'Build neovim'
+      command: 'make CMAKE_BUILD_TYPE=RelWithDebInfo -j 4'
+      args:
+        chdir: '{{ dir_sources }}/neovim'
+
+    - name: 'Install neovim'
+      become: true
+      command: 'make install'
+      args:
+        chdir: '{{ dir_sources }}/neovim'
+
+- name: 'Install python neovim module'
+  pip:
+    name: pynvim
+    state: latest
+
+- name: 'Install NodeJS neovim module'
+  become: true
+  npm:
+    name: neovim
+    global: true
+    state: latest
+
+- name: 'Install Ruby neovim module'
+  become: true
+  community.general.gem:
+    name: 'neovim'
+    state: latest
+    norc: false
+
+# Would not run
+# - name: 'Install Perl neovim module'
+#   become: true
+#   cpanm:
+#     name: 'Neovim::Ext'

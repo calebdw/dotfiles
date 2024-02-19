@@ -1,0 +1,27 @@
+---
+- name: 'check if installation dir exists'
+  stat:
+    path: '{{ php_manual_path }}'
+  register: install_path
+
+- name: 'create installation dir'
+  become: true
+  file:
+    path: '{{ php_manual_path }}'
+    state: directory
+    mode: '0644'
+  when: not install_path.stat.exists
+
+- name: 'install required sqlite extension'
+  become: true
+  apt:
+    state: latest
+    cache_valid_time: 3600
+    name:
+      - php{{ php_version }}-sqlite3
+
+- name: 'download php manual for PsySh'
+  become: true
+  get_url:
+    url: '{{ php_manual_url }}'
+    dest: '{{ php_manual_file }}'

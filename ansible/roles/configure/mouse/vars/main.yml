@@ -1,0 +1,12 @@
+---
+# Instructions came from:
+#  - https://askubuntu.com/questions/285689/increase-mouse-wheel-scroll-speed
+# Run `lsusb` to find the mouse vid, pid and, name
+mouse_vid: '1a7c'
+mouse_pid: '0197'
+mouse_name: 'Evoluent Evoluent VerticalMouse D'
+mouse_udev_path: '/etc/udev/hwdb.d'
+mouse_click_angle: 30
+# per full rotation
+mouse_click_count: 192
+

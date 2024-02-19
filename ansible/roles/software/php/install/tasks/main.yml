@@ -1,0 +1,39 @@
+---
+- name: 'add php ppa'
+  become: true
+  apt_repository:
+    repo: 'ppa:ondrej/php'
+
+- name: 'install PHP'
+  become: true
+  apt:
+    state: latest
+    cache_valid_time: 3600
+    name:
+      - php{{ php_version }}-bcmath   # for precision floats
+      - php{{ php_version }}-cli      # command-line interpreter
+      - php{{ php_version }}-curl     # CURL module
+      - php{{ php_version }}-fpm      # FPM-CGI binary
+      - php{{ php_version }}-gd       # GD module (images)
+      - php{{ php_version }}-imap     # IMAP module
+      - php{{ php_version }}-mbstring # MBSTRING module (non-ascii strings)
+      - php{{ php_version }}-pgsql    # PostgreSQL module
+      - php{{ php_version }}-redis    # extension for interfacing with Redis
+      - php{{ php_version }}-soap     # SOAP module
+      - php{{ php_version }}-xml      # for working with xml data
+      - php{{ php_version }}-xmlrpc   # XMLRPC-EPI module
+      - php{{ php_version }}-zip      # required for ZipArchive class
+  notify:
+    - restart php-fpm
+
+- name: 'lock PHP version'
+  become: true
+  community.general.alternatives:
+    name: php
+    path: /usr/bin/php{{ php_version }}
+
+# - name: 'start php-fpm service'
+#   become: true
+#   service:
+#     name: 'php{{ php_version }}-fpm'
+#     state: started

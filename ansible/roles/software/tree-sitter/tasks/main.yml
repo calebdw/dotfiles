@@ -1,0 +1,7 @@
+---
+- name: 'Install tree-sitter-cli'
+  become: true
+  npm:
+    global: true
+    name: tree-sitter-cli
+    state: latest

@@ -1,0 +1,13 @@
+---
+- name: 'install porter'
+  community.general.composer:
+    command: require
+    global_command: true
+    arguments: 'anystack-sh/porter'
+
+- name: 'install chokidar (file watcher)'
+  become: true
+  npm:
+    global: true
+    name: chokidar
+    state: latest

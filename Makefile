@@ -1,6 +1,6 @@
 SHELL:=/bin/bash
 
-.PHONY: all nvim dots scripts clean
+.PHONY: all nvim dots scripts clean ansible
 
 all: nvim dots scripts
 
@@ -39,3 +39,8 @@ clean:
 	rm -rf ~/.config/nvim
 	find ~/bin -type l -lname "$(PWD)/scripts/*" -delete
 	find ~/.gnupg -type l -lname "$(PWD)/.gnupg/*" -delete
+
+ansible:
+	cd ansible && \
+	ansible-galaxy install -r requirements.yml && \
+	ansible-playbook playbooks/local.yml -K

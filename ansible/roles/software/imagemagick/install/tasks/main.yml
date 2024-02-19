@@ -1,0 +1,13 @@
+---
+- name: 'download standalone imagemagick AppImage'
+  become: true
+  get_url:
+    url: '{{ imagemagick_url }}'
+    dest: '{{ imagemagick_dest }}'
+    mode: '0755'
+
+- name: ensure imagemagick directory exists
+  become: true
+  file:
+    path: '{{ imagemagick_configure_dir }}'
+    state: 'directory'

@@ -1,0 +1,20 @@
+---
+- name: 'add mouse udev config'
+  become: true
+  template:
+    src: "71-mouse-local.hwdb.j2"
+    dest: "{{ mouse_udev_path }}/71-mouse-local.hwdb"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+  register: mouse_udev
+
+- when: mouse_udev.changed
+  block:
+    - name: 'update systemd hardware dabase'
+      become: true
+      command: 'systemd-hwdb update'
+
+    - name: 'reload udev input configs'
+      become: true
+      shell: 'udevadm trigger /dev/input/event*'

@@ -1,0 +1,4 @@
+---
+imagemagick_url: 'https://imagemagick.org/archive/binaries/magick'
+imagemagick_dest: '/usr/local/bin/magick'
+imagemagick_configure_dir: '/etc/ImageMagick-7'

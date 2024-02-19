@@ -1,0 +1,21 @@
+---
+- name: 'add tableplus APT repository'
+  become: true
+  ansible.builtin.deb822_repository:
+    name: pgadmin
+    uris: 'https://deb.tableplus.com/debian/{{ tableplus_dist_version }}'
+    signed_by: 'https://deb.tableplus.com/apt.tableplus.com.gpg.key'
+    suites: tableplus
+    components: main
+    architectures: amd64
+  notify: update apt cache
+
+- name: 'flush handlers'
+  ansible.builtin.meta: flush_handlers
+
+- name: 'install tableplus'
+  become: true
+  apt:
+    state: latest
+    cache_valid_time: 3600
+    name: 'tableplus'

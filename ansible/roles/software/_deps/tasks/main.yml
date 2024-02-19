@@ -1,0 +1,39 @@
+---
+- name: 'install dependencies'
+  become: true
+  apt:
+    state: latest
+    cache_valid_time: 3600
+    name:
+      # - acl # operations involving ansible become_user
+      - apt-transport-https
+      - autoconf
+      - automake
+      - build-essential
+      - ca-certificates
+      - cmake
+      - curl
+      - default-jdk
+      - default-jre
+      - doxygen
+      - g++
+      - gcc
+      - gettext
+      - gnupg
+      - libjansson-dev
+      - libseccomp-dev
+      - libtool
+      - libtool-bin
+      - libxml2-dev
+      - libyaml-dev
+      - lsb-release
+      - luarocks
+      - ninja-build
+      - pkg-config
+      - python3-docutils
+      - python3-pip
+      - python3-venv
+      - ripgrep
+      - software-properties-common # apt-add-repository commands
+      - unzip
+      - xclip

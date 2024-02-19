@@ -1,0 +1,45 @@
+---
+- name: 'update apt cache'
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: restart php-fpm
+  become: true
+  service:
+    name: 'php{{ php_version }}-fpm'
+    state: restarted
+
+- name: restart nginx
+  become: true
+  service:
+    name: 'nginx'
+    state: restarted
+
+- name: reload nginx
+  become: true
+  service:
+    name: 'nginx'
+    state: reloaded
+
+- name: restart postgresql
+  become: true
+  service:
+    name: 'postgresql'
+    state: restarted
+
+- name: reread supervisor
+  become: true
+  shell: 'supervisorctl update'
+
+- name: restart cron
+  become: true
+  service:
+    name: 'cron'
+    state: restarted
+
+- name: reload postgresql
+  become: true
+  service:
+    name: 'postgresql'
+    state: reloaded

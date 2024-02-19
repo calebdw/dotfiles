@@ -1,0 +1,4 @@
+---
+php_manual_url: 'http://psysh.org/manual/en/php_manual.sqlite'
+php_manual_path: '/usr/local/share/psysh'
+php_manual_file: '{{ php_manual_path }}/php_manual.sqlite'

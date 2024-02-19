@@ -1,0 +1,21 @@
+---
+- name: 'install Docker'
+  include_role:
+    name: geerlingguy.docker
+    apply:
+      become: true
+      vars:
+        docker_users: '{{ ansible_env.USER }}'
+        docker_package_state: latest
+        ansible_distribution: Ubuntu
+        docker_install_compose_plugin: true
+        docker_install_compose: false
+
+- name: 'install Docker Python library'
+  include_role:
+    name: geerlingguy.pip
+    apply:
+      become: true
+      vars:
+        pip_install_packages:
+          - name: docker

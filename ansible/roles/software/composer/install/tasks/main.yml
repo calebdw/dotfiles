@@ -1,0 +1,8 @@
+---
+- name: 'install composer'
+  include_role:
+    name: geerlingguy.composer
+    apply:
+      become: true
+      vars:
+        composer_keep_updated: true

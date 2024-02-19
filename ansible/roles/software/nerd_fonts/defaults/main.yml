@@ -1,0 +1,5 @@
+---
+nerd_font: 'FiraCode'
+nerd_font_version: 'v3.1.1'
+nerd_font_url: 'https://github.com/ryanoasis/nerd-fonts/releases/download/{{ nerd_font_version }}/{{ nerd_font }}.zip'
+nerd_font_file: '{{ nerd_font }}_Nerd_Font.zip'
