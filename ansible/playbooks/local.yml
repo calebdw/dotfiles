@@ -17,4 +17,5 @@
     - software/porter
     - software/tableplus
     - software/tree-sitter
+    - software/wezterm
     - configure/mouse

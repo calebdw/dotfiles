@@ -1,0 +1,21 @@
+---
+- name: 'add wezterm APT repository'
+  become: true
+  ansible.builtin.deb822_repository:
+    name: wezterm
+    uris: 'https://apt.fury.io/wez'
+    signed_by: 'https://apt.fury.io/wez/gpg.key'
+    suites: '*'
+    components: '*'
+    architectures: amd64
+  notify: update apt cache
+
+- name: 'flush handlers'
+  ansible.builtin.meta: flush_handlers
+
+- name: 'install wezterm'
+  become: true
+  apt:
+    state: latest
+    cache_valid_time: 3600
+    name: 'wezterm'
