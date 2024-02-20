@@ -1,8 +1,8 @@
 SHELL:=/bin/bash
 
-.PHONY: all dots scripts clean ansible
+.PHONY: all dots scripts clean ansible clean-links
 
-all: dots scripts
+all: dots scripts clean-links
 
 dots:
 	ln -sf $(PWD)/.alacritty.yml ~/
@@ -15,26 +15,16 @@ dots:
 	ln -sf $(PWD)/gitconfig ~/.gitconfig
 	ln -sf $(PWD)/gitignore ~/.gitignore
 	cp -asfv $(PWD)/.gnupg ~/
-	cp -asfv $(PWD)/.config ~/ && find ~/.config -xtype l -delete
-	find ~ -maxdepth 2 -xtype l -delete
+	cp -asfv $(PWD)/.config ~/
 
 scripts:
 	cp -asfv $(PWD)/scripts/* ~/bin/
-	find ~/bin -xtype l -delete
+
+clean-links:
+	find ~ -xtype l -delete
 
 clean:
-	rm ~/.alacritty.yml \
-		~/.bash_aliases \
-		~/.bashrc \
-		~/.editorconfig \
-		~/.latexmkrc \
-		~/.tmux.conf \
-		~/.vimrc \
-		~/.gitconfig \
-		~/.gitignore \
-	find ~/bin -type l -lname "$(PWD)/scripts/*" -delete
-	find ~/.config -type l -lname "$(PWD)/.config/*" -delete
-	find ~/.gnupg -type l -lname "$(PWD)/.gnupg/*" -delete
+	find ~ -type l -lname "$(PWD)/*" -delete
 
 ansible:
 	cd ansible && \
