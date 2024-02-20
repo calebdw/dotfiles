@@ -5,7 +5,7 @@ local config = wezterm.config_builder()
 config.font = wezterm.font_with_fallback({
   'FiraCode Nerd Font',
   -- 'JetBrainsMono Nerd Font',
-  'Nonicons',
+  'nonicons',
 })
 
 -- Colors --

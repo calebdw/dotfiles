@@ -1,13 +1,11 @@
 return {
   'szw/vim-maximizer', -- zoom
-  -- Can't use until Win Terminal supports fallback fonts
   'nvim-tree/nvim-web-devicons',
   {
     'yamatsum/nvim-nonicons',
-    enabled = false,
     dependencies = 'nvim-tree/nvim-web-devicons',
   },
-  { 'rcarriga/nvim-notify',   config = true },
+  { 'rcarriga/nvim-notify',  config = true },
   {
     'stevearc/dressing.nvim',
     opts = {

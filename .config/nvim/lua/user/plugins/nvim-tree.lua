@@ -83,6 +83,9 @@ return {
         indent_markers = {
           enable = true,
         },
+        -- icons = {
+        --   glyphs = require('nvim-nonicons.extentions.nvim-tree').glyphs,
+        -- },
       },
       respect_buf_cwd = false,
       -- sync_root_with_cwd = false,
@@ -92,5 +95,8 @@ return {
       },
     }
   end,
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  dependencies = {
+    'nvim-tree/nvim-web-devicons',
+    -- 'yamatsum/nvim-nonicons',
+  },
 }
