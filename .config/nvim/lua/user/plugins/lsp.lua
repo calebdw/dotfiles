@@ -70,6 +70,45 @@ return {
       ensure_installed = servers,
     },
   },
+  {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    -- enabled = false,
+    opts = {
+      auto_update = true,
+      start_delay = 500,
+      ensure_installed = {
+        -- LSP Servers --
+        { 'phpactor', version = 'master' },
+        'tailwindcss-language-server',
+
+        -- DAP Servers --
+        'chrome-debug-adapter',
+        'php-debug-adapter',
+
+        -- Linters --
+        'codespell',
+        'curlylint',
+        'gitlint',
+        'hadolint',
+        'markdownlint',
+        'proselint',
+        'shellcheck',
+        'shellharden',
+        'sqlfluff',
+        'vale',
+        'write-good',
+        'yamllint',
+
+        -- Formatters --
+        'fixjson',
+        'luaformatter',
+        'prettier',
+        'prettierd',
+        'sql-formatter'
+      },
+    },
+    dependencies = { 'williamboman/mason.nvim' },
+  },
   { -- auto format on save
     'lukas-reineke/lsp-format.nvim',
     config = true,
@@ -331,45 +370,6 @@ return {
       'nvim-lua/plenary.nvim',
       'neovim/nvim-lspconfig',
     },
-  },
-  {
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
-    -- enabled = false,
-    opts = {
-      auto_update = true,
-      start_delay = 500,
-      ensure_installed = {
-        -- LSP Servers --
-        { 'phpactor', version = 'master' },
-        'tailwindcss-language-server',
-
-        -- DAP Servers --
-        'chrome-debug-adapter',
-        'php-debug-adapter',
-
-        -- Linters --
-        'codespell',
-        'curlylint',
-        'gitlint',
-        'hadolint',
-        'markdownlint',
-        'proselint',
-        'shellcheck',
-        'shellharden',
-        'sqlfluff',
-        'vale',
-        'write-good',
-        'yamllint',
-
-        -- Formatters --
-        'fixjson',
-        'luaformatter',
-        'prettier',
-        'prettierd',
-        'sql-formatter'
-      },
-    },
-    dependencies = { 'williamboman/mason.nvim' },
   },
   'glepnir/lspsaga.nvim',        -- UI for LSP client
   'jayp0521/mason-null-ls.nvim', -- mason null-ls
