@@ -1,6 +1,6 @@
 return {
   'nvim-telescope/telescope.nvim',
-  opts = function ()
+  opts = function()
     local actions = require('telescope.actions')
     local lga_actions = require('telescope-live-grep-args.actions')
 
@@ -20,6 +20,17 @@ return {
         file_ignore_patterns = {
           '.git/',
           'public/vendor',
+        },
+        -- let telescope search in hidden files
+        vimgrep_arguments = {
+          'rg',
+          '--hidden',
+          '--color=never',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+          "--smart-case"
         },
       },
       pickers    = {
