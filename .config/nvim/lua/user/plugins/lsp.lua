@@ -269,21 +269,20 @@ return {
         if name == 'lua_ls' then
           opts.settings = {
             Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
               diagnostics = {
                 globals = {
-                  'vim',
                   -- luasnip globals
                   'ls', 's', 'sn', 'isn', 'c', 'i', 'd', 't',
                   'f', 'r', 'fmt', 'fmta',
                 },
               },
               runtime = { version = 'LuaJIT', path = runtime_path },
-              telemetry = { enable = false },
               workspace = {
-                library = vim.api.nvim_get_runtime_file('', true),
+                -- this replaces neodev
+                library = {
+                  '${3rd}/luv/library',
+                  unpack(vim.api.nvim_get_runtime_file('', true)),
+                },
                 checkThirdParty = false,
               },
             }
@@ -343,7 +342,6 @@ return {
     dependencies = {
       'b0o/schemastore.nvim', -- json schemas
       'williamboman/mason.nvim',
-      'folke/neodev.nvim',    -- neovim api docs
       'williamboman/mason-lspconfig',
       'lukas-reineke/lsp-format.nvim',
       'hrsh7th/cmp-nvim-lsp',
