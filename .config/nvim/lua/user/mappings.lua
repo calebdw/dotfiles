@@ -21,6 +21,10 @@ map('v', '>', '>gv')
 -- Paste in visual mode without replacing yank
 map('v', 'p', '"_dP')
 
+-- Yank to system clipboard
+map({ 'n', 'v' }, '<leader>y', '"+y')
+map({ 'n', 'v' }, '<leader>Y', '"+Y')
+
 -- Easily insert trailing chars in insert mode
 map('i', ';;', '<esc>A;')
 map('i', ',,', '<esc>A,')
