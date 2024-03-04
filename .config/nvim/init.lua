@@ -1,9 +1,3 @@
--- Impatient
-local ok, impatient = pcall(require, 'impatient')
-if ok then
-  impatient.enable_profile()
-end
-
 -- Disable plugins
 -- Might not need these anymore with Lazy?
 local disabled_builtins = {
