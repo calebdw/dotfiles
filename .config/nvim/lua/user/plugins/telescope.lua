@@ -109,7 +109,6 @@ return {
     map({ 'n', 'v' }, '<leader>Tw', builtin.lsp_workspace_symbols)
     map({ 'n', 'v' }, '<leader>TW', builtin.lsp_dynamic_workspace_symbols)
 
-
     map({ 'n', 'v' }, '<leader>dc', extensions.dap.commands)
     map({ 'n', 'v' }, '<leader>dC', extensions.dap.configurations)
     map({ 'n', 'v' }, '<leader>db', extensions.dap.list_breakpoints)

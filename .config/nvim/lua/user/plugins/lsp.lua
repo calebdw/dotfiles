@@ -124,12 +124,6 @@ return {
       table.insert(runtime_path, "lua/?.lua")
       table.insert(runtime_path, "lua/?/init.lua")
 
-      -- diagnostic keymaps
-      map('n', '<leader>d', vim.diagnostic.open_float)
-      map('n', '[d', vim.diagnostic.goto_prev)
-      map('n', ']d', vim.diagnostic.goto_next)
-      map('n', '<leader>qd', vim.diagnostic.setloclist)
-
       local on_attach = function(client, bufnr)
         -- Enable completion triggered by <c-x><c-o> DO NOT USE with nvim-cmp
         -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')

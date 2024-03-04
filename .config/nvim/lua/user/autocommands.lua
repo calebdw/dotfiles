@@ -3,13 +3,6 @@ local autocmd = vim.api.nvim_create_autocmd
 
 local default = augroup('user_default', { clear = true })
 
--- Autocompile packer configs
--- autocmd('BufWritePost', {
---   group = augroup('user_packer_config', { clear = true }),
---   pattern = '*/dotfiles/nvim/lua/user/plugins/*.lua',
---   command = 'source <afile> | PackerCompile',
--- })
-
 -- File Formats
 local file_formats = augroup('user_file_formats', { clear = true })
 
@@ -36,5 +29,13 @@ autocmd({ 'TermOpen' }, {
   pattern = '*',
   callback = function()
     vim.wo.spell = false
+  end,
+})
+
+autocmd({ 'TextYankPost' }, {
+  desc = 'Highlight when yanking text',
+  group = default,
+  callback = function()
+    vim.highlight.on_yank()
   end,
 })

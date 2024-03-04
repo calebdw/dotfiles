@@ -93,8 +93,7 @@ return {
 
     -- parser_config.php = {
     --   install_info = {
-    --     -- url = '~/sources/treesitter/tree-sitter-php/tree-sitter-php',
-    --     url = '~/sources/treesitter/tree-sitter-php',
+    --     url = '~/sources/treesitter/tree-sitter-php/php',
     --     files = {
     --       'src/parser.c',
     --       'src/scanner.c',

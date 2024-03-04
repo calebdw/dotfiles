@@ -29,6 +29,7 @@ opt.backupdir:remove('.') -- keep backups out of the current directory
 -- Splitting --
 opt.splitbelow = true
 opt.splitright = true
+opt.inccommand = 'split' -- preview substitutions in a split
 
 -- Line numbers --
 opt.number = true
@@ -68,7 +69,7 @@ opt.confirm = true
 
 -- Hidden Chars --
 opt.list = true
-opt.listchars = { tab = '> ', trail = '⋅', nbsp = '+', eol = '↴' }
+opt.listchars = { tab = '» ', trail = '⋅', nbsp = '␣', eol = '↴' }
 opt.termguicolors = true
 
 -- Scrolling --
@@ -88,22 +89,19 @@ opt.errorformat:append("%f|%l col %c|%m")
 opt.errorformat:append('%-G%.%#') -- ignores all other unmatched lines
 
 -- Folding --
--- vim.opt.foldmethod     = 'expr'
--- vim.opt.foldexpr       = 'nvim_treesitter#foldexpr()'
----WORKAROUND
-vim.api.nvim_create_autocmd({ 'BufEnter', 'BufAdd', 'BufNew', 'BufNewFile', 'BufWinEnter' }, {
-  group = vim.api.nvim_create_augroup('TS_FOLD_WORKAROUND', {}),
-  callback = function()
-    vim.opt.foldmethod = 'expr'
-    vim.opt.foldexpr   = 'nvim_treesitter#foldexpr()'
-  end
-})
----ENDWORKAROUND
+vim.opt.foldmethod     = 'expr'
+vim.opt.foldexpr       = 'v:lua.vim.treesitter.foldexpr()'
 opt.foldenable = false -- zi toggles
 -- opt.foldlevel = 99
 
 -- Sign Column
 opt.signcolumn = 'yes:2'
+
+-- Decrease update time
+vim.opt.updatetime = 250
+vim.opt.timeoutlen = 300 -- time for a mapped sequence to complete
+
+opt.showmode = false     -- already shown in statusline
 
 -- Diagnostic config
 vim.diagnostic.config({
