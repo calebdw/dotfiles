@@ -15,6 +15,8 @@
     ra = rebase --abort
     rc = rebase --continue
     ri = rebase -i
+    spo = stash pop
+    spu = stash push -u
     st = status
     stag = tag -s
     br = branch -av
