@@ -17,7 +17,7 @@ return {
       },
     },
     autotag = { -- 'windwp/nvim-ts-autotag'
-      enable = true,
+      enable = false, -- this breaks dot repeating with `>`
     },
     endwise = { -- 'RRethy/nvim-treesitter-endwise',
       enable = true,
