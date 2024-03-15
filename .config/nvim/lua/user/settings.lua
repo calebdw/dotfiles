@@ -70,7 +70,6 @@ opt.confirm = true
 -- Hidden Chars --
 opt.list = true
 opt.listchars = { tab = '» ', trail = '⋅', nbsp = '␣', eol = '↴' }
-opt.termguicolors = true
 
 -- Scrolling --
 opt.scrolloff = 8
