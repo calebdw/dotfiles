@@ -23,7 +23,10 @@ return {
         dapui.close()
       end
     end,
-    dependencies = 'mfussenegger/nvim-dap',
+    dependencies = {
+      'mfussenegger/nvim-dap',
+      'nvim-neotest/nvim-nio',
+    },
   },
   'nvim-telescope/telescope-dap.nvim',
   'rcarriga/cmp-dap',
