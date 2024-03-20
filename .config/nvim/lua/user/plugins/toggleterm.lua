@@ -15,10 +15,10 @@ return {
     float_opts = {
       border = 'rounded',
       width = function()
-        return math.ceil(vim.api.nvim_get_option("columns") * .8)
+        return math.ceil(vim.api.nvim_get_option_value("columns", { scope = 'global'}) * .8)
       end,
       height = function()
-        return math.ceil(vim.api.nvim_get_option("lines") * .8 - 4)
+        return math.ceil(vim.api.nvim_get_option_value("lines", { scope = 'global'}) * .8 - 4)
       end
     },
     winbar = {
