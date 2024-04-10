@@ -12,6 +12,7 @@ alias l='ls -CF'
 alias nv='nvim'
 alias python='python3'
 alias pip='pip3'
+alias g='git '
 
 alias dockup='docker compose up --build -d'
 alias dockdown='docker compose down'
@@ -19,15 +20,15 @@ alias dock-stop-all='docker stop $(docker ps -q)'
 alias dock-rm-all='docker rm -f $(docker ps -q)'
 alias dock-sys-prune='docker system prune -f'
 
-function g { grep -R "$1" --include=\*.php --exclude-dir={vendor,storage,uploads,database,migrations-archive}; }
-function gl { grep -Rl "$1" --include=\*.php --exclude-dir={vendor,storage,uploads,database,migrations-archive}; }
+# function g { grep -R "$1" --include=\*.php --exclude-dir={vendor,storage,uploads,database,migrations-archive}; }
+# function gl { grep -Rl "$1" --include=\*.php --exclude-dir={vendor,storage,uploads,database,migrations-archive}; }
 
 # Pass aliases through sudo
 alias sudo='sudo '
 
 # Laravel Sail
 alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
-alias s='sail'
+alias s='sail '
 
 # PHP Deployer
 alias dep='vendor/bin/dep'
