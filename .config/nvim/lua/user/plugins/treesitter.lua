@@ -38,10 +38,6 @@ return {
         },
       },
     },
-    context_commentstring = { -- JoosepAlviste/nvim-ts-context-commentstring
-      enable = true,
-      enable_autocmd = false, -- using Comment.nvim
-    },
   },
   config = function(_, opts)
     local map = require('user.util').map
@@ -115,4 +111,9 @@ return {
     'nvim-treesitter/nvim-treesitter-textobjects',
     'nvim-treesitter/nvim-treesitter-context',
   },
+  -- {
+  --   'JoosepAlviste/nvim-ts-context-commentstring',
+  --   enabled = false,
+  --   opts = { enable_autocmd = false },
+  -- },
 }
