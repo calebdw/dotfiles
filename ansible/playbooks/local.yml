@@ -4,7 +4,6 @@
     - software/_deps
     - software/brave-browser
     - software/composer/install
-    # - software/ctags
     - software/docker
     - software/git
     - software/git-dmb
