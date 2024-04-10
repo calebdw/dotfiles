@@ -285,7 +285,7 @@ return {
 
         if name == 'tailwindcss' then
           opts.filetypes = {
-            'antlers.html', 'antlers', 'blade.html.php', 'blade', 'html', 'css', 'sass', 'scss'
+            'antlers.html', 'antlers', 'blade.html.php', 'blade', 'html', 'css', 'sass', 'scss', 'vue'
           }
           opts.settings = {
             tailwindCSS = {
