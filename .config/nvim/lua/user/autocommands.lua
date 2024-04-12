@@ -39,3 +39,17 @@ autocmd({ 'TextYankPost' }, {
     vim.highlight.on_yank()
   end,
 })
+
+autocmd({ 'FileType' }, {
+  desc = 'Force commentstring to include spaces',
+  group = default,
+  callback = function()
+    local cs = vim.bo.commentstring
+
+    if not cs or not cs:match('%%s') then
+      return
+    end
+
+    vim.bo.commentstring = cs:gsub('%s*%%s%s*', ' %%s '):gsub('%s*$', '')
+  end,
+})
