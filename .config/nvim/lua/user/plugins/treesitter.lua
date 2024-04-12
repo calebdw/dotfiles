@@ -104,16 +104,10 @@ return {
     map('n', '<leader>i', vim.show_pos)
   end,
   dependencies = {
-    'JoosepAlviste/nvim-ts-context-commentstring',
     'windwp/nvim-ts-autotag',
     'RRethy/nvim-treesitter-endwise',
     -- @todo: configure plugin
     'nvim-treesitter/nvim-treesitter-textobjects',
     'nvim-treesitter/nvim-treesitter-context',
   },
-  -- {
-  --   'JoosepAlviste/nvim-ts-context-commentstring',
-  --   enabled = false,
-  --   opts = { enable_autocmd = false },
-  -- },
 }
