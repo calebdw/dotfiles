@@ -5,6 +5,7 @@ return {
   end,
   opts = {
     ensure_installed = 'all',
+    auto_install = true,
     highlight = { enable = true, },
     indent = { enable = true, },
     incremental_selection = {
@@ -109,5 +110,6 @@ return {
     -- @todo: configure plugin
     'nvim-treesitter/nvim-treesitter-textobjects',
     'nvim-treesitter/nvim-treesitter-context',
+    'LiadOz/nvim-dap-repl-highlights',
   },
 }
