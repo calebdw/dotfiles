@@ -16,10 +16,16 @@ return {
         {
           type = 'php',
           request = 'launch',
-          name = 'Listen for Xdebug',
+          name = 'Listen for Xdebug in Docker',
           pathMappings = {
             ['/var/www'] = '${workspaceFolder}',
           },
+          repl_lang = 'php_only',
+        },
+        {
+          type = 'php',
+          request = 'launch',
+          name = 'Listen for Xdebug locally',
           repl_lang = 'php_only',
         },
       }
