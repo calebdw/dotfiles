@@ -82,7 +82,7 @@ return {
         'tailwindcss-language-server',
 
         -- DAP Servers --
-        'js-debug-adapter',
+        { 'js-debug-adapter', version = 'v1.76.1' },
         'php-debug-adapter',
 
         -- Linters --

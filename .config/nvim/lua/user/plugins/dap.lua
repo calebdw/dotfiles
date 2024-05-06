@@ -6,12 +6,68 @@ return {
     config = function()
       local dap = require('dap')
       local widgets = require('dap.ui.widgets')
+      local registry = require('mason-registry')
+
+      -- dap.set_log_level('TRACE')
+
+      dap.configurations.javascript = {
+        {
+          type                      = 'pwa-node',
+          request                   = 'attach',
+          name                      = 'Attach debugger to existing `node --inspect` process',
+          cwd                       = '${workspaceFolder}',
+          skipFiles                 = {
+            '${workspaceFolder}/node_modules/**/*.js',
+            '${workspaceFolder}/packages/**/node_modules/**/*.js',
+            '${workspaceFolder}/packages/**/**/node_modules/**/*.js',
+            '<node_internals>/**',
+            'node_modules/**',
+          },
+          sourceMaps                = true,
+          console                   = "integratedTerminal",
+          resolveSourceMapLocations = {
+            '${workspaceFolder}/**',
+            '!**/node_modules/**',
+          },
+        },
+        {
+          type = 'pwa-node',
+          request = 'launch',
+          name = 'Launch file',
+          program = '${file}',
+          cwd = '${workspaceFolder}',
+        },
+        {
+          type = 'pwa-chrome',
+          request = 'launch',
+          name = 'Launch browser to debug client side code',
+          url = function()
+            local co = coroutine.running()
+            return coroutine.create(function()
+              vim.ui.input({ prompt = 'Enter URL: ', default = 'http://localhost:5173' }, function(url)
+                if url == nil or url == '' then
+                  return
+                else
+                  coroutine.resume(co, url)
+                end
+              end)
+            end)
+          end,
+          runtimeExecutable = '/usr/bin/brave-browser',
+          -- for TypeScript/Svelte
+          sourceMaps = true,
+          webRoot = '${workspaceFolder}/src',
+          protocol = 'inspector',
+          port = 9222,
+          -- skip files from vite's hmr
+          skipFiles = { '**/node_modules/**/*', '**/@vite/*', '**/src/client/*', '**/src/*' },
+        },
+      }
 
       dap.adapters.php = {
         type = 'executable',
-        command = os.getenv('HOME') .. '/.local/share/nvim/mason/packages/php-debug-adapter/php-debug-adapter',
+        command = registry.get_package('php-debug-adapter'):get_install_path() .. '/php-debug-adapter',
       }
-
       dap.configurations.php = {
         {
           type = 'php',
@@ -39,20 +95,28 @@ return {
       map('n', '<leader>lp', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
       map('n', '<leader>dr', function() dap.repl.open() end)
       map('n', '<leader>dl', function() dap.run_last() end)
-      map({'n', 'v'}, '<leader>dh', function() widgets.hover() end)
-      map({'n', 'v'}, '<leader>dp', function() widgets.preview() end)
+      map({ 'n', 'v' }, '<leader>dh', function() widgets.hover() end)
+      map({ 'n', 'v' }, '<leader>dp', function() widgets.preview() end)
       map('n', '<leader>ds', function() widgets.centered_float(widgets.scopes) end)
 
       vim.api.nvim_set_hl(0, 'DapBreakpoint', { ctermbg = 0, fg = '#993939', bg = '' })
       vim.api.nvim_set_hl(0, 'DapLogPoint', { ctermbg = 0, fg = '#61afef', bg = '' })
       vim.api.nvim_set_hl(0, 'DapStopped', { ctermbg = 0, fg = '#98c379', bg = '' })
 
-      vim.fn.sign_define('DapBreakpoint', { text='', texthl='DapBreakpoint', linehl='', numhl='' })
-      vim.fn.sign_define('DapBreakpointCondition', { text='ﳁ', texthl='DapBreakpoint', linehl='', numhl='' })
-      vim.fn.sign_define('DapBreakpointRejected', { text='', texthl='DapBreakpoint', linehl='', numhl= '' })
-      vim.fn.sign_define('DapLogPoint', { text='', texthl='DapLogPoint', linehl='', numhl= '' })
-      vim.fn.sign_define('DapStopped', { text='', texthl='DapStopped', linehl='debugPC', numhl= '' })
+      vim.fn.sign_define('DapBreakpoint', { text = '', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
+      vim.fn.sign_define('DapBreakpointCondition', { text = 'ﳁ', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
+      vim.fn.sign_define('DapBreakpointRejected', { text = '', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
+      vim.fn.sign_define('DapLogPoint', { text = '', texthl = 'DapLogPoint', linehl = '', numhl = '' })
+      vim.fn.sign_define('DapStopped', { text = '', texthl = 'DapStopped', linehl = 'debugPC', numhl = '' })
     end,
+  },
+  {
+    'mxsdev/nvim-dap-vscode-js',
+    opts = {
+      debugger_path = vim.fn.stdpath('data') .. '/mason/packages/js-debug-adapter',
+      adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
+    },
+    dependencies = { 'mfussenegger/nvim-dap' },
   },
   {
     'rcarriga/nvim-dap-ui',
@@ -63,11 +127,19 @@ return {
 
       dapui.setup(opts)
 
-      dap.listeners.before.attach.dapui_config = function() dapui.open() end
-      dap.listeners.before.launch.dapui_config = function() dapui.open() end
-      dap.listeners.before.disconnect.dapui_config = function() dapui.close() end
-      dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
-      dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
+      local open = function()
+        dapui.open()
+      end
+
+      local close = function()
+        dapui.close()
+      end
+
+      dap.listeners.before.attach.dapui_config = open
+      dap.listeners.before.launch.dapui_config = open
+      dap.listeners.before.disconnect.dapui_config = close
+      dap.listeners.before.event_terminated.dapui_config = close
+      dap.listeners.before.event_exited.dapui_config = close
     end,
     dependencies = {
       'mfussenegger/nvim-dap',
