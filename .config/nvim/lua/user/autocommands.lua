@@ -1,12 +1,11 @@
-local augroup = vim.api.nvim_create_augroup
-local autocmd = vim.api.nvim_create_autocmd
+local util = require('user.util')
 
-local default = augroup('user_default', { clear = true })
+local default = vim.api.nvim_create_augroup('user_default', { clear = true })
 
 -- File Formats
-local file_formats = augroup('user_file_formats', { clear = true })
+local file_formats = vim.api.nvim_create_augroup('user_file_formats', { clear = true })
 
-autocmd({ 'BufNewFile', 'BufRead' }, {
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
   group = file_formats,
   pattern = '*.qf',
   callback = function()
@@ -14,7 +13,7 @@ autocmd({ 'BufNewFile', 'BufRead' }, {
   end,
 })
 
-autocmd({ 'BufNewFile', 'BufRead' }, {
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
   group = file_formats,
   pattern = '*.nvim',
   callback = function()
@@ -24,7 +23,7 @@ autocmd({ 'BufNewFile', 'BufRead' }, {
 })
 
 -- Turn off spellchecking in Terminal Windows
-autocmd({ 'TermOpen' }, {
+vim.api.nvim_create_autocmd({ 'TermOpen' }, {
   group = default,
   pattern = '*',
   callback = function()
@@ -32,7 +31,7 @@ autocmd({ 'TermOpen' }, {
   end,
 })
 
-autocmd({ 'TextYankPost' }, {
+vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
   desc = 'Highlight when yanking text',
   group = default,
   callback = function()
@@ -40,11 +39,17 @@ autocmd({ 'TextYankPost' }, {
   end,
 })
 
-autocmd({ 'FileType' }, {
+vim.api.nvim_create_autocmd({ 'FileType' }, {
   desc = 'Force commentstring to include spaces',
   group = default,
   callback = function(event)
     local cs = vim.bo[event.buf].commentstring
     vim.bo[event.buf].commentstring = cs:gsub('(%S)%%s', '%1 %%s'):gsub('%%s(%S)', '%%s %1')
   end,
+})
+
+vim.api.nvim_create_autocmd({ 'VimEnter' }, {
+  desc = 'Clean up old files',
+  group = default,
+  callback = util.clean_old_files,
 })

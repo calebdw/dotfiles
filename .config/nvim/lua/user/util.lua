@@ -85,4 +85,18 @@ function M.map(modes, lhs, rhs, opts)
   ))
 end
 
+function M.clean_old_files()
+  local days = 30
+
+  vim.uv.spawn('find', {
+    cwd = vim.fn.stdpath('state'),
+    args = { 'undo', 'swap', 'backup', '-type', 'f', '-mtime', '+' .. days, '-delete' },
+  }, function(code, _)
+    if code == 0 then
+      return
+    end
+    vim.notify("Failed to clean up old files. Exit code: " .. code, vim.log.levels.ERROR)
+  end)
+end
+
 return M
