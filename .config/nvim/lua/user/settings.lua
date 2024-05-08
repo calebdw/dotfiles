@@ -20,7 +20,7 @@ opt.formatoptions = 'qnj1'
 opt.breakindent = true -- indent when breaking lines
 
 -- Backup files --
-opt.backup = true
+opt.backup = false
 opt.writebackup = false -- do not write/delete backup upon successful save
 opt.swapfile = true
 opt.undofile = true
