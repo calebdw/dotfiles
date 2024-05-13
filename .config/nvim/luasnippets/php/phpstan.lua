@@ -14,17 +14,10 @@ return {
     )
   ),
   s(
-    { trig = 'stan-ignore-next', dscr = 'phpstan ignore next line' },
+    { trig = 'stan-ignore', dscr = 'phpstan ignore' },
     fmta(
-      [[/** @phpstan-ignore-next-line */<>]],
-      { i(0) }
-    )
-  ),
-  s(
-    { trig = 'stan-ignore', dscr = 'phpstan ignore line' },
-    fmta(
-      [[/** @phpstan-ignore-line */<>]],
-      { i(0) }
+      [[/** @phpstan-ignore <> */]],
+      { i(1) }
     )
   ),
   s(
