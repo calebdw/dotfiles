@@ -135,6 +135,8 @@ return {
         dapui.close()
       end
 
+      map('n', '<leader>dt', function() dapui.toggle() end)
+
       dap.listeners.before.attach.dapui_config = open
       dap.listeners.before.launch.dapui_config = open
       dap.listeners.before.disconnect.dapui_config = close
