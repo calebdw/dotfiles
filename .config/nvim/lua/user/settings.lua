@@ -88,19 +88,19 @@ opt.errorformat:append("%f|%l col %c|%m")
 opt.errorformat:append('%-G%.%#') -- ignores all other unmatched lines
 
 -- Folding --
-vim.opt.foldmethod     = 'expr'
-vim.opt.foldexpr       = 'v:lua.vim.treesitter.foldexpr()'
-opt.foldenable = false -- zi toggles
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr   = 'v:lua.vim.treesitter.foldexpr()'
+opt.foldenable     = false -- zi toggles
 -- opt.foldlevel = 99
 
 -- Sign Column
-opt.signcolumn = 'yes:2'
+opt.signcolumn     = 'yes:2'
 
 -- Decrease update time
 vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300 -- time for a mapped sequence to complete
 
-opt.showmode = false     -- already shown in statusline
+opt.showmode       = false -- already shown in statusline
 
 -- Diagnostic config
 vim.diagnostic.config({
@@ -112,11 +112,15 @@ vim.diagnostic.config({
   },
 })
 
-vim.fn.sign_define({
-  { name = 'DiagnosticSignError', text = '', texthl = 'DiagnosticSignError' },
-  { name = 'DiagnosticSignWarn', text = '', texthl = 'DiagnosticSignWarn' },
-  { name = 'DiagnosticSignInfo', text = '', texthl = 'DiagnosticSignInfo' },
-  { name = 'DiagnosticSignHint', text = '', texthl = 'DiagnosticSignHint' },
+vim.diagnostic.config({
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+      [vim.diagnostic.severity.HINT] = " ",
+    },
+  },
 })
 
 -- Filetypes --
