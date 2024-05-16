@@ -169,6 +169,9 @@ return {
         -- https://github.com/neovim/nvim-lspconfig/wiki/User-contributed-tips#use-nvim-notify-to-display-lsp-messages
         ['window/showMessage'] = function(_, result, ctx)
           local client = vim.lsp.get_client_by_id(ctx.client_id)
+          if client == nil then
+            return
+          end
           local lvl = ({ 'ERROR', 'WARN', 'INFO', 'DEBUG' })[result.type]
           vim.notify(result.message, lvl, {
             title = 'LSP | ' .. client.name,
