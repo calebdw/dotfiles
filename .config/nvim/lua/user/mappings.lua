@@ -71,8 +71,6 @@ map('t', '<C-l>', ':wincmd l<cr>')
 
 -- Diagnostics
 map('n', '<leader>d', vim.diagnostic.open_float)
-map('n', '[d', vim.diagnostic.goto_prev)
-map('n', ']d', vim.diagnostic.goto_next)
 map('n', '<leader>qd', vim.diagnostic.setloclist)
 
 -- Laravel Pint --
