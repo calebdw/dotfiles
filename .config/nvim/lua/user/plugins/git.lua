@@ -14,7 +14,7 @@ return {
       map('n', '<leader>Gd', ':Git diff<cr>')
       map('n', '<leader>GC', ':Git commit --amend --no-edit<cr>')
       map('n', '<leader>Gf', ':Git fetch -p<cr>')
-      map('n', '<leader>Gl', ':Git log<cr>')
+      map('n', '<leader>Gl', ':Git log --max-count 20<cr>')
       map('n', '<leader>GL', ':Git reflog<cr>')
       map('n', '<leader>Gp', ':Git pull<cr>')
       map('n', '<leader>GP', ':Git push<cr>')
