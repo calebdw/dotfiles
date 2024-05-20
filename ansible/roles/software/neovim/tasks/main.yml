@@ -20,6 +20,10 @@
       args:
         chdir: '{{ dir_sources }}/neovim'
 
+    - name: 'Remove existing neovim runtime files'
+      become: true
+      shell: 'rm -rf $(nvim --headless --clean -n -c "echo \$VIM | q")'
+
     - name: 'Install neovim'
       become: true
       command: 'make install'
