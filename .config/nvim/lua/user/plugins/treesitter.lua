@@ -87,12 +87,12 @@ return {
 
     -- parser_config.php_only = {
     --   install_info = {
-    --     url = '~/sources/treesitter/tree-sitter-php/tree-sitter-php-only',
+    --     url = '~/sources/treesitter/tree-sitter-php/php_only',
     --     files = {
     --       'src/parser.c',
     --       'src/scanner.c',
     --     },
-    --     branch = "split_parsers",
+    --     branch = "master",
     --     generate_requires_npm = false,
     --     requires_generate_from_grammar = false,
     --   },
