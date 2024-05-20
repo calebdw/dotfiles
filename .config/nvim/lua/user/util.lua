@@ -1,11 +1,11 @@
 local M = {}
 
 --- Get relative path to file
--- @param file (string, default='%') The file to get the relative path for
+---
+--- @param file string|nil The file to get the relative path for (default='%')
+--- @return nil
 function M.relative_path(file)
-  if (file == nil) then
-    file = '%'
-  end
+  file = file or '%'
 
   return vim.fn.fnamemodify(
     vim.fn.expand(file),
@@ -19,10 +19,10 @@ function M.float(opts)
 
   local buf = api.nvim_create_buf(false, true)
 
-  api.nvim_buf_set_option(buf, 'bufhidden', 'wipe')
+  api.nvim_set_option_value(buf, 'bufhidden', 'wipe')
 
-  local width = api.nvim_get_option('columns')
-  local height = api.nvim_get_option('lines')
+  local width = api.nvim_get_option_value('columns')
+  local height = api.nvim_get_option_value('lines')
 
   local win_height = math.ceil(height * 0.8 - 4)
   local win_width = math.ceil(width * 0.8)
@@ -59,6 +59,8 @@ end
 ---
 --- Necessary for visual range to be updated before executing
 --- visual keymaps
+---
+--- @return nil
 function M.escape()
   vim.cmd.normal('�')
 end
@@ -85,11 +87,19 @@ function M.map(modes, lhs, rhs, opts)
   ))
 end
 
+--- Cleans up old files in the state directory
+---
+--- @return nil
 function M.clean_old_files()
   local days = 30
+  local cwd = vim.fn.stdpath('state')
+
+  if type(cwd) == 'table' then
+    cwd = cwd[1]
+  end
 
   vim.uv.spawn('find', {
-    cwd = vim.fn.stdpath('state'),
+    cwd = cwd,
     args = { 'undo', 'swap', 'backup', '-type', 'f', '-mtime', '+' .. days, '-delete' },
   }, function(code, _)
     if code == 0 then
