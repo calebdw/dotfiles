@@ -4,7 +4,6 @@ local g = vim.g
 -- Faster loading for providers
 g.node_host_prog = '/usr/bin/neovim-node-host'
 g.python3_host_prog = '/usr/bin/python3'
-g.ruby_host_prog = '/usr/bin/ruby'
 
 -- Override leader
 g.mapleader = ' '

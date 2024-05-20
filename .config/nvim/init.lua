@@ -8,8 +8,8 @@ for _, name in pairs(disabled_builtins) do
   vim.g['loaded_' .. name] = 1
 end
 
--- disable perl provider
 vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
 
 -- Load modules
 require('user')

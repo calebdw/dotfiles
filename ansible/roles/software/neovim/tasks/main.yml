@@ -41,16 +41,3 @@
     name: neovim
     global: true
     state: latest
-
-- name: 'Install Ruby neovim module'
-  become: true
-  community.general.gem:
-    name: 'neovim'
-    state: latest
-    norc: false
-
-# Would not run
-# - name: 'Install Perl neovim module'
-#   become: true
-#   cpanm:
-#     name: 'Neovim::Ext'
