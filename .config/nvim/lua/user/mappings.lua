@@ -82,7 +82,6 @@ map('n', '<leader>pi', function()
   local fileName = util.relative_path('%')
 
   vim.api.nvim_command(
-    'Dispatch! vendor/bin/sail pint '
-    .. fileName
+    'Dispatch! ' .. util.sail_or_bin('pint', true) .. ' ' .. fileName
   )
 end)
