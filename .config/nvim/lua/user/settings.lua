@@ -101,17 +101,12 @@ vim.opt.timeoutlen = 300 -- time for a mapped sequence to complete
 
 opt.showmode       = false -- already shown in statusline
 
--- Diagnostic config
 vim.diagnostic.config({
-  severity_sort = true,
-  virtual_text = false,
   float = {
-    source = 'always',
+    source = true,
     border = 'rounded',
   },
-})
-
-vim.diagnostic.config({
+  severity_sort = true,
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = " ",
@@ -120,6 +115,7 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.HINT] = " ",
     },
   },
+  virtual_text = false,
 })
 
 -- Filetypes --
