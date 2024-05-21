@@ -109,10 +109,6 @@ return {
     },
     dependencies = { 'williamboman/mason.nvim' },
   },
-  { -- auto format on save
-    'lukas-reineke/lsp-format.nvim',
-    config = true,
-  },
   { -- common configs for built-in LSP client
     'neovim/nvim-lspconfig',
     config = function()
@@ -160,9 +156,6 @@ return {
             -- timeout_ms = 2000,
           })
         end, opts)
-
-        -- Enables Format on Save
-        -- require('lsp-format').on_attach(client)
       end
 
       local handlers = {
@@ -340,7 +333,6 @@ return {
       'b0o/schemastore.nvim', -- json schemas
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig',
-      'lukas-reineke/lsp-format.nvim',
       'hrsh7th/cmp-nvim-lsp',
     },
   },
