@@ -1,71 +1,56 @@
-local map = require('user.util').map
-
 return {
-  -- Neotest is not working right now so reverting back to vim-test
-  ---@todo: remove once neotest is working
-  {
-    'vim-test/vim-test',
-    config = function()
-      vim.g['test#custom_strategies'] = {
-        toggleterm = function(cmd)
-          require('toggleterm').exec(cmd)
-        end,
-      }
-      vim.g['test#strategy'] = 'toggleterm'
-      vim.g['test#php#pest#executable'] = './vendor/bin/sail test'
-
-      map('n', '<leader>pt', function()
-        vim.cmd.write()
-        vim.cmd('TestNearest')
-      end)
-      map('n', '<leader>pf', function()
-        vim.cmd.write()
-        vim.cmd('TestFile')
-      end)
-    end,
-  },
   {
     'nvim-neotest/neotest',
-    enabled = false,
-    dependencies = {
-      'vim-test/vim-test',
-      'nvim-lua/plenary.nvim',
-      'nvim-treesitter/nvim-treesitter',
-      -- 'olimorris/neotest-phpunit',
-      'theutz/neotest-pest',
-      'nvim-neotest/neotest-plenary',
-      'antoinemadec/FixCursorHold.nvim',
+    keys = {
+      { '<leader>rt', function() require('neotest').run.run() end, desc = 'Run test' },
+      { '<leader>rd', function() require('neotest').run.run({ strategy = 'dap' }) end, desc = 'Run test with dap' },
+      { '<leader>ra', function() require('neotest').run.attach() end, desc = 'Attach to test' },
+      { '<leader>rs', function() require('neotest').run.stop() end, desc = 'Stop test' },
+      { '<leader>rf', function() require('neotest').run.run(vim.fn.expand('%')) end, desc = 'Run test file' },
+      { '<leader>rS', function() require('neotest').run.run({ suite = true }) end, desc = 'Run test suite' },
+      { '<leader>ro', function() require('neotest').output() end, desc = 'Open test output' },
+      { '<leader>pt', ':w<cr>:TestFile<cr>', desc = 'Run test file (vim-test)' },
     },
     opts = function()
       return {
         discovery = {
-            enabled = false,
+          enabled = false,
         },
         adapters = {
-            -- require('neotest-phpunit'),
-            require('neotest-pest'),
-            -- require('neotest-pest')({
-            --     pest_cmd = function()
-            --         return 'vendor/bin/sail bin pest'
-            --     end,
-            -- }),
-            require('neotest-plenary'),
+          -- require('neotest-phpunit')({
+          --   phpunit_cmd = function() return util.sail('phpunit') end,
+          -- }),
+          require('neotest-pest')({
+            sail_project_path = '/var/www',
+          }),
+          require('neotest-plenary'),
+          require('neotest-vitest'),
+          -- this caused neotest to fail
+          -- require('neotest-playwright'),
+          require('neotest-vim-test')({
+            allow_file_types = { 'php' },
+          }),
         },
-        log_level = 1,
+        -- log_level = vim.log.levels.INFO,
       }
     end,
-    config = function(_, opts)
-      local neotest = require('neotest')
-
-      neotest.setup(opts)
-
-      map('n', '<leader>pt', neotest.run.run)
-      map('n', '<leader>pa', neotest.run.attach)
-      map('n', '<leader>ps', neotest.run.stop)
-      map('n', '<leader>pf', function()
-        neotest.run.run(vim.fn.expand('%'))
-      end)
-      map('n', '<leader>pS', function() neotest.run.run({ suite = true }) end)
+    init = function()
+      vim.g['test#strategy'] = 'toggleterm'
+      vim.g['test#php#pest#executable'] = './vendor/bin/sail test'
     end,
+    dependencies = {
+      -- deps
+      'nvim-neotest/nvim-nio',
+      'nvim-lua/plenary.nvim',
+      'antoinemadec/FixCursorHold.nvim',
+      -- Adapters
+      'vim-test/vim-test',
+      'nvim-neotest/neotest-vim-test',
+      'olimorris/neotest-phpunit',
+      'thenbe/neotest-playwright',
+      'V13Axel/neotest-pest',
+      'marilari88/neotest-vitest',
+      'nvim-neotest/neotest-plenary',
+    },
   },
 }
