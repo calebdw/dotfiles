@@ -73,7 +73,15 @@ return {
   -- Dim Inactive Codeblocks --
   { 'folke/twilight.nvim',   config = true },
   -- Zen Mode --
-  { 'folke/zen-mode.nvim',   config = true },
+  {
+    'folke/zen-mode.nvim',
+    cmd = 'ZenMode',
+    opts = {
+      wezterm = {
+        enabled = true,
+      },
+    },
+  },
   {
     'folke/tokyonight.nvim',
     lazy = false,
