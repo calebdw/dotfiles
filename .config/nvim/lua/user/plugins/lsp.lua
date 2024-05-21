@@ -35,19 +35,20 @@ local servers = {
   -- 'vuels', -- Vue
   -- 'zeta_note', -- Markdown
   -- 'zk', -- Markdown
-  'yamlls' -- YAML
+  'yamlls', -- YAML
 }
 
 return {
   {
-    "sourcegraph/sg.nvim",
+    'sourcegraph/sg.nvim',
+    enabled = false,
     opts = {
       enable_cody = true,
       accept_tos = true,
     },
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
     },
   },
   {
@@ -58,8 +59,8 @@ return {
         icons = {
           package_installed = '✓',
           package_pending = '➜',
-          package_uninstalled = '✗'
-        }
+          package_uninstalled = '✗',
+        },
       },
     },
   },
@@ -78,7 +79,7 @@ return {
       start_delay = 500,
       ensure_installed = {
         -- LSP Servers --
-        { 'phpactor', version = 'master' },
+        { 'phpactor',         version = 'master' },
         'tailwindcss-language-server',
 
         -- DAP Servers --
@@ -104,7 +105,7 @@ return {
         'luaformatter',
         'prettier',
         'prettierd',
-        'sql-formatter'
+        'sql-formatter',
       },
     },
     dependencies = { 'williamboman/mason.nvim' },
@@ -117,8 +118,8 @@ return {
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
       local runtime_path = vim.split(package.path, ';')
-      table.insert(runtime_path, "lua/?.lua")
-      table.insert(runtime_path, "lua/?/init.lua")
+      table.insert(runtime_path, 'lua/?.lua')
+      table.insert(runtime_path, 'lua/?/init.lua')
 
       local on_attach = function(client, bufnr)
         -- Enable completion triggered by <c-x><c-o> DO NOT USE with nvim-cmp
@@ -141,20 +142,6 @@ return {
         map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
         map('n', '<leader>wl', function()
           vim.print(vim.lsp.buf.list_workspace_folders())
-        end, opts)
-        map('n', '<leader>f', function()
-          vim.lsp.buf.format({
-            async = true,
-            -- name = 'null-ls',
-            -- timeout_ms = 2000,
-          })
-        end, opts)
-        map('v', '<leader>f', function()
-          vim.lsp.buf.range_formatting({
-            async = true,
-            -- name = 'null-ls',
-            -- timeout_ms = 2000,
-          })
         end, opts)
       end
 
@@ -194,7 +181,9 @@ return {
         }
         if name == 'antlersls' then
           opts.filetypes = {
-            'antlers.html', 'antlers', 'html',
+            'antlers.html',
+            'antlers',
+            'html',
           }
         end
 
@@ -213,13 +202,24 @@ return {
 
         if name == 'emmet_ls' then
           opts.filetypes = {
-            'antlers.html', 'antlers', 'blade.html.php', 'blade', 'html', 'css', 'sass', 'scss',
+            'antlers.html',
+            'antlers',
+            'blade.html.php',
+            'blade',
+            'html',
+            'css',
+            'sass',
+            'scss',
           }
         end
 
         if name == 'html' then
           opts.filetypes = {
-            'antlers.html', 'antlers', 'blade.html.php', 'blade', 'html',
+            'antlers.html',
+            'antlers',
+            'blade.html.php',
+            'blade',
+            'html',
           }
         end
 
@@ -251,8 +251,8 @@ return {
               checkOnType = false,
               diagnostics = true,
               inlayHints = true,
-              smartCompletion = true
-            }
+              smartCompletion = true,
+            },
           }
         end
 
@@ -262,8 +262,18 @@ return {
               diagnostics = {
                 globals = {
                   -- luasnip globals
-                  'ls', 's', 'sn', 'isn', 'c', 'i', 'd', 't',
-                  'f', 'r', 'fmt', 'fmta',
+                  'ls',
+                  's',
+                  'sn',
+                  'isn',
+                  'c',
+                  'i',
+                  'd',
+                  't',
+                  'f',
+                  'r',
+                  'fmt',
+                  'fmta',
                 },
               },
               runtime = { version = 'LuaJIT', path = runtime_path },
@@ -275,13 +285,21 @@ return {
                 },
                 checkThirdParty = false,
               },
-            }
+            },
           }
         end
 
         if name == 'tailwindcss' then
           opts.filetypes = {
-            'antlers.html', 'antlers', 'blade.html.php', 'blade', 'html', 'css', 'sass', 'scss', 'vue'
+            'antlers.html',
+            'antlers',
+            'blade.html.php',
+            'blade',
+            'html',
+            'css',
+            'sass',
+            'scss',
+            'vue',
           }
           opts.settings = {
             tailwindCSS = {
@@ -304,7 +322,10 @@ return {
 
         if name == 'volar' then
           opts.filetypes = {
-            'typescript', 'javascript', 'vue', 'json'
+            'typescript',
+            'javascript',
+            'vue',
+            'json',
           }
         end
 

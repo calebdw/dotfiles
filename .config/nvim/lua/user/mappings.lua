@@ -57,10 +57,10 @@ map({ 'n', 'v' }, '<leader>qc', ':call setqflist([])<cr>')
 map({ 'n', 'x' }, 'ga', '<Plug>(EasyAlign)')
 
 -- Ansible Playbooks --
-map('n', '<leader>ap', ":Start ansible-playbook % -kK<cr>")
+map('n', '<leader>ap', ':Start ansible-playbook % -kK<cr>')
 
 -- Buffer Delete --
-map({ 'n', 'v' }, '<leader>q', ":Bdelete<cr>")
+map({ 'n', 'v' }, '<leader>q', ':Bdelete<cr>')
 
 -- Terminal
 map('t', '<esc><esc>', '<C-\\><C-n>')
@@ -72,14 +72,3 @@ map('t', '<C-l>', ':wincmd l<cr>')
 -- Diagnostics
 map('n', '<leader>d', vim.diagnostic.open_float)
 map('n', '<leader>qd', vim.diagnostic.setloclist)
-
--- Laravel Pint --
-map('n', '<leader>pi', function()
-  vim.cmd.write()
-
-  local fileName = util.relative_path('%')
-
-  vim.api.nvim_command(
-    'Dispatch! ' .. util.sail_or_bin('pint', true) .. ' ' .. fileName
-  )
-end)

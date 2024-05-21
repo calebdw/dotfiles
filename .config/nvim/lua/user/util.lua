@@ -7,10 +7,7 @@ local M = {}
 function M.relative_path(file)
   file = file or '%'
 
-  return vim.fn.fnamemodify(
-    vim.fn.expand(file),
-    ':p:~:.'
-  )
+  return vim.fn.fnamemodify(vim.fn.expand(file), ':p:~:.')
 end
 
 --- Create a floating window
@@ -30,7 +27,7 @@ function M.float(opts)
   local row = math.ceil((height - win_height) / 2 - 1)
   local col = math.ceil((width - win_width) / 2)
 
-  if (opts == nil) then
+  if opts == nil then
     opts = {
       style = 'minimal',
       relative = 'editor',
@@ -80,11 +77,7 @@ function M.map(modes, lhs, rhs, opts)
     expr = false,
     -- unique = true,
   }
-  vim.keymap.set(modes, lhs, rhs, vim.tbl_extend(
-    'force',
-    defaults,
-    opts or {}
-  ))
+  vim.keymap.set(modes, lhs, rhs, vim.tbl_extend('force', defaults, opts or {}))
 end
 
 --- Cleans up old files in the state directory
@@ -105,7 +98,7 @@ function M.clean_old_files()
     if code == 0 then
       return
     end
-    vim.notify("Failed to clean up old files. Exit code: " .. code, vim.log.levels.ERROR)
+    vim.notify('Failed to clean up old files. Exit code: ' .. code, vim.log.levels.ERROR)
   end)
 end
 
@@ -118,7 +111,7 @@ function M.sail_or_bin(cmd, as_string)
   local sail = './vendor/bin/sail'
 
   if vim.fn.executable(sail) == 1 then
-    local result = {sail, 'bin', cmd}
+    local result = { sail, 'bin', cmd }
     if as_string then
       return table.concat(result, ' ')
     end

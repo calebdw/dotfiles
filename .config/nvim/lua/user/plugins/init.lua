@@ -1,5 +1,3 @@
-local map = require('user.util').map
-
 -- List of many Neovim plugins:
 -- https://github.com/rockerBOO/awesome-neovim
 
@@ -44,9 +42,20 @@ return { -- General
   },
   {
     'voldikss/vim-browser-search',
+    keys = {
+      {
+        '<leader>s',
+        '<Plug>SearchNormal',
+        desc = 'Normal Web [S]earch',
+      },
+      {
+        '<leader>s',
+        '<Plug>SearchVisual',
+        mode = 'v',
+        desc = 'Visual Web [S]earch',
+      },
+    },
     init = function()
-      map('n', '<leader>s', '<Plug>SearchNormal', {desc = 'Normal Web [S]earch'})
-      map('v', '<leader>s', '<Plug>SearchVisual', {desc = 'Visual Web [S]earch'})
       vim.g.browser_search_engines = {
         brave = 'https://search.brave.com/search?q=%s',
       }
@@ -58,21 +67,17 @@ return { -- General
   -- 'whatyouhide/vim-textobj-xmlattr'
   --     dependencies = 'kana/vim-textobj-user'
 
-
   -- FZF
   -- 'ibhagwan/fzf-lua',
-
 
   -- LaTeX --
   {
     'lervag/vimtex',
-    enabled = false
+    enabled = false,
   },
-
 
   -- Annotation Toolkit --
   -- use 'danymat/neogen'
-
 
   -- Remote Development --
   -- @todo - Setup
@@ -81,7 +86,6 @@ return { -- General
     -- Dev inside Docker containers
     'jamestthompson3/nvim-remote-containers',
   },
-
 
   {
     'neomake/neomake',
@@ -103,9 +107,8 @@ return { -- General
   --   end
   -- },
 
-
   -- Games --
-  { 'alec-gibson/nvim-tetris',    cmd = 'Tetris' },
-  { 'seandewar/nvimesweeper',     cmd = 'Nvimesweeper' },
+  { 'alec-gibson/nvim-tetris', cmd = 'Tetris' },
+  { 'seandewar/nvimesweeper', cmd = 'Nvimesweeper' },
   { 'seandewar/killersheep.nvim', cmd = 'KillKillKill' },
 }
