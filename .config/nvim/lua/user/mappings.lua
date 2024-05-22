@@ -59,9 +59,6 @@ map({ 'n', 'x' }, 'ga', '<Plug>(EasyAlign)')
 -- Ansible Playbooks --
 map('n', '<leader>ap', ':Start ansible-playbook % -kK<cr>')
 
--- Buffer Delete --
-map({ 'n', 'v' }, '<leader>q', ':Bdelete<cr>')
-
 -- Terminal
 map('t', '<esc><esc>', '<C-\\><C-n>')
 map('t', '<C-h>', ':wincmd h<cr>')
@@ -76,4 +73,3 @@ map('n', '<leader>qd', vim.diagnostic.setloclist)
 map('n', '<leader>gg', function()
   vim.ui.open('https://github.com/' .. vim.fn.expand('<cfile>'))
 end, { desc = 'Open GitHub repo' })
-

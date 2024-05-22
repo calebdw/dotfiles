@@ -29,12 +29,18 @@ return { -- General
   'nelstrom/vim-visual-star-search', -- use * to search visual text
   'jessarcher/vim-heritage', -- auto create non-existant dirs
   'sickill/vim-pasta', -- auto indent when pasting (may need to exclude fugitive)
-  'famiu/bufdelete.nvim', -- delete buffers without closing window
+  {
+    'famiu/bufdelete.nvim', -- delete buffers without closing window
+    cmd = { 'Bdelete', 'Bwipeout' },
+    keys = {
+      { '<leader>bd', function() require('bufdelete').bufdelete(0, true) end, desc = 'Delete buffer' },
+    },
+  },
   { -- Switch between single and multi line statements --
     -- update to neovim --
     -- 'Wansmer/treesj'
     'andrewradev/splitjoin.vim',
-    config = function()
+    init = function()
       vim.g.splitjoin_html_attributes_brackets_on_new_line = 1
       vim.g.splitjoin_trailing_comma = 1
       vim.g.splitjoin_php_method_chain_full = 1

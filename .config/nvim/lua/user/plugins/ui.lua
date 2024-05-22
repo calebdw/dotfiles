@@ -1,5 +1,11 @@
 return {
-  'szw/vim-maximizer', -- zoom
+  {
+    'szw/vim-maximizer',
+    cmd = 'MaximizerToggle',
+    keys = {
+      { '<F3>', mode = { 'n', 'i', 'v' } },
+    },
+  },
   'nvim-tree/nvim-web-devicons',
   {
     'yamatsum/nvim-nonicons',
@@ -88,9 +94,9 @@ return {
     priority = 1000,
     opts = {
       hide_inactive_statusline = true,
-      on_highlights = function(highlights, colors)
-        -- highlights['@variable'].fg = '#ffb777'
-      end,
+      -- on_highlights = function(highlights, colors)
+      --   highlights['@variable'].fg = '#ffb777'
+      -- end,
       sidebars = {
         'help',
         'packer',
@@ -149,6 +155,7 @@ return {
   },
   {
     'ziontee113/icon-picker.nvim',
+    cmd = { 'IconPickerNormal', 'IconPickerInsert', 'IconPickerYank' },
     opts = {},
   },
 }
