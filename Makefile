@@ -10,6 +10,7 @@ dots:
 	ln -sf $(PWD)/.bashrc ~/
 	ln -sf $(PWD)/.editorconfig ~/
 	ln -sf $(PWD)/.latexmkrc ~/
+	ln -sf $(PWD)/.pg_format ~/
 	ln -sf $(PWD)/.tmux.conf ~/
 	ln -sf $(PWD)/.vimrc ~/
 	ln -sf $(PWD)/gitconfig ~/.gitconfig
