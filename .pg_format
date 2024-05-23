@@ -30,6 +30,9 @@ type-case=1
 # Values: 0=>unchanged, 1=>lowercase, 2=>uppercase, 3=>capitalize.
 function-case=2
 
+# Preserve empty line in plpgsql code.
+keep-newline=1
+
 # Do not add an extra empty line at end of the output.
 no-extra-line=1
 
