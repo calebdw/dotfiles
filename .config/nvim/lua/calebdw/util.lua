@@ -80,28 +80,6 @@ function M.map(modes, lhs, rhs, opts)
   vim.keymap.set(modes, lhs, rhs, vim.tbl_extend('force', defaults, opts or {}))
 end
 
---- Cleans up old files in the state directory
----
---- @return nil
-function M.clean_old_files()
-  local days = 30
-  local cwd = vim.fn.stdpath('state')
-
-  if type(cwd) == 'table' then
-    cwd = cwd[1]
-  end
-
-  vim.uv.spawn('find', {
-    cwd = cwd,
-    args = { 'undo', 'swap', 'backup', '-type', 'f', '-mtime', '+' .. days, '-delete' },
-  }, function(code, _)
-    if code == 0 then
-      return
-    end
-    vim.notify('Failed to clean up old files. Exit code: ' .. code, vim.log.levels.ERROR)
-  end)
-end
-
 --- This proxies a command through `sail` if it is installed.
 ---
 --- @param cmd string

@@ -1,5 +1,3 @@
-local util = require('calebdw.util')
-
 local default = vim.api.nvim_create_augroup('user_default', { clear = true })
 
 -- File Formats
@@ -49,7 +47,23 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
 })
 
 vim.api.nvim_create_autocmd({ 'VimEnter' }, {
-  desc = 'Clean up old files',
+  desc = 'Clean up old files in the state directory.',
   group = default,
-  callback = util.clean_old_files,
+  callback = function()
+    local days = 30
+    local cwd = vim.fn.stdpath('state')
+
+    if type(cwd) == 'table' then
+      cwd = cwd[1]
+    end
+
+    ---@diagnostic disable-next-line: missing-fields
+    vim.uv.spawn('find', {
+      cwd = cwd,
+      args = { 'undo', 'swap', 'backup', '-type', 'f', '-mtime', '+' .. days, '-delete' },
+    }, function(code, _)
+      if code ~= 0 then return end
+      vim.notify('Failed to clean up old files. Exit code: ' .. code, vim.log.levels.ERROR)
+    end)
+  end,
 })
