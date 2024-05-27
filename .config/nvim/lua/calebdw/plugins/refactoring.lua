@@ -38,7 +38,7 @@ return {
     {
       '<leader>rr',
       function()
-        require('user.util').escape()
+        require('calebdw.util').escape()
         require('refactoring').select_refactor()
       end,
       mode = 'x',

@@ -1,4 +1,4 @@
-local map = require('user.util').map
+local map = require('calebdw.util').map
 
 -- Default servers to install
 local servers = {

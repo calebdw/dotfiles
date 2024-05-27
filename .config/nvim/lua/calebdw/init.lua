@@ -1,6 +1,6 @@
-require('user.autocommands')
-require('user.settings')
-require('user.mappings')
+require('calebdw.autocommands')
+require('calebdw.options')
+require('calebdw.keymaps')
 
 -- Bootstrap Lazy
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
@@ -10,7 +10,7 @@ if not vim.uv.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup('user.plugins', {
+require('lazy').setup('calebdw.plugins', {
   performance = {
     rtp = {
       disabled_plugins = {

@@ -59,7 +59,7 @@ return {
     local telescope = require('telescope')
     local builtin = require('telescope.builtin')
     local extensions = telescope.extensions
-    local map = require('user.util').map
+    local map = require('calebdw.util').map
 
     telescope.setup(opts)
 

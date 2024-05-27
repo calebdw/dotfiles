@@ -1,5 +1,4 @@
-local util = require('user.util')
-local map = util.map
+local map = require('calebdw.util').map
 
 -- Disable highlight after search with ESC
 map('n', '<esc>', ':noh<cr>')

@@ -1,4 +1,4 @@
-local util = require('user.util')
+local util = require('calebdw.util')
 
 local default = vim.api.nvim_create_augroup('user_default', { clear = true })
 

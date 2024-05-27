@@ -2,7 +2,7 @@ return {
   'nvim-tree/nvim-tree.lua',
   opts = function()
     local api = require('nvim-tree.api')
-    local map = require('user.util').map
+    local map = require('calebdw.util').map
 
     map('n', '<leader>nt', api.tree.toggle)
     map('n', '<leader>nr', api.tree.reload)

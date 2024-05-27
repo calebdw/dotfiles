@@ -10,7 +10,7 @@ return {
   },
   config = function(_, opts)
     local ls = require('luasnip')
-    local map = require('user.util').map
+    local map = require('calebdw.util').map
 
     ls.setup(opts)
 
