@@ -57,13 +57,30 @@ vim.api.nvim_create_autocmd({ 'VimEnter' }, {
       cwd = cwd[1]
     end
 
+    local function notify_error(msg)
+      vim.schedule(function()
+        vim.notify(msg, vim.log.levels.ERROR)
+      end)
+    end
+
+    local stderr = vim.uv.new_pipe()
+    local stderr_data = ''
+    assert(stderr, 'Failed to create stderr pipe')
+
     ---@diagnostic disable-next-line: missing-fields
     vim.uv.spawn('find', {
       cwd = cwd,
       args = { 'undo', 'swap', 'backup', '-type', 'f', '-mtime', '+' .. days, '-delete' },
+      stdio = { nil, nil, stderr },
     }, function(code, _)
-      if code ~= 0 then return end
-      vim.notify('Failed to clean up old files. Exit code: ' .. code, vim.log.levels.ERROR)
+      if code == 0 then return end
+      notify_error('Failed to clean up old files in the state directory: ' .. stderr_data)
+    end)
+
+    stderr:read_start(function(err, data)
+      assert(not err, err)
+      if not data then return end
+      stderr_data = stderr_data .. data
     end)
   end,
 })
