@@ -6,7 +6,6 @@
     - software/composer/install
     - software/cli-tools
     - software/docker
-    - software/git
     - software/neovim
     - software/nerd_fonts
     - software/nodejs/install

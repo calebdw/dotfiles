@@ -11,6 +11,9 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup('calebdw.plugins', {
+  diff = {
+    cmd = 'terminal_git',
+  },
   performance = {
     rtp = {
       disabled_plugins = {

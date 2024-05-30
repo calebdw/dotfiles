@@ -31,15 +31,25 @@
     defaultRemote = origin
 [color]
     ui = auto
+[commit]
+    gpgsign = true
 [core]
     autocrlf = false
     excludesFile = ~/.gitignore
     editor = nvim
     commentchar = *
-[commit]
-    gpgsign = true
-[tag]
-    gpgSign = true
+    pager = delta
+[delta]
+    hyperlinks = true
+    line-numbers = true
+    navigate = true
+    side-by-side = true
+[diff]
+    colorMoved = default
+[init]
+    defaultBranch = master
+[interactive]
+    diffFilter = delta --color-only
 [merge]
     conflictstyle = zdiff3
     tool = nvimdiff2
@@ -49,9 +59,7 @@
 [push]
     autoSetupRemote = true
 [rerere]
-    # google `git rerere`, basically git remembers your
-    # partial merge choices and replays them next time
     enabled = true
     autoupdate = true
-[init]
-    defaultBranch = master
+[tag]
+    gpgSign = true
