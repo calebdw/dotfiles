@@ -6,7 +6,6 @@
     - software/composer/install
     - software/docker
     - software/git
-    - software/git-dmb
     - software/neovim
     - software/nerd_fonts
     - software/nodejs/install
