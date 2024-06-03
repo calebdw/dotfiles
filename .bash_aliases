@@ -13,6 +13,7 @@ alias nv='nvim'
 alias python='python3'
 alias pip='pip3'
 alias g='git '
+alias lg='lazygit'
 
 # Use bat instead of cat if available
 command -v bat &> /dev/null && alias cat='bat --paging=never'

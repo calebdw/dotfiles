@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/jesseduffield/lazygit/master/schema/config.json
+# keybinding:
+#   universal:
+#     confirm: 'y'
+git:
+  autoFetch: false
+  paging:
+    pager: 'delta --dark --paging=never'
+  parseEmoji: true
+gui:
+  branchColors:
+    master: red
+    main: red
+    hotfix: red
+    develop: yellow
+    release: green
+    preview: magenta
+  nerdFontsVersion: '3'
+  theme:
+    selectedLineBgColor:
+      - black
+os:
+  editPreset: 'nvim-remote'

@@ -1,4 +1,5 @@
 ---
+- import_tasks: lazygit.yml
 - block:
   - name: add git ppa
     apt_repository:
