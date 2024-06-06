@@ -2,7 +2,7 @@
 - name: 'Clone neovim'
   git:
     repo: 'https://github.com/neovim/neovim.git'
-    dest: '{{ dir_sources }}/neovim'
+    dest: '{{ dir_sources }}/neovim/neovim'
     clone: true
     update: true
     force: true
@@ -13,12 +13,12 @@
     - name: 'Clean neovim'
       command: 'make distclean'
       args:
-        chdir: '{{ dir_sources }}/neovim'
+        chdir: '{{ dir_sources }}/neovim/neovim'
 
     - name: 'Build neovim'
       command: 'make CMAKE_BUILD_TYPE=RelWithDebInfo -j 4'
       args:
-        chdir: '{{ dir_sources }}/neovim'
+        chdir: '{{ dir_sources }}/neovim/neovim'
 
     - name: 'Remove existing neovim runtime files'
       become: true
@@ -28,7 +28,7 @@
       become: true
       command: 'make install'
       args:
-        chdir: '{{ dir_sources }}/neovim'
+        chdir: '{{ dir_sources }}/neovim/neovim'
 
 - name: 'Install python neovim module'
   pip:
