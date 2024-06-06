@@ -8,7 +8,7 @@
     cob = checkout -b
     cm = commit
     d = diff
-    fp = fetch -p
+    f = fetch
     nah = "!f(){ git reset --hard; git clean -df; if [ -d ".git/rebase-apply" ] || [ -d ".git/rebase-merge" ]; then git rebase --abort; fi; }; f"
     l = log
     pf = push --force-with-lease
@@ -46,6 +46,9 @@
     side-by-side = true
 [diff]
     colorMoved = default
+[fetch]
+    prune = true
+    all = true
 [init]
     defaultBranch = master
 [interactive]
