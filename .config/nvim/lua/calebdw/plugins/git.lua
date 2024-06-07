@@ -24,10 +24,47 @@ return {
   },
   {
     'NeogitOrg/neogit',
+    cmd = { 'Neogit' },
+    keys = {
+      {'<leader>Gs', function() require('neogit').open() end, desc = 'Open Neogit', },
+      {
+        '<leader>Gc',
+        function()
+          require('neogit').action('commit', 'commit', { '--verbose' })()
+        end,
+        desc = 'Open Neogit',
+      },
+      {
+        '<leader>Gp',
+        function()
+          require('neogit').action('pull', 'from_upstream')()
+        end,
+        desc = 'Neogit pull',
+      },
+      {
+        '<leader>GP',
+        function()
+          require('neogit').action('push', 'to_upstream', { '--force-with-lease', })()
+        end,
+        desc = 'Neogit push',
+      },
+      {
+        '<leader>Gf',
+        function()
+          require('neogit').action('fetch', 'fetch_upstream', { '--all', '-p', })()
+        end,
+        desc = 'Neogit fetch',
+      },
+    },
+    opts = {
+      graph_style = 'unicode',
+    },
     dependencies = {
       'nvim-lua/plenary.nvim',
       'sindrets/diffview.nvim',
-      'nvim-telescope/telescope.nvim', -- optional
+      'nvim-telescope/telescope.nvim',
+    },
+  },
     },
     config = true
   },
