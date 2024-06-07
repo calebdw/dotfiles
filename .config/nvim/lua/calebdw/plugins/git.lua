@@ -1,27 +1,6 @@
 local map = require('calebdw.util').map
 
 return {
-  'tpope/vim-rhubarb',
-  {
-    'tpope/vim-fugitive',
-    config = function()
-      map('n', '<leader>Gs', ':Git status<cr>')
-      map('n', '<leader>Ga', ':update<cr>:Git add %<cr>')
-      map('n', '<leader>GA', ':Git add *<cr>')
-      map('n', '<leader>Gb', ':Git branch<cr>')
-      map('n', '<leader>GB', ':Git blame<cr>')
-      map('n', '<leader>Gc', ':Git commit<cr>')
-      map('n', '<leader>Gd', ':Git diff<cr>')
-      map('n', '<leader>GC', ':Git commit --amend --no-edit<cr>')
-      map('n', '<leader>Gf', ':Git fetch -p<cr>')
-      map('n', '<leader>Gl', ':Git log --max-count 20<cr>')
-      map('n', '<leader>GL', ':Git reflog<cr>')
-      map('n', '<leader>Gp', ':Git pull<cr>')
-      map('n', '<leader>GP', ':Git push<cr>')
-      map('n', '<leader>Gr', ':Git reset %<cr>')
-      map('n', '<leader>GR', ':Git reset<cr>')
-    end,
-  },
   {
     'NeogitOrg/neogit',
     cmd = { 'Neogit' },
@@ -65,8 +44,29 @@ return {
       'nvim-telescope/telescope.nvim',
     },
   },
+  {
+    'FabijanZulj/blame.nvim',
+    cmd = { 'BlameToggle' },
+    opts = {
+      date_format = '%Y-%m-%d',
     },
-    config = true
+  },
+  {
+    'emmanueltouzery/agitator.nvim',
+    keys = {
+      {
+        '<leader>Gbt',
+        function() require('agitator').git_blame_toggle() end,
+        desc = 'Git blame toggle',
+      },
+      {
+        '<leader>Gbm',
+        function()
+          require('agitator').git_time_machine({ use_current_win = true })
+        end,
+        desc = 'Git blame time machine',
+      },
+    },
   },
   {
     'lewis6991/gitsigns.nvim',
@@ -76,7 +76,7 @@ return {
       return {
         -- current_line_blame = false
         current_line_blame_opts = {
-          virt_text_pos = 'overlay',
+          virt_text_pos = 'eol',
         },
         preview_config = {
           border = 'rounded',
