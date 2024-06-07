@@ -23,6 +23,15 @@ return {
     end,
   },
   {
+    'NeogitOrg/neogit',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim',
+      'nvim-telescope/telescope.nvim', -- optional
+    },
+    config = true
+  },
+  {
     'lewis6991/gitsigns.nvim',
     opts = function()
       local gs = require('gitsigns')
@@ -63,9 +72,7 @@ return {
           Map('n', '<leader>hR', gs.reset_buffer)
           Map('n', '<leader>hp', gs.preview_hunk)
           Map('n', '<leader>hb', function() gs.blame_line({ full = true }) end)
-          Map('n', '<leader>hd', function()
-            gs.diffthis('@', { split = 'rightbelow' })
-          end)
+          Map('n', '<leader>hd', function() gs.diffthis('@', { split = 'rightbelow' }) end)
           Map('n', '<leader>hD', function() gs.diffthis('~') end)
           Map('n', '<leader>td', gs.toggle_deleted)
           Map('n', '<leader>tw', gs.toggle_word_diff)
