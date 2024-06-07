@@ -97,7 +97,7 @@ opt.signcolumn     = 'yes:2'
 
 -- Decrease update time
 vim.opt.updatetime = 250
-vim.opt.timeoutlen = 300 -- time for a mapped sequence to complete
+vim.opt.timeoutlen = 500 -- time for a mapped sequence to complete
 
 opt.showmode       = false -- already shown in statusline
 
