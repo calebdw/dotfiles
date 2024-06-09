@@ -50,6 +50,7 @@ vim.api.nvim_create_autocmd({ 'VimEnter' }, {
   desc = 'Clean up old files in the state directory.',
   group = default,
   callback = function()
+    local Job = require('plenary.job')
     local days = 30
     local cwd = vim.fn.stdpath('state')
 
@@ -63,24 +64,15 @@ vim.api.nvim_create_autocmd({ 'VimEnter' }, {
       end)
     end
 
-    local stderr = vim.uv.new_pipe()
-    local stderr_data = ''
-    assert(stderr, 'Failed to create stderr pipe')
-
-    ---@diagnostic disable-next-line: missing-fields
-    vim.uv.spawn('find', {
-      cwd = cwd,
+    Job:new({
+      command = 'find',
       args = { 'undo', 'swap', 'backup', '-type', 'f', '-mtime', '+' .. days, '-delete' },
-      stdio = { nil, nil, stderr },
-    }, function(code, _)
-      if code == 0 then return end
-      notify_error('Failed to clean up old files in the state directory: ' .. stderr_data)
-    end)
-
-    stderr:read_start(function(err, data)
-      assert(not err, err)
-      if not data then return end
-      stderr_data = stderr_data .. data
-    end)
+      cwd = cwd,
+      on_exit = function(job, code)
+        if code == 0 then return end
+        local error = table.concat(job:stderr_result(), '\n')
+        notify_error('Failed to clean up old files in the state directory: ' .. error)
+      end,
+    }):start()
   end,
 })
