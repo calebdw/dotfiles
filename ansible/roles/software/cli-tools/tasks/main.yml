@@ -62,3 +62,8 @@
   community.general.cargo:
     name: ripgrep
     state: latest
+
+- name: 'Install git-absorb'
+  community.general.cargo:
+    name: git-absorb
+    state: latest

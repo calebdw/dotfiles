@@ -3,6 +3,10 @@
     email = cdwhite3@pm.me
 [includeIf "gitdir:~/projects/"]
     path = ~/.gitconfig.work
+[absorb]
+    autoStageIfNothingStaged = true
+    maxStack = 20
+    oneFixupPerCommit = true
 [alias]
     br = branch -av
     brdel = branch -D
@@ -66,6 +70,8 @@
     rebase = true
 [push]
     autoSetupRemote = true
+[rebase]
+    autoSquash = true
 [rerere]
     enabled = true
     autoupdate = true
