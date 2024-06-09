@@ -121,4 +121,22 @@ return {
       }
     end,
   },
+  {
+    'polarmutex/git-worktree.nvim',
+    branch = 'main',
+    opts = {},
+    init = function()
+      local telescope = require('telescope')
+      local extensions = telescope.extensions
+
+      telescope.load_extension('git_worktree')
+
+      map({ 'n', 'v' }, '<leader>gc', extensions.git_worktree.create_git_worktree)
+      map({ 'n', 'v' }, '<leader>gw', extensions.git_worktree.git_worktrees)
+    end,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+    }
+  },
 }

@@ -4,14 +4,19 @@
 [includeIf "gitdir:~/projects/"]
     path = ~/.gitconfig.work
 [alias]
+    br = branch -av
+    brdel = branch -D
+    cloneb = clone-bare-for-worktrees
+    c = commit
     co = checkout
     cob = checkout -b
-    cm = commit
     d = diff
     f = fetch
-    nah = "!f(){ git reset --hard; git clean -df; if [ -d ".git/rebase-apply" ] || [ -d ".git/rebase-merge" ]; then git rebase --abort; fi; }; f"
     l = log
-    pf = push --force-with-lease
+    nah = "!f(){ git reset --hard; git clean -df; if [ -d ".git/rebase-apply" ] || [ -d ".git/rebase-merge" ]; then git rebase --abort; fi; }; f"
+    p = pull
+    P = push
+    Pf = push --force-with-lease
     ra = rebase --abort
     rc = rebase --continue
     ri = rebase -i
@@ -19,8 +24,8 @@
     spu = stash push -u
     st = status
     stag = tag -s
-    br = branch -av
-    brdel = branch -D
+    w = worktree
+    wa = worktree add
 
     aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
 
@@ -66,3 +71,5 @@
     autoupdate = true
 [tag]
     gpgSign = true
+[worktree]
+    guessRemote = true
