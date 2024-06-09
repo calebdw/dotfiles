@@ -122,7 +122,7 @@ return {
     end,
   },
   {
-    'polarmutex/git-worktree.nvim',
+    'calebdw/git-worktree.nvim',
     branch = 'main',
     opts = {},
     init = function()
