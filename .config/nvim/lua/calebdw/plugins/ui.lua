@@ -11,7 +11,19 @@ return {
     'yamatsum/nvim-nonicons',
     dependencies = 'nvim-tree/nvim-web-devicons',
   },
-  { 'rcarriga/nvim-notify',  config = true },
+  {
+    'rcarriga/nvim-notify',
+    config = true,
+    init = function()
+      local telescope = require('telescope')
+      local map = require('calebdw.util').map
+      vim.notify = require('notify')
+
+      telescope.load_extension('notify')
+      map({ 'n', 'v' }, '<leader>tP', telescope.extensions.persisted.persisted)
+    end,
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+  },
   {
     'stevearc/dressing.nvim',
     opts = {

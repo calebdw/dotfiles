@@ -63,23 +63,16 @@ return {
 
     telescope.setup(opts)
 
-    telescope.load_extension('dap')
     telescope.load_extension('env')
     telescope.load_extension('fzf')
     telescope.load_extension('live_grep_args')
-    telescope.load_extension('notify')
-    telescope.load_extension('persisted')
-    telescope.load_extension('projects')
     telescope.load_extension('ui-select')
     telescope.load_extension('undo')
 
     -- Keymaps
     map({ 'n', 'v' }, '<leader>ff', builtin.find_files)
     map({ 'n', 'v' }, '<leader>fa', function()
-      builtin.find_files({
-        no_ignore = true,
-        prompt_title = 'All Files',
-      })
+      builtin.find_files({ no_ignore = true, prompt_title = 'All Files', })
     end)
     map({ 'n', 'v' }, '<leader>fl', extensions.live_grep_args.live_grep_args)
     map({ 'n', 'v' }, '<leader>fb', builtin.buffers)
@@ -96,8 +89,6 @@ return {
     map({ 'n', 'v' }, '<leader>tt', builtin.treesitter)
     map({ 'n', 'v' }, '<leader>tR', builtin.reloader)
     map({ 'n', 'v' }, '<leader>tr', builtin.resume)
-    map({ 'n', 'v' }, '<leader>tp', extensions.projects.projects)
-    map({ 'n', 'v' }, '<leader>tP', extensions.persisted.persisted)
     map({ 'n', 'v' }, '<leader>tu', extensions.undo.undo)
 
     map({ 'n', 'v' }, '<leader>Td', builtin.lsp_definitions)
@@ -108,12 +99,6 @@ return {
     map({ 'n', 'v' }, '<leader>Ts', builtin.lsp_document_symbols)
     map({ 'n', 'v' }, '<leader>Tw', builtin.lsp_workspace_symbols)
     map({ 'n', 'v' }, '<leader>TW', builtin.lsp_dynamic_workspace_symbols)
-
-    map({ 'n', 'v' }, '<leader>dc', extensions.dap.commands)
-    map({ 'n', 'v' }, '<leader>dC', extensions.dap.configurations)
-    map({ 'n', 'v' }, '<leader>db', extensions.dap.list_breakpoints)
-    map({ 'n', 'v' }, '<leader>dv', extensions.dap.variables)
-    map({ 'n', 'v' }, '<leader>df', extensions.dap.frames)
   end,
   dependencies = {
     'nvim-lua/plenary.nvim',
@@ -121,7 +106,6 @@ return {
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     'nvim-telescope/telescope-ui-select.nvim',
     'LinArcX/telescope-env.nvim',
-    'nvim-telescope/telescope-dap.nvim',
     'debugloop/telescope-undo.nvim',
   },
 }

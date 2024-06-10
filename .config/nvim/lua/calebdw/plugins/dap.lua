@@ -127,13 +127,9 @@ return {
 
       dapui.setup(opts)
 
-      local open = function()
-        dapui.open()
-      end
+      local open = function() dapui.open() end
 
-      local close = function()
-        dapui.close()
-      end
+      local close = function() dapui.close() end
 
       map('n', '<leader>dt', function() dapui.toggle() end)
 
@@ -155,5 +151,22 @@ return {
   {
     'LiadOz/nvim-dap-repl-highlights',
     opts = {},
-  }
+  },
+  {
+    'nvim-telescope/telescope-dap.nvim',
+    init = function()
+      local telescope = require('telescope')
+
+      telescope.load_extension('dap')
+      map({ 'n', 'v' }, '<leader>dc', telescope.extensions.dap.commands)
+      map({ 'n', 'v' }, '<leader>dC', telescope.extensions.dap.configurations)
+      map({ 'n', 'v' }, '<leader>db', telescope.extensions.dap.list_breakpoints)
+      map({ 'n', 'v' }, '<leader>dv', telescope.extensions.dap.variables)
+      map({ 'n', 'v' }, '<leader>df', telescope.extensions.dap.frames)
+    end,
+    dependencies = {
+      'mfussenegger/nvim-dap',
+      'nvim-telescope/telescope.nvim',
+    },
+  },
 }
