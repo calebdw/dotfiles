@@ -1,4 +1,14 @@
-local map = require('calebdw.util').map
+local util = require('calebdw.util')
+local map = util.map
+
+--- Symlink shared files to the worktree.
+--- @param root string
+--- @param worktree string
+--- @return nil
+local function symlink_shared_files(root, worktree)
+  local shared = root..'/.shared'
+  util.symlink_files(shared, root..'/'..worktree, true, true)
+end
 
 return {
   {
@@ -123,16 +133,20 @@ return {
   },
   {
     'calebdw/git-worktree.nvim',
-    branch = 'main',
     opts = {},
-    init = function()
+    config = function(_, opts)
+      local gwt = require('git-worktree')
+      gwt.setup(opts)
+      gwt.on_tree_change(function(op, meta)
+        if op == gwt.Operations.Create then
+          symlink_shared_files(gwt:get_root(), meta.path)
+        end
+      end)
+
       local telescope = require('telescope')
-      local extensions = telescope.extensions
-
       telescope.load_extension('git_worktree')
-
-      map({ 'n', 'v' }, '<leader>gc', extensions.git_worktree.create_git_worktree)
-      map({ 'n', 'v' }, '<leader>gw', extensions.git_worktree.git_worktrees)
+      map({ 'n', 'v' }, '<leader>gc', telescope.extensions.git_worktree.create_git_worktree)
+      map({ 'n', 'v' }, '<leader>gw', telescope.extensions.git_worktree.git_worktrees)
     end,
     dependencies = {
       'nvim-lua/plenary.nvim',

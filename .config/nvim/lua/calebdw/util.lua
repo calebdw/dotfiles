@@ -100,4 +100,56 @@ function M.sail_or_bin(cmd, as_string)
   return './vendor/bin/' .. cmd
 end
 
+--- This recursively symlinks files from a src directory to a dest directory.
+--- @param src string
+--- @param dest string
+--- @param relative? boolean
+--- @param force? boolean
+--- @return nil
+function M.symlink_files(src, dest, relative, force)
+  relative = relative ~= false
+  force = force == true
+
+  local Job = require('plenary.job')
+  local Path = require('plenary.path')
+  local scan = require('plenary.scandir')
+
+  local src_path = Path:new(src)
+  local dest_path = Path:new(dest)
+
+  if not src_path:exists() then
+    vim.notify('Shared directory does not exist: ' .. src, vim.log.levels.DEBUG)
+    return
+  end
+
+  scan.scan_dir_async(src_path:absolute(), {
+    hidden = true,
+    add_dirs = false,
+    on_insert = function(entry)
+      local target = dest_path:joinpath(Path:new(entry):make_relative(src_path:absolute()))
+
+      local args = { '-s' }
+      if relative then table.insert(args, '-r') end
+      if force then table.insert(args, '-f') end
+
+      table.insert(args, entry)
+      table.insert(args, target:absolute())
+
+      Job:new({
+        command = 'ln',
+        args = args,
+        on_exit = function(_, code)
+          if code == 0 then return end
+          vim.schedule(function()
+            vim.notify(
+              'Failed to symlink ' .. entry .. ' -> ' .. target:absolute(),
+              vim.log.levels.ERROR
+            )
+          end)
+        end,
+      }):start()
+    end,
+  })
+end
+
 return M
