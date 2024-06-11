@@ -137,7 +137,7 @@ return {
         map('n', '<leader>gt', vim.lsp.buf.type_definition, opts)
         map('n', '<leader>gr', vim.lsp.buf.references, opts)
         map('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-        map('n', '<leader>rn', vim.lsp.buf.rename, opts)
+        -- map('n', '<leader>rn', vim.lsp.buf.rename, opts)
         map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
         map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
         map('n', '<leader>wl', function()
@@ -379,10 +379,24 @@ return {
       'neovim/nvim-lspconfig',
     },
   },
-  'glepnir/lspsaga.nvim',        -- UI for LSP client
+  'glepnir/lspsaga.nvim', -- UI for LSP client
   'jayp0521/mason-null-ls.nvim', -- mason null-ls
-  {                              -- ui for lsp progress
+  { -- ui for lsp progress
     'j-hui/fidget.nvim',
     tag = 'legacy',
+  },
+  {
+    'smjonas/inc-rename.nvim',
+    opts = {
+      save_in_cmd_history = false,
+    },
+    keys = {
+      {
+        '<leader>rn',
+        function() return ':IncRename ' .. vim.fn.expand('<cword>') end,
+        expr = true,
+        desc = 'Incremental Rename',
+      },
+    },
   },
 }
