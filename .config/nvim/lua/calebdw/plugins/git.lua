@@ -6,8 +6,23 @@ local map = util.map
 --- @param worktree string
 --- @return nil
 local function symlink_shared_files(root, worktree)
-  local shared = root..'/.shared'
-  util.symlink_files(shared, root..'/'..worktree, true, true)
+  local shared = root .. '/.shared'
+  util.symlink_files(shared, root .. '/' .. worktree, true, true)
+end
+
+--- Serve the worktree.
+--- @param root string
+--- @param worktree string
+local serve_worktree = function(root, worktree)
+  local serve = root .. '/.serve'
+  local Job = require('plenary.job')
+  vim.notify('Serving worktree: ' .. worktree, vim.log.levels.INFO)
+
+  Job:new({
+    command = 'ln',
+    args = { '-srfT', worktree, serve },
+    cwd = root,
+  }):start()
 end
 
 return {
@@ -15,33 +30,25 @@ return {
     'NeogitOrg/neogit',
     cmd = { 'Neogit' },
     keys = {
-      {'<leader>Gs', function() require('neogit').open() end, desc = 'Open Neogit', },
+      { '<leader>gs', function() require('neogit').open() end, desc = 'Open Neogit' },
       {
-        '<leader>Gc',
-        function()
-          require('neogit').action('commit', 'commit', { '--verbose' })()
-        end,
+        '<leader>gc',
+        function() require('neogit').action('commit', 'commit', { '--verbose' })() end,
         desc = 'Open Neogit',
       },
       {
-        '<leader>Gp',
-        function()
-          require('neogit').action('pull', 'from_upstream')()
-        end,
+        '<leader>gp',
+        function() require('neogit').action('pull', 'from_upstream')() end,
         desc = 'Neogit pull',
       },
       {
-        '<leader>GP',
-        function()
-          require('neogit').action('push', 'to_upstream', { '--force-with-lease', })()
-        end,
+        '<leader>gP',
+        function() require('neogit').action('push', 'to_upstream', { '--force-with-lease' })() end,
         desc = 'Neogit push',
       },
       {
-        '<leader>Gf',
-        function()
-          require('neogit').action('fetch', 'fetch_upstream', { '--all', '-p', })()
-        end,
+        '<leader>gf',
+        function() require('neogit').action('fetch', 'fetch_upstream', { '--all', '-p' })() end,
         desc = 'Neogit fetch',
       },
     },
@@ -71,9 +78,7 @@ return {
       },
       {
         '<leader>Gbm',
-        function()
-          require('agitator').git_time_machine({ use_current_win = true })
-        end,
+        function() require('agitator').git_time_machine({ use_current_win = true }) end,
         desc = 'Git blame time machine',
       },
     },
@@ -138,19 +143,20 @@ return {
       local gwt = require('git-worktree')
       gwt.setup(opts)
       gwt.on_tree_change(function(op, meta)
-        if op == gwt.Operations.Create then
-          symlink_shared_files(gwt:get_root(), meta.path)
-        end
+        local root = gwt:get_root()
+        assert(root, 'Git worktree root not found')
+        if op == gwt.Operations.Create then symlink_shared_files(root, meta.path) end
+        if op == gwt.Operations.Switch then serve_worktree(root, meta.path) end
       end)
 
       local telescope = require('telescope')
       telescope.load_extension('git_worktree')
-      map({ 'n', 'v' }, '<leader>gc', telescope.extensions.git_worktree.create_git_worktree)
-      map({ 'n', 'v' }, '<leader>gw', telescope.extensions.git_worktree.git_worktrees)
+      map({ 'n', 'v' }, '<leader>wc', telescope.extensions.git_worktree.create_git_worktree)
+      map({ 'n', 'v' }, '<leader>ww', telescope.extensions.git_worktree.git_worktrees)
     end,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope.nvim',
-    }
+    },
   },
 }
