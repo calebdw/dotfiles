@@ -58,9 +58,7 @@ end
 --- visual keymaps
 ---
 --- @return nil
-function M.escape()
-  vim.cmd.normal('�')
-end
+function M.escape() vim.cmd.normal('�') end
 
 --- Wrapper around `vim.keymap.set` to include defaults
 ---
@@ -90,9 +88,7 @@ function M.sail_or_bin(cmd, as_string)
 
   if vim.fn.executable(sail) == 1 then
     local result = { sail, 'bin', cmd }
-    if as_string then
-      return table.concat(result, ' ')
-    end
+    if as_string then return table.concat(result, ' ') end
 
     return result
   end
@@ -135,19 +131,18 @@ function M.symlink_files(src, dest, relative, force)
       table.insert(args, entry)
       table.insert(args, target:absolute())
 
-      Job:new({
-        command = 'ln',
-        args = args,
-        on_exit = function(_, code)
-          if code == 0 then return end
-          vim.schedule(function()
-            vim.notify(
-              'Failed to symlink ' .. entry .. ' -> ' .. target:absolute(),
-              vim.log.levels.ERROR
+      Job
+        :new({
+          command = 'ln',
+          args = args,
+          on_exit = function(_, code)
+            if code == 0 then return end
+            vim.schedule(
+              function() vim.notify('Failed to symlink ' .. entry .. ' -> ' .. target:absolute(), vim.log.levels.ERROR) end
             )
-          end)
-        end,
-      }):start()
+          end,
+        })
+        :start()
     end,
   })
 end

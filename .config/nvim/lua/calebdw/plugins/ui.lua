@@ -29,7 +29,7 @@ return {
     opts = {
       input = {
         relative = 'editor',
-        prefer_width = .4,
+        prefer_width = 0.4,
       },
     },
   },
@@ -57,7 +57,7 @@ return {
         'nvim-tree',
         'quickfix',
         'toggleterm',
-      }
+      },
     },
     dependencies = {
       'nvim-tree/nvim-web-devicons',
@@ -67,7 +67,7 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
-    main = "ibl",
+    main = 'ibl',
     opts = {
       scope = {
         show_start = false,
@@ -89,7 +89,7 @@ return {
   -- Smooth Scrolling --
   { 'karb94/neoscroll.nvim', config = true },
   -- Dim Inactive Codeblocks --
-  { 'folke/twilight.nvim',   config = true },
+  { 'folke/twilight.nvim', config = true },
   -- Zen Mode --
   {
     'folke/zen-mode.nvim',
@@ -162,7 +162,7 @@ return {
         names = false,
         mode = 'background',
         tailwind = 'lsp',
-      }
+      },
     },
   },
   {

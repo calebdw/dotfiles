@@ -5,7 +5,7 @@ return {
     local lga_actions = require('telescope-live-grep-args.actions')
 
     return {
-      defaults   = {
+      defaults = {
         mappings = {
           i = {
             ['<esc>'] = actions.close,
@@ -30,10 +30,10 @@ return {
           '--with-filename',
           '--line-number',
           '--column',
-          "--smart-case"
+          '--smart-case',
         },
       },
-      pickers    = {
+      pickers = {
         find_files = {
           hidden = true,
         },
@@ -71,9 +71,7 @@ return {
 
     -- Keymaps
     map({ 'n', 'v' }, '<leader>ff', builtin.find_files)
-    map({ 'n', 'v' }, '<leader>fa', function()
-      builtin.find_files({ no_ignore = true, prompt_title = 'All Files', })
-    end)
+    map({ 'n', 'v' }, '<leader>fa', function() builtin.find_files({ no_ignore = true, prompt_title = 'All Files' }) end)
     map({ 'n', 'v' }, '<leader>fl', extensions.live_grep_args.live_grep_args)
     map({ 'n', 'v' }, '<leader>fb', builtin.buffers)
     map({ 'n', 'v' }, '<leader>fh', builtin.help_tags)

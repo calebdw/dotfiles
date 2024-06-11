@@ -69,6 +69,9 @@ map('t', '<C-l>', ':wincmd l<cr>')
 map('n', '<leader>d', vim.diagnostic.open_float)
 map('n', '<leader>qd', vim.diagnostic.setloclist)
 
-map('n', '<leader>gg', function()
-  vim.ui.open('https://github.com/' .. vim.fn.expand('<cfile>'))
-end, { desc = 'Open GitHub repo' })
+map(
+  'n',
+  '<leader>gg',
+  function() vim.ui.open('https://github.com/' .. vim.fn.expand('<cfile>')) end,
+  { desc = 'Open GitHub repo' }
+)

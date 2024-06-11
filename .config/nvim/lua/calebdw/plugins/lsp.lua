@@ -2,23 +2,23 @@ local map = require('calebdw.util').map
 
 -- Default servers to install
 local servers = {
-  'ansiblels',     -- Ansible
-  'antlersls',     -- Statamic/Antlers
+  'ansiblels', -- Ansible
+  'antlersls', -- Statamic/Antlers
   -- 'bashls', -- Bash
-  'cmake',         -- CMake
-  'clangd',        -- C++
-  'cssls',         -- CSS
+  'cmake', -- CMake
+  'clangd', -- C++
+  'cssls', -- CSS
   'cssmodules_ls', -- CSS
-  'dockerls',      -- Docker
-  'emmet_ls',      -- Emmet support
-  'html',          -- HTML
-  'jsonls',        -- JSON
+  'dockerls', -- Docker
+  'emmet_ls', -- Emmet support
+  'html', -- HTML
+  'jsonls', -- JSON
   -- 'latex', -- LaTeX
-  'lemminx',       -- XM
-  'lua_ls',        -- Lua
+  'lemminx', -- XM
+  'lua_ls', -- Lua
   -- 'intelephense', -- PHP
-  'ocamllsp',      -- OCaml
-  'phpactor',      -- PHP
+  'ocamllsp', -- OCaml
+  'phpactor', -- PHP
   -- 'psalm', -- PHP
   -- 'jedi_language_server', -- Python
   'pyright', -- Python
@@ -28,10 +28,10 @@ local servers = {
   -- 'remark_ls', -- Markdown
   -- 'sqls', -- SQL
   'rust_analyzer', -- Rust
-  'sqlls',         -- SQL
-  'tailwindcss',   -- Tailwind CSS
+  'sqlls', -- SQL
+  'tailwindcss', -- Tailwind CSS
   -- 'tsserver', -- Javascript / TypeScript
-  'volar',         -- Vue
+  'volar', -- Vue
   -- 'vuels', -- Vue
   -- 'zeta_note', -- Markdown
   -- 'zk', -- Markdown
@@ -79,7 +79,7 @@ return {
       start_delay = 500,
       ensure_installed = {
         -- LSP Servers --
-        { 'phpactor',         version = 'master' },
+        { 'phpactor', version = 'master' },
         'tailwindcss-language-server',
 
         -- DAP Servers --
@@ -140,25 +140,19 @@ return {
         -- map('n', '<leader>rn', vim.lsp.buf.rename, opts)
         map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
         map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
-        map('n', '<leader>wl', function()
-          vim.print(vim.lsp.buf.list_workspace_folders())
-        end, opts)
+        map('n', '<leader>wl', function() vim.print(vim.lsp.buf.list_workspace_folders()) end, opts)
       end
 
       local handlers = {
         -- https://github.com/neovim/nvim-lspconfig/wiki/User-contributed-tips#use-nvim-notify-to-display-lsp-messages
         ['window/showMessage'] = function(_, result, ctx)
           local client = vim.lsp.get_client_by_id(ctx.client_id)
-          if client == nil then
-            return
-          end
+          if client == nil then return end
           local lvl = ({ 'ERROR', 'WARN', 'INFO', 'DEBUG' })[result.type]
           vim.notify(result.message, lvl, {
             title = 'LSP | ' .. client.name,
             timeout = 10000,
-            keep = function()
-              return lvl == 'ERROR' or lvl == 'WARN'
-            end,
+            keep = function() return lvl == 'ERROR' or lvl == 'WARN' end,
           })
         end,
         ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {

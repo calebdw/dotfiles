@@ -12,19 +12,19 @@ return {
 
       dap.configurations.javascript = {
         {
-          type                      = 'pwa-node',
-          request                   = 'attach',
-          name                      = 'Attach debugger to existing `node --inspect` process',
-          cwd                       = '${workspaceFolder}',
-          skipFiles                 = {
+          type = 'pwa-node',
+          request = 'attach',
+          name = 'Attach debugger to existing `node --inspect` process',
+          cwd = '${workspaceFolder}',
+          skipFiles = {
             '${workspaceFolder}/node_modules/**/*.js',
             '${workspaceFolder}/packages/**/node_modules/**/*.js',
             '${workspaceFolder}/packages/**/**/node_modules/**/*.js',
             '<node_internals>/**',
             'node_modules/**',
           },
-          sourceMaps                = true,
-          console                   = "integratedTerminal",
+          sourceMaps = true,
+          console = 'integratedTerminal',
           resolveSourceMapLocations = {
             '${workspaceFolder}/**',
             '!**/node_modules/**',
