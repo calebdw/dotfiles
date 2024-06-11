@@ -21,7 +21,7 @@ return {
           --   phpunit_cmd = function() return util.sail('phpunit') end,
           -- }),
           require('neotest-pest')({
-            sail_project_path = '/var/www',
+            sail_project_path = '/var/www/html',
           }),
           require('neotest-plenary'),
           require('neotest-vitest'),

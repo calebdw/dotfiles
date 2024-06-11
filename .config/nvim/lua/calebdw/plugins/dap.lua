@@ -74,7 +74,7 @@ return {
           request = 'launch',
           name = 'Listen for Xdebug in Docker',
           pathMappings = {
-            ['/var/www'] = '${workspaceFolder}',
+            ['/var/www/html'] = '${workspaceFolder}',
           },
           repl_lang = 'php_only',
         },
