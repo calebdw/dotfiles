@@ -20,7 +20,7 @@ return {
       vim.notify = require('notify')
 
       telescope.load_extension('notify')
-      map({ 'n', 'v' }, '<leader>tP', telescope.extensions.persisted.persisted)
+      map({ 'n', 'v' }, '<leader>Tn', telescope.extensions.notify.notify)
     end,
     dependencies = { 'nvim-telescope/telescope.nvim' },
   },
