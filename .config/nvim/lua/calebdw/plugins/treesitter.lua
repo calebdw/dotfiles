@@ -4,15 +4,15 @@ return {
   opts = {
     ensure_installed = 'all',
     auto_install = true,
-    highlight = { enable = true, },
-    indent = { enable = true, },
+    highlight = { enable = true },
+    indent = { enable = true },
     incremental_selection = {
       enable = true,
       keymaps = { -- set to `false` to disable one of the mappings
-        init_selection = "gnn",
-        node_incremental = "grn",
-        scope_incremental = "grc",
-        node_decremental = "grm",
+        init_selection = 'gnn',
+        node_incremental = 'grn',
+        scope_incremental = 'grc',
+        node_decremental = 'grm',
       },
     },
     autotag = { -- 'windwp/nvim-ts-autotag'
@@ -69,33 +69,33 @@ return {
     --   filetype = 'php',
     -- }
 
-    -- parser_config.php = {
-    --   install_info = {
-    --     url = '~/sources/treesitter/tree-sitter-php/php',
-    --     files = {
-    --       'src/parser.c',
-    --       'src/scanner.c',
-    --     },
-    --     branch = "master",
-    --     generate_requires_npm = true,
-    --     requires_generate_from_grammar = true,
-    --   },
-    --   filetype = 'php',
-    -- }
+    parser_config.php = {
+      install_info = {
+        url = '~/sources/treesitter/tree-sitter-php/php',
+        files = {
+          'src/parser.c',
+          'src/scanner.c',
+        },
+        branch = 'php84',
+        generate_requires_npm = false,
+        requires_generate_from_grammar = false,
+      },
+      filetype = 'php',
+    }
 
-    -- parser_config.php_only = {
-    --   install_info = {
-    --     url = '~/sources/treesitter/tree-sitter-php/php_only',
-    --     files = {
-    --       'src/parser.c',
-    --       'src/scanner.c',
-    --     },
-    --     branch = "master",
-    --     generate_requires_npm = false,
-    --     requires_generate_from_grammar = false,
-    --   },
-    --   -- filetype = 'php',
-    -- }
+    parser_config.php_only = {
+      install_info = {
+        url = '~/sources/treesitter/tree-sitter-php/php_only',
+        files = {
+          'src/parser.c',
+          'src/scanner.c',
+        },
+        branch = 'php84',
+        generate_requires_npm = false,
+        requires_generate_from_grammar = false,
+      },
+      -- filetype = 'php',
+    }
 
     require('nvim-treesitter.configs').setup(opts)
 

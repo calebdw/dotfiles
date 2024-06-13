@@ -8,9 +8,7 @@ return {
 
     return {
       snippet = {
-        expand = function(args)
-          luasnip.lsp_expand(args.body)
-        end,
+        expand = function(args) luasnip.lsp_expand(args.body) end,
       },
       formatting = {
         format = lspkind.cmp_format({
@@ -20,7 +18,7 @@ return {
       mapping = cmp.mapping.preset.insert({
         -- maybe use <c-y>?
         ['<cr>'] = cmp.mapping.confirm({ select = false }),
-        ['<c-b>'] = cmp.mapping.scroll_docs( -4),
+        ['<c-b>'] = cmp.mapping.scroll_docs(-4),
         ['<c-f>'] = cmp.mapping.scroll_docs(4),
         ['<c-space>'] = cmp.mapping.complete(),
       }),
@@ -37,7 +35,7 @@ return {
         { name = 'emoji' },
         { name = 'vim-dadbod-completion' },
         -- {name = 'buffer-lines'},
-        {name = 'nvim_lsp_document_symbol'},
+        { name = 'nvim_lsp_document_symbol' },
       }),
       experimental = {
         ghost_text = true,
@@ -52,14 +50,11 @@ return {
 
     cmp.setup.filetype({ 'dap-repl', 'dapui_watches', 'daupui_hover' }, {
       sources = {
-        { name = 'dap' }
-      }
+        { name = 'dap' },
+      },
     })
 
-    cmp.event:on(
-      'confirm_done',
-      cmp_autopairs.on_confirm_done()
-    )
+    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
     require('cmp_git').setup()
   end,
@@ -86,9 +81,7 @@ return {
           TypeParameter = '',
         },
       },
-      config = function(_, opts)
-        require('lspkind').init(opts)
-      end
+      config = function(_, opts) require('lspkind').init(opts) end,
     },
     'petertriho/cmp-git',
     'David-Kunz/cmp-npm',

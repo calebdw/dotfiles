@@ -1,3 +1,7 @@
+local Job = require('plenary.job')
+local Path = require('plenary.path')
+local scan = require('plenary.scandir')
+
 local M = {}
 
 --- Get relative path to file
@@ -106,17 +110,8 @@ function M.symlink_files(src, dest, relative, force)
   relative = relative ~= false
   force = force == true
 
-  local Job = require('plenary.job')
-  local Path = require('plenary.path')
-  local scan = require('plenary.scandir')
-
   local src_path = Path:new(src)
   local dest_path = Path:new(dest)
-
-  if not src_path:exists() then
-    vim.notify('Shared directory does not exist: ' .. src, vim.log.levels.DEBUG)
-    return
-  end
 
   scan.scan_dir_async(src_path:absolute(), {
     hidden = true,
