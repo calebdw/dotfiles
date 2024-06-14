@@ -108,6 +108,13 @@ return {
     },
     cmd = { 'Oil' },
     opts = {
+      skip_confirm_for_simple_edits = true,
+      experimental_watch_for_changes = true,
+      keymaps = {
+        ['<C-v>'] = { 'actions.select', opts = { vertical = true }, desc = 'Open the entry in a vertical split' },
+        ['<C-x>'] = { 'actions.select', opts = { horizontal = true }, desc = 'Open the entry in a horizontal split' },
+        ['q'] = 'actions.close',
+      },
       view_options = {
         show_hidden = true,
       },
