@@ -13,7 +13,9 @@ return {
   },
   {
     'rcarriga/nvim-notify',
-    config = true,
+    opts = {
+      on_open = function(win) vim.api.nvim_win_set_config(win, { focusable = false }) end,
+    },
     init = function()
       local telescope = require('telescope')
       local map = require('calebdw.util').map
