@@ -46,11 +46,9 @@ if [ -n "$upstream" ]; then
     git fetch upstream
 fi
 
-# Need to update all local branches to track the remote branches
+# Need to remove all local branches with invalid upstreams
 # See: https://stackoverflow.com/questions/54367011/git-bare-repositories-worktrees-and-tracking-branches
-git for-each-ref --format='%(refname:short)' refs/heads | while read branch; do
-    git branch --set-upstream-to=origin/"$branch" "$branch"
-done
+git for-each-ref --format='%(refname:short)' refs/heads | xargs git branch -D
 
 default_branch=$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')
 
