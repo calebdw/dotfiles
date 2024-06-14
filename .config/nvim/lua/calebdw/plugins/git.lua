@@ -1,3 +1,5 @@
+local Path = require('plenary.path')
+local Job = require('plenary.job')
 local util = require('calebdw.util')
 local map = util.map
 
@@ -7,7 +9,33 @@ local map = util.map
 --- @return nil
 local function symlink_shared_files(root, worktree)
   local shared = root .. '/.shared'
+  if not Path:new(shared):exists() then return end
   util.symlink_files(shared, root .. '/' .. worktree, true, true)
+end
+
+--- Bootstrap the worktree.
+--- @param root string
+--- @param worktree string
+local bootstrap_worktree = function(root, worktree)
+  local bootstrap = root .. '/.bootstrap'
+  if not Path:new(bootstrap):exists() then return end
+  vim.notify('Bootstrapping worktree: ' .. worktree, vim.log.levels.INFO)
+
+  Job:new({
+    command = 'bash',
+    args = { bootstrap, worktree },
+    cwd = root,
+    on_exit = function(j, code)
+      if code == 0 then
+        vim.notify('Bootstrapping complete: ' .. worktree, vim.log.levels.INFO)
+        return
+      end
+      vim.notify(
+        'Error bootstrapping worktree: ' .. worktree .. '\n' .. table.concat(j:stderr_result(), '\n'),
+        vim.log.levels.ERROR
+      )
+    end,
+  }):start()
 end
 
 --- Serve the worktree.
@@ -15,14 +43,14 @@ end
 --- @param worktree string
 local serve_worktree = function(root, worktree)
   local serve = root .. '/.serve'
-  local Job = require('plenary.job')
+  if not Path:new(serve):exists() then return end
   vim.notify('Serving worktree: ' .. worktree, vim.log.levels.INFO)
 
   Job:new({
     command = 'ln',
     args = { '-srfT', worktree, serve },
     cwd = root,
-  }):start()
+  }):sync()
 end
 
 return {
@@ -145,7 +173,11 @@ return {
       gwt.on_tree_change(function(op, meta)
         local root = gwt:get_root()
         assert(root, 'Git worktree root not found')
-        if op == gwt.Operations.Create then symlink_shared_files(root, meta.path) end
+        if op == gwt.Operations.Create then
+          symlink_shared_files(root, meta.path)
+          serve_worktree(root, meta.path)
+          bootstrap_worktree(root, meta.path)
+        end
         if op == gwt.Operations.Switch then serve_worktree(root, meta.path) end
       end)
 
