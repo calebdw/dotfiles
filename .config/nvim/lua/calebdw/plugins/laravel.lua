@@ -1,6 +1,6 @@
 return {
   {
-    'ricardoramirezr/lali-components.nvim',
-    ft = 'blade',
+    'ricardoramirezr/blade-nav.nvim',
+    ft = { 'blade', 'php' },
   },
 }
