@@ -50,11 +50,11 @@ fi
 # See: https://stackoverflow.com/questions/54367011/git-bare-repositories-worktrees-and-tracking-branches
 git for-each-ref --format='%(refname:short)' refs/heads | xargs git branch -D
 
-default_branch=$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')
+echo "Discovering default branch..."
+remote=$(if [ -n "$upstream" ]; then echo "upstream"; else echo "origin"; fi)
+default_branch=$(git remote show $remote | sed -n '/HEAD branch/s/.*: //p')
 
 if [ -n "$default_branch" ]; then
-    remote=$(if [ -n "$upstream" ]; then echo "upstream"; else echo "origin"; fi)
-
     echo "Creating initial worktree for the default branch ($remote/$default_branch)..."
     git worktree add -B "$default_branch" "$default_branch" "${remote}/$default_branch"
 fi
