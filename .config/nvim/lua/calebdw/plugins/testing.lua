@@ -1,3 +1,5 @@
+local util = require('calebdw.util')
+
 return {
   {
     'nvim-neotest/neotest',
@@ -36,7 +38,7 @@ return {
     end,
     init = function()
       vim.g['test#strategy'] = 'toggleterm'
-      vim.g['test#php#pest#executable'] = './vendor/bin/sail test'
+      vim.g['test#php#pest#executable'] = util.sail_or_bin('pest', true)
     end,
     dependencies = {
       -- deps
