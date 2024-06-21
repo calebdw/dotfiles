@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -e
+
+git_dir=$(git rev-parse --git-dir)
+
+git reset --hard
+git clean -df
+
+if [ -d "$git_dir/rebase-apply" ] || [ -d "$git_dir/rebase-merge" ]; then
+    git rebase --abort
+fi

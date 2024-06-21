@@ -17,7 +17,6 @@
     d = diff
     f = fetch
     l = log
-    nah = "!f(){ git reset --hard; git clean -df; if [ -d ".git/rebase-apply" ] || [ -d ".git/rebase-merge" ]; then git rebase --abort; fi; }; f"
     p = pull
     P = push
     Pf = push --force-with-lease
