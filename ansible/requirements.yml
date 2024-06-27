@@ -7,4 +7,5 @@ collections:
 roles:
   - name: geerlingguy.composer
   - name: geerlingguy.docker
+  - name: geerlingguy.go
   - name: geerlingguy.pip

@@ -4,6 +4,7 @@
     - software/_deps
     - software/brave-browser
     - software/composer/install
+    - software/go/install
     - software/cli-tools
     - software/docker
     - software/neovim
