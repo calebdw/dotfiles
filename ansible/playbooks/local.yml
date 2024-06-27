@@ -17,4 +17,5 @@
     - software/tableplus
     - software/tree-sitter
     - software/wezterm
+    - software/yubikey
     - configure/mouse
