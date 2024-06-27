@@ -374,7 +374,6 @@ return {
     },
   },
   'glepnir/lspsaga.nvim', -- UI for LSP client
-  'jayp0521/mason-null-ls.nvim', -- mason null-ls
   { -- ui for lsp progress
     'j-hui/fidget.nvim',
     tag = 'legacy',
