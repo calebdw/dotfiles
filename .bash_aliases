@@ -40,7 +40,6 @@ alias dep='vendor/bin/dep'
 # Laravel Artisan
 alias a='php artisan'
 alias sa=' sail artisan '
-alias pest='sail bin pest'
 
 export PATH="$HOME/bin:$PATH"
 export PATH="$PATH:$COMPOSER_HOME/vendor/bin"
