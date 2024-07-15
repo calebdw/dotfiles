@@ -2,6 +2,12 @@
 
 set -e
 
+read -p "This will reset all changes and clean the working directory. Are you sure? (y/N): " confirm
+if [[ $confirm != [yY] ]]; then
+    echo "Operation cancelled."
+    exit 1
+fi
+
 git_dir=$(git rev-parse --git-dir)
 
 git reset --hard
