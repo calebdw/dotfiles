@@ -46,6 +46,8 @@ local serve_worktree = function(root, worktree)
   if not Path:new(serve):exists() then return end
   vim.notify('Serving worktree: ' .. worktree, vim.log.levels.INFO)
 
+  Job:new({ command = 'rm', args = { serve }, cwd = root }):sync()
+
   Job:new({
     command = 'ln',
     args = { '-srfT', worktree, serve },
