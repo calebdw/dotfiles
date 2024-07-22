@@ -79,7 +79,7 @@ return {
       start_delay = 500,
       ensure_installed = {
         -- LSP Servers --
-        { 'phpactor', version = 'master' },
+        'phpactor',
         'tailwindcss-language-server',
 
         -- DAP Servers --
