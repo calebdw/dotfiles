@@ -6,7 +6,7 @@
 [absorb]
     autoStageIfNothingStaged = true
     maxStack = 20
-    oneFixupPerCommit = true
+    oneFixupPerCommit = false
 [alias]
     br = branch -av
     brdel = branch -D
