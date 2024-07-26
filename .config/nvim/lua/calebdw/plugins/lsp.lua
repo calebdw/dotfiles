@@ -106,6 +106,7 @@ return {
         'prettier',
         'prettierd',
         'sql-formatter',
+        'yamlfmt',
       },
     },
     dependencies = { 'williamboman/mason.nvim' },

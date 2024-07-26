@@ -13,6 +13,7 @@ dots:
 	ln -sf $(PWD)/.pg_format ~/
 	ln -sf $(PWD)/.tmux.conf ~/
 	ln -sf $(PWD)/.vimrc ~/
+	ln -sf $(PWD)/.yamlfmt.yml ~/
 	ln -sf $(PWD)/gitconfig ~/.gitconfig
 	ln -sf $(PWD)/gitignore ~/.gitignore
 	cp -asfv $(PWD)/.gnupg ~/

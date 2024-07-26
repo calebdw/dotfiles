@@ -1,0 +1,6 @@
+---
+formatter:
+  include_document_start: true
+  eof_newline: true
+  trim_trailing_spaces: true
+  retain_line_breaks_single: true

@@ -27,8 +27,10 @@ return {
         json = { 'prettier', 'jq', stop_after_first = true },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
         lua = { 'stylua' },
+        markdown = { 'prettier', 'markdownfmt', stop_after_first = true },
         php = { 'pint', 'phpcbf', 'php_cs_fixer', stop_after_first = true },
         sql = { 'pg_format', 'sqlfmt', stop_after_first = true },
+        yaml = { 'yamlfmt' },
         ['*'] = { 'injected' },
       },
       format_on_save = function(bufnr)
