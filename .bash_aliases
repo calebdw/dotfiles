@@ -47,6 +47,8 @@ export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/go/bin"
 export PATH="$PATH:./node_modules/.bin"
 export PATH="$PATH:./vendor/bin"
+
+export XDG_CONFIG_HOME=$HOME/.config
 export COMPOSER_HOME=$HOME/.config/composer
 
 # Bash Completion for all aliases
