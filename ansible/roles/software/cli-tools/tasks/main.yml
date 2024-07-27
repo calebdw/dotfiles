@@ -1,30 +1,31 @@
 ---
 - import_tasks: lazygit.yml
-- block:
+- name: install git
+  block:
     - name: add git ppa
       apt_repository:
-        repo: 'ppa:git-core/ppa'
+        repo: ppa:git-core/ppa
     - name: install git
       become: true
       apt:
         state: latest
-        update_cache: yes
+        update_cache: true
         cache_valid_time: 3600
-        name:
-          - git
-    - name: 'install git-delete-merged-branches (git-dmb)'
+        name: [git]
+    - name: install git-delete-merged-branches (git-dmb)
       pip:
         name: git-delete-merged-branches
         state: latest
-    - name: 'Install git-delta'
+    - name: Install git-delta
       community.general.cargo:
         name: git-delta
         state: latest
 
-- block:
-    - name: 'Clone fzf'
+- name: Install fzf
+  block:
+    - name: Clone fzf
       git:
-        repo: 'https://github.com/junegunn/fzf.git'
+        repo: https://github.com/junegunn/fzf.git
         dest: '{{ dir_sources }}/fzf'
         clone: true
         update: true
@@ -32,19 +33,20 @@
       register: clone
     - when: clone.changed
       block:
-        - name: 'Install fzf'
-          command: './install --all'
+        - name: Install fzf
+          command: ./install --all
           args:
             chdir: '{{ dir_sources }}/fzf'
 
-- block:
-    - name: 'Install bat'
+- name: Install bat
+  block:
+    - name: Install bat
       community.general.cargo:
         name: bat
         state: latest
-    - name: 'Clone bat-extras'
+    - name: Clone bat-extras
       git:
-        repo: 'https://github.com/eth-p/bat-extras.git'
+        repo: https://github.com/eth-p/bat-extras.git
         dest: '{{ dir_sources }}/bat-extras'
         clone: true
         update: true
@@ -52,23 +54,23 @@
       register: clone
     - when: clone.changed
       block:
-        - name: 'Install bat-extras'
+        - name: Install bat-extras
           become: true
-          command: './build.sh --install'
+          command: ./build.sh --install
           args:
             chdir: '{{ dir_sources }}/bat-extras'
 
-- name: 'Install ripgrep'
+- name: Install ripgrep
   community.general.cargo:
     name: ripgrep
     state: latest
 
-- name: 'Install git-absorb'
+- name: Install git-absorb
   community.general.cargo:
     name: git-absorb
     state: latest
 
-- name: 'Install fd'
+- name: Install fd
   community.general.cargo:
     name: fd-find
     state: latest
