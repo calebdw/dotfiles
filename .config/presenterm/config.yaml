@@ -1,0 +1,11 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mfontanini/presenterm/master/config-file-schema.json
+defaults:
+  theme: dark
+  # theme: tokyonight-storm
+options:
+  end_slide_shorthand: true
+  strict_front_matter_parsing: false
+snippet:
+  exec:
+    enable: true

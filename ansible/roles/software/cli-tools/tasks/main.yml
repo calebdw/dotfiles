@@ -75,6 +75,57 @@
     name: fd-find
     state: latest
 
+- name: Install presentterm
+  block:
+    - name: Clone the presenterm repository
+      git:
+        repo: https://github.com/mfontanini/presenterm.git
+        dest: '{{ dir_sources }}/presenterm'
+        version: master
+      register: presenterm_repo
+    - name: Install presenterm
+      community.general.cargo:
+        name: presenterm
+        directory: '{{ dir_sources }}/presenterm'
+      when: presenterm_repo.changed
+    - name: Install typst
+      community.general.cargo:
+        name: typst-cli
+        state: latest
+    - name: Install pandoc
+      block:
+        - name: Get the latest Pandoc version
+          uri:
+            url: "https://api.github.com/repos/jgm/pandoc/releases/latest"
+            return_content: yes
+          register: release_info
+        - name: Set the latest Pandoc version
+          set_fact:
+            pandoc_latest_version: "{{ release_info.json.tag_name | regex_replace('^v', '') }}"
+        - name: Check if Pandoc is installed
+          command: pandoc --version
+          register: pandoc_installed
+          ignore_errors: true
+          failed_when: false
+          changed_when: false
+        - name: Set installed Pandoc version
+          set_fact:
+            pandoc_installed_version: "{{ (pandoc_installed.stdout | regex_search('pandoc ([0-9.]+)', '\\1')).0 | default('') }}"
+        - when: pandoc_latest_version != pandoc_installed_version
+          block:
+            - name: Download Pandoc v{{ pandoc_latest_version }}
+              get_url:
+                url: "https://github.com/jgm/pandoc/releases/download/{{ release_info.json.tag_name }}/pandoc-{{ pandoc_latest_version }}-1-amd64.deb"
+                dest: "/tmp/pandoc.deb"
+            - name: Install Pandoc v{{ pandoc_latest_version }}
+              become: true
+              apt:
+                deb: "/tmp/pandoc.deb"
+            - name: Clean up downloaded .deb file
+              file:
+                path: "/tmp/pandoc.deb"
+                state: absent
+
 - name: Install lookatme
   block:
     - name: Install dev dependencies for ueberzug and urwid-ueberzogen
