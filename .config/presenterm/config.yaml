@@ -9,3 +9,5 @@ options:
 snippet:
   exec:
     enable: true
+  render:
+    threads: 4
