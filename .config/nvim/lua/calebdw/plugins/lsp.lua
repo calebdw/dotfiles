@@ -103,7 +103,6 @@ return {
         -- Formatters --
         'fixjson',
         'luaformatter',
-        'prettier',
         'prettierd',
         'sql-formatter',
         'yamlfmt',
