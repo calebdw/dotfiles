@@ -32,8 +32,9 @@ echo "Creating directory $name..."
 mkdir -p "$name"
 cd "$name"
 
-git clone --bare "$url" .bare
-echo "gitdir: ./.bare" > .git
+git clone --bare "$url" .git
+# git clone --bare "$url" .bare
+# echo "gitdir: ./.bare" > .git
 
 echo "Configuring origin remote..."
 git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
