@@ -29,6 +29,7 @@ return {
         lua = { 'stylua' },
         markdown = { 'prettier', 'markdownlint', stop_after_first = true },
         php = { 'pint', 'phpcbf', 'php_cs_fixer', stop_after_first = true },
+        rust = { 'rustfmt', stop_after_first = true },
         sql = { 'pg_format', 'sqlfmt', stop_after_first = true },
         yaml = { 'yamlfmt' },
         ['*'] = { 'injected' },
