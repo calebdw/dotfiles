@@ -19,3 +19,25 @@
     state: latest
     cache_valid_time: 3600
     name: 'wezterm-nightly'
+
+- name: 'check if wezterm is in alternatives'
+  become: true
+  command: 'update-alternatives --list x-terminal-emulator'
+  register: alternatives_output
+  changed_when: false
+
+- name: 'add wezterm to x-terminal-emulator alternatives'
+  become: true
+  command: 'update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator $(which wezterm) 50'
+  when: '"wezterm" not in alternatives_output.stdout'
+
+- name: 'check current default x-terminal-emulator'
+  become: true
+  command: 'update-alternatives --query x-terminal-emulator | grep "Value: "'
+  register: current_terminal
+  changed_when: false
+
+- name: 'set wezterm as default terminal emulator'
+  become: true
+  command: 'update-alternatives --set x-terminal-emulator $(which wezterm)'
+  when: '"wezterm" not in current_terminal.stdout'
