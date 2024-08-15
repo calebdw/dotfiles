@@ -18,4 +18,4 @@
   apt:
     state: latest
     cache_valid_time: 3600
-    name: 'wezterm'
+    name: 'wezterm-nightly'
