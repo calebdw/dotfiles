@@ -37,3 +37,6 @@
       - software-properties-common # apt-add-repository commands
       - unzip
       - xclip
+      # webp support
+      - webp
+      - webp-pixbuf-loader
