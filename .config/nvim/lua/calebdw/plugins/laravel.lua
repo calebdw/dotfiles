@@ -1,6 +1,6 @@
 return {
   {
     'ricardoramirezr/blade-nav.nvim',
-    ft = { 'blade', 'php' },
+    ft = { 'blade', 'blade.php' },
   },
 }
