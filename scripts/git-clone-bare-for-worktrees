@@ -28,13 +28,15 @@ url=$1
 basename=${url##*/}
 name=${2:-${basename%.*}}
 
+if [[ -d "$name" ]]; then
+    echo "Directory '$name' already exists!"
+    exit 1
+fi
+
 echo "Creating directory $name..."
-mkdir -p "$name"
-cd "$name"
+mkdir "$name" && cd "$name"
 
 git clone --bare "$url" .git
-# git clone --bare "$url" .bare
-# echo "gitdir: ./.bare" > .git
 
 echo "Configuring origin remote..."
 git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
