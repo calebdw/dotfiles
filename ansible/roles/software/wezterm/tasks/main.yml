@@ -33,7 +33,7 @@
 
 - name: 'check current default x-terminal-emulator'
   become: true
-  command: 'update-alternatives --query x-terminal-emulator | grep "Value: "'
+  shell: 'update-alternatives --query x-terminal-emulator | grep "Value: "'
   register: current_terminal
   changed_when: false
 
