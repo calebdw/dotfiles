@@ -77,17 +77,10 @@
 
 - name: Install presentterm
   block:
-    - name: Clone the presenterm repository
-      git:
-        repo: https://github.com/mfontanini/presenterm.git
-        dest: '{{ dir_sources }}/presenterm'
-        version: master
-      register: presenterm_repo
     - name: Install presenterm
       community.general.cargo:
         name: presenterm
-        directory: '{{ dir_sources }}/presenterm'
-      when: presenterm_repo.changed
+        state: latest
     - name: Install typst
       community.general.cargo:
         name: typst-cli
