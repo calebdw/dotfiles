@@ -37,3 +37,5 @@ Enum
 Palletizer
 sortable
 Laraflake
+frontend
+phpstan
