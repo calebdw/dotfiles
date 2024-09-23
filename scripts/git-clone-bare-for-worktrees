@@ -36,7 +36,7 @@ fi
 echo "Creating directory $name..."
 mkdir "$name" && cd "$name"
 
-git clone --bare "$url" .git
+git clone --bare --depth=1 "$url" .git
 
 echo "Configuring origin remote..."
 git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
