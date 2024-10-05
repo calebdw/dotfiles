@@ -56,6 +56,8 @@
     colorMoved = default
 [fetch]
     prune = true
+[format]
+    signoff = true
 [init]
     defaultBranch = master
 [interactive]
