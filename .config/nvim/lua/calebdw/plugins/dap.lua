@@ -10,6 +10,44 @@ return {
 
       -- dap.set_log_level('TRACE')
 
+      dap.adapters.codelldb = {
+        type = 'server',
+        port = '${port}',
+        executable = {
+          -- CHANGE THIS to your path!
+          -- command = '/absolute/path/to/codelldb/extension/adapter/codelldb',
+          -- command = registry.get_package('php-debug-adapter'):get_install_path() .. '/php-debug-adapter',
+          command = 'codelldb',
+          args = { '--port', '${port}' },
+        },
+      }
+      dap.adapters.php = {
+        type = 'executable',
+        command = registry.get_package('php-debug-adapter'):get_install_path() .. '/php-debug-adapter',
+      }
+
+      dap.configurations.c = {
+        {
+          name = 'Launch file',
+          type = 'codelldb',
+          request = 'launch',
+          program = function() return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file') end,
+          cwd = '${workspaceFolder}',
+          stopOnEntry = true,
+        },
+        {
+          name = 'Attach',
+          type = 'codelldb',
+          request = 'attach',
+          program = function() return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file') end,
+          pid = '${command:pickProcess}',
+          cwd = '${workspaceFolder}',
+          stopOnEntry = true,
+          waitFor = true,
+        },
+      }
+      dap.configurations.cpp = dap.configurations.c
+      dap.configurations.rust = dap.configurations.c
       dap.configurations.javascript = {
         {
           type = 'pwa-node',
@@ -62,11 +100,6 @@ return {
           -- skip files from vite's hmr
           skipFiles = { '**/node_modules/**/*', '**/@vite/*', '**/src/client/*', '**/src/*' },
         },
-      }
-
-      dap.adapters.php = {
-        type = 'executable',
-        command = registry.get_package('php-debug-adapter'):get_install_path() .. '/php-debug-adapter',
       }
       dap.configurations.php = {
         {

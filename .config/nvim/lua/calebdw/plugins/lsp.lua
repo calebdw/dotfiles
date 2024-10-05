@@ -85,6 +85,7 @@ return {
         -- DAP Servers --
         { 'js-debug-adapter', version = 'v1.76.1' },
         'php-debug-adapter',
+        'codelldb',
 
         -- Linters --
         'codespell',
