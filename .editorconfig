@@ -8,6 +8,9 @@ indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
 
+[*.patch]
+trim_trailing_whitespace = false
+
 [*.{yml,yaml,neon*,lua,scm,xml,md}]
 indent_size = 2
 
