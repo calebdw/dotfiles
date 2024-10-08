@@ -51,6 +51,7 @@ export PATH="$PATH:./vendor/bin"
 
 export XDG_CONFIG_HOME=$HOME/.config
 export COMPOSER_HOME=$HOME/.config/composer
+export EDITOR=nvim
 
 # Bash Completion for all aliases
 complete -F _complete_alias "${!BASH_ALIASES[@]}"
