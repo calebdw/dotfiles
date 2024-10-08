@@ -13,6 +13,7 @@ alias nv='nvim'
 alias python='python3'
 alias pip='pip3'
 alias g='git '
+alias b='b4 '
 alias lg='lazygit'
 
 # Use bat instead of cat if available

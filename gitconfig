@@ -3,10 +3,6 @@
     email = cdwhite3@pm.me
 [includeIf "gitdir:~/projects/"]
     path = ~/.gitconfig.work
-[absorb]
-    autoStageIfNothingStaged = true
-    maxStack = 20
-    oneFixupPerCommit = false
 [alias]
     br = branch -av
     brdel = branch -D
@@ -37,6 +33,8 @@
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 [checkout]
     defaultRemote = origin
+[credential]
+    helper = store
 [color]
     ui = auto
 [commit]
@@ -47,11 +45,6 @@
     editor = nvim
     commentchar = *
     pager = delta
-[delta]
-    hyperlinks = true
-    line-numbers = true
-    navigate = true
-    side-by-side = true
 [diff]
     colorMoved = default
 [fetch]
@@ -75,7 +68,31 @@
 [rerere]
     enabled = true
     autoupdate = true
+# [sendemail]
+#     # chainReplyTo = true
+#     confirm = auto
+#     smtpServer = 127.0.0.1
+#     smtpServerPort = 1025
+#     smtpEncryption = tls
+#     smtpSSLCertPath =
+#     smtpUser = cdwhite3@pm.me
 [tag]
     gpgSign = true
 [worktree]
     guessRemote = true
+
+# 3rd Party Tools
+[absorb]
+    autoStageIfNothingStaged = true
+    maxStack = 20
+    oneFixupPerCommit = false
+[b4]
+    send-endpoint-web = https://lkml.kernel.org/_b4_submit
+    send-same-thread = true
+[delta]
+    hyperlinks = true
+    line-numbers = true
+    navigate = true
+    side-by-side = true
+[patatt]
+    signingKey = openpgp:93EDE5A0C788BC38

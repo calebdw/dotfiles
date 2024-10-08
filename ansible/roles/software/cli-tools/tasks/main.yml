@@ -1,21 +1,45 @@
 ---
-- import_tasks: lazygit.yml
-- name: install git
+- name: install git and tools
   block:
+    - import_tasks: lazygit.yml
+
     - name: add git ppa
       apt_repository:
         repo: ppa:git-core/ppa
+
     - name: install git
       become: true
       apt:
         state: latest
         update_cache: true
         cache_valid_time: 3600
-        name: [git]
+        name:
+          - git
+          - git-email
+
+    - name: install perl deps for git-email
+      become: true
+      community.general.cpanm:
+        name: '{{ item }}'
+      loop:
+        - MIME::Base64
+        - MIME::QuotedPrint
+        - Net::Domain
+        - Net::SMTP
+        - Authen::SASL
+        - Mail::Address
+        - Net::SMTP::SSL
+
+    - name: Install b4
+      pip:
+        name: b4
+        state: latest
+
     - name: install git-delete-merged-branches (git-dmb)
       pip:
         name: git-delete-merged-branches
         state: latest
+
     - name: Install git-delta
       community.general.cargo:
         name: git-delta
