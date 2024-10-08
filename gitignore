@@ -4,3 +4,4 @@
 .php-cs-fixer.cache
 .phpactor.*
 .gitconfig
+/_emails
