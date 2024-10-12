@@ -1,9 +1,13 @@
 ---
+- name: 'update apt cache'
+  become: true
+  apt:
+    cache_valid_time: 3600
+
 - name: 'install dependencies'
   become: true
   apt:
     state: latest
-    cache_valid_time: 3600
     name:
       # - acl # operations involving ansible become_user
       - apt-transport-https
@@ -33,10 +37,23 @@
       - python3-docutils
       - python3-pip
       - python3-venv
-      - ripgrep
       - software-properties-common # apt-add-repository commands
       - unzip
       - xclip
       # webp support
       - webp
       - webp-pixbuf-loader
+
+- name: 'ensure bash completion dir exists'
+  ansible.builtin.file:
+    path: "{{ dir_user_completions }}"
+    state: directory
+    mode: '0755'
+
+- name: 'install pip bash completion'
+  become: true
+  ansible.builtin.copy:
+    content: "{{ lookup('pipe', 'pip completion --bash') }}"
+    dest: '/etc/bash_completion.d/pip'
+    mode: '0644'
+

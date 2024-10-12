@@ -1,7 +1,5 @@
 ---
-composer_home_path: '~/.config/composer'
-
-dir_sources: "~{{ ansible_env.USER }}/sources"
-
+dir_sources: "{{ ansible_env.HOME }}/sources"
+dir_user_completions: "{{ ansible_env.HOME }}/.local/share/bash-completion/completions"
 
 php_version: 8.2
