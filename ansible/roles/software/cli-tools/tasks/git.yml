@@ -1,0 +1,42 @@
+---
+- name: add git ppa
+  apt_repository:
+    repo: ppa:git-core/ppa
+  notify: update apt cache
+
+- name: install git
+  become: true
+  apt:
+    state: latest
+    name:
+      - git
+      - git-email
+
+- name: install perl deps for git-email
+  become: true
+  community.general.cpanm:
+    name: '{{ item }}'
+  loop:
+    - MIME::Base64
+    - MIME::QuotedPrint
+    - Net::Domain
+    - Net::SMTP
+    - Authen::SASL
+    - Mail::Address
+    - Net::SMTP::SSL
+
+- name: 'Install {{ item }}'
+  pip:
+    name: '{{ item }}'
+    state: latest
+  loop:
+    - git-dmb
+    - b4
+
+- name: 'Install {{ item }}'
+  community.general.cargo:
+    name: '{{ item }}'
+    state: latest
+  loop:
+    - git-delta
+    - git-absorb

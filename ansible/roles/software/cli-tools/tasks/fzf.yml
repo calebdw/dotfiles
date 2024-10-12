@@ -1,0 +1,19 @@
+---
+- name: Install fzf
+  vars:
+    install_dir: '{{ dir_sources }}/fzf'
+  block:
+    - name: Clone fzf
+      git:
+        repo: https://github.com/junegunn/fzf.git
+        dest: '{{ install_dir }}'
+        clone: true
+        update: true
+        force: true
+      register: clone
+    - when: clone.changed
+      block:
+        - name: Install fzf
+          command: ./install --all
+          args:
+            chdir: '{{ install_dir }}'

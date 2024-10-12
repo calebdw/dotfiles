@@ -1,0 +1,24 @@
+---
+- name: Install bat
+  vars:
+    install_dir: '{{ dir_sources }}/bat-extras'
+  block:
+    - name: Install bat
+      community.general.cargo:
+        name: bat
+        state: latest
+    - name: Clone bat-extras
+      git:
+        repo: https://github.com/eth-p/bat-extras.git
+        dest: '{{ install_dir }}'
+        clone: true
+        update: true
+        force: true
+      register: clone
+    - when: clone.changed
+      block:
+        - name: Install bat-extras
+          become: true
+          command: ./build.sh --install
+          args:
+            chdir: '{{ install_dir }}'
