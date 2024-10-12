@@ -1,0 +1,11 @@
+[Personal]
+source = imaps://cdwhite3%40pm.me@127.0.0.1:1143
+source-cred-cmd = keyring get proton-imap $USER
+outgoing = smtps://cdwhite3%40pm.me@127.0.0.1:1025
+outgoing-cred-cmd = keyring get proton-smtp $USER
+default = INBOX
+from = Caleb White <cdwhite3@pm.me>
+cache-headers = true
+check-mail = 1m
+copy-to = Sent
+folders-sort = INBOX, Drafts, Sent, Starred, Archive, Spam, Trash

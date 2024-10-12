@@ -1,0 +1,73 @@
+---
+- name: Install aerc
+  vars:
+    install_dir: '{{ dir_sources }}/aerc'
+  block:
+    - name: install deps
+      apt:
+        state: latest
+        name:
+          - scdoc
+          - w3m
+          - dante-client
+    - name: Clone aerc
+      git:
+        repo: https://git.sr.ht/~rjarry/aerc
+        dest: '{{ install_dir }}'
+        clone: true
+        update: true
+        force: true
+      register: clone
+    - when: clone.changed
+      block:
+        - name: Compile aerc
+          command: 'gmake'
+          args:
+            chdir: '{{ install_dir }}'
+        - name: Install aerc
+          become: true
+          command: 'gmake install'
+          args:
+            chdir: '{{ install_dir }}'
+
+- name: Install himalaya
+  block:
+    - name: Install himalaya
+      command: cargo install --git https://github.com/pimalaya/himalaya.git --all-features
+
+    - name: Write himalaya bash completion script
+      ansible.builtin.copy:
+        content: "{{ lookup('pipe', 'himalaya completion bash') }}"
+        dest: "{{ dir_user_completions }}/himalaya"
+        mode: '0644'
+
+- name: Install davmail
+  block:
+    - name: Install davmail
+      apt:
+        state: latest
+        name: davmail
+    - name: Create systemd service for davmail
+      ansible.builtin.copy:
+        content: |
+          [Unit]
+          Description=DavMail POP/IMAP/SMTP/Caldav/Carddav/LDAP Exchange Gateway
+          After=network.target
+
+          [Service]
+          ExecStart=/usr/bin/davmail %h/.config/davmail/davmail.properties
+          Restart=on-failure
+          StandardOutput=journal
+          StandardError=journal
+
+          [Install]
+          WantedBy=default.target
+        dest: '{{ ansible_env.HOME }}/.config/systemd/user/davmail.service'
+        mode: '0644'
+    - name: Enable and start davmail service
+      ansible.builtin.systemd_service:
+        daemon_reload: true
+        enabled: true
+        state: started
+        name: davmail
+        scope: user

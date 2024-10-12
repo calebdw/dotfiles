@@ -1,0 +1,20 @@
+display-name = "Caleb White"
+downloads-dir = "~/Downloads"
+
+[accounts.proton]
+default = true
+email = "cdwhite3@proton.me"
+
+backend = "imap"
+imap.host = "127.0.0.1"
+imap.port = 1143
+imap.login = "cdwhite3@proton.me"
+imap.auth.type = "password"
+imap.auth.keyring = "proton-imap"
+
+message.send.backend = "smtp"
+smtp.host = "127.0.0.1"
+smtp.port = 1025
+smtp.login = "cdwhite3@proton.me"
+smtp.auth.type = "password"
+smtp.auth.keyring = "proton-smtp"
