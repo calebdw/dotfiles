@@ -68,14 +68,12 @@
 [rerere]
     enabled = true
     autoupdate = true
-# [sendemail]
-#     # chainReplyTo = true
-#     confirm = auto
-#     smtpServer = 127.0.0.1
-#     smtpServerPort = 1025
-#     smtpEncryption = tls
-#     smtpSSLCertPath =
-#     smtpUser = cdwhite3@pm.me
+[sendemail]
+    confirm = auto
+    smtpServer = 127.0.0.1
+    smtpServerPort = 1025
+    smtpEncryption = ssl
+    smtpUser = cdwhite3@pm.me
 [tag]
     gpgSign = true
 [worktree]
