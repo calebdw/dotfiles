@@ -50,7 +50,7 @@ return {
       'nvim-neotest/neotest-vim-test',
       'olimorris/neotest-phpunit',
       'thenbe/neotest-playwright',
-      'V13Axel/neotest-pest',
+      { 'V13Axel/neotest-pest', branch = 'PHPUnit_Test_Support' },
       'marilari88/neotest-vitest',
       'nvim-neotest/neotest-plenary',
     },
