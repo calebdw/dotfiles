@@ -47,3 +47,4 @@ worktree
 config
 reinitializing
 subcommands
+variadic
