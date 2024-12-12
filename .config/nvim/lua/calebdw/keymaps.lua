@@ -75,3 +75,7 @@ map(
   function() vim.ui.open('https://github.com/' .. vim.fn.expand('<cfile>')) end,
   { desc = 'Open GitHub repo' }
 )
+
+map('n', '<space><space>x', ':source %<cr>', { desc = 'Source current file' })
+map('n', '<space>x', ':.lua<cr>', { desc = 'Source current line' })
+map('v', '<space>x', ':lua<cr><esc>', { desc = 'Source current selection' })
