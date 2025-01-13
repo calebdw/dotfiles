@@ -46,12 +46,12 @@ export XDG_CONFIG_HOME=$HOME/.config
 export COMPOSER_HOME=$HOME/.config/composer
 export EDITOR=nvim
 
+export PATH="./vendor/bin:$PATH"
+export PATH="./node_modules/.bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 export PATH="$PATH:$COMPOSER_HOME/vendor/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/go/bin"
-export PATH="$PATH:./node_modules/.bin"
-export PATH="$PATH:./vendor/bin"
 
 # Bash Completion for all aliases
 complete -F _complete_alias "${!BASH_ALIASES[@]}"
