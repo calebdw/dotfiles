@@ -7,6 +7,7 @@
     br = branch -av
     brdel = branch -D
     cloneb = clone-bare-for-worktrees
+    cp = cherry-pick
     c = commit
     co = checkout
     cob = checkout -b
@@ -19,6 +20,7 @@
     ra = rebase --abort
     rc = rebase --continue
     ri = rebase -i
+    s = stash
     spo = stash pop
     spu = stash push -u
     st = status
@@ -78,6 +80,7 @@
     gpgSign = true
 [worktree]
     guessRemote = true
+    useRelativePaths = true
 
 # 3rd Party Tools
 [absorb]
