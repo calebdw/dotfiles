@@ -1,0 +1,8 @@
+---
+- name: install perl
+  become: true
+  apt:
+    state: latest
+    name:
+      - perl
+      - cpanminus

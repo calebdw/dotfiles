@@ -8,6 +8,7 @@
     - software/composer/install
     - software/cargo/install
     - software/go/install
+    - software/perl/install
     - software/cli-tools
     - software/docker
     - software/neovim
