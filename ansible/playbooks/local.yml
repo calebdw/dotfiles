@@ -3,6 +3,8 @@
   roles:
     - software/_deps
     - software/brave-browser
+    - software/php/install
+    - software/php/manual
     - software/composer/install
     - software/go/install
     - software/cli-tools
@@ -11,8 +13,6 @@
     - software/nerd_fonts
     - software/nodejs/install
     - software/pgadmin
-    - software/php/install
-    - software/php/manual
     - software/porter
     - software/tableplus
     - software/tree-sitter
