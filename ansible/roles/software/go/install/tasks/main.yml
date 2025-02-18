@@ -4,9 +4,6 @@
     name: geerlingguy.go
     apply:
       become: true
-      vars:
-        go_version: '1.22.4'
-        go_checksum: 'ba79d4526102575196273416239cca418a651e049c2b099f3159db85e7bade7d'
 
 - name: Create symlink for Go binary
   become: true
