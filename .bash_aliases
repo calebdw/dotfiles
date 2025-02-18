@@ -17,7 +17,7 @@ alias b='b4 '
 alias lg='lazygit'
 
 # Use bat instead of cat if available
-command -v bat &> /dev/null && alias cat='bat --paging=never'
+# command -v bat &> /dev/null && alias cat='bat --paging=never'
 
 alias dockup='docker compose up --build -d'
 alias dockdown='docker compose down'
