@@ -4,6 +4,7 @@
     install_dir: '{{ dir_sources }}/aerc'
   block:
     - name: install deps
+      become: true
       apt:
         state: latest
         name:

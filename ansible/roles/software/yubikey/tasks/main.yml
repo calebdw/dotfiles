@@ -7,4 +7,5 @@
       - scdaemon
       - pcscd
       - yubikey-manager
+
 - import_tasks: touch-detector.yml

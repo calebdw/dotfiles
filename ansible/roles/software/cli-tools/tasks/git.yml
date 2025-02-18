@@ -33,7 +33,7 @@
     - Mail::Address
     - Net::SMTP::SSL
 
-- name: 'Install {{ item }}'
+- name: 'Install pip packages'
   pip:
     name: '{{ item }}'
     state: latest
@@ -41,7 +41,7 @@
     - git-dmb
     - b4
 
-- name: 'Install {{ item }}'
+- name: 'Install cargo packages'
   community.general.cargo:
     name: '{{ item }}'
     state: latest
