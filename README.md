@@ -6,11 +6,27 @@
 
 🏡 is where the 💚 is.
 
-### Installation
+## Installation
 
 To install simply execute `make`, to uninstall `make clean`.
 
-#### Ansible
+### Ansible
+
+#### Ansible Installation
+
+Ansible first needs to be installed through `pip`
+
+```bash
+sudo apt update
+sudo apt install python3-pip
+sudo pip3 install ansible   # globally
+pip3 install --user ansible # locally
+# upgrade
+sudo pip3 install --upgrade ansible   # globally
+pip3 install --upgrade --user ansible # locally
+```
+
+> [!NOTE]
+> Ansible binaries are installed in `~/.local/bin` which needs to be in your PATH.
 
 To play the Ansible playbook, execute `make ansible`.
-
