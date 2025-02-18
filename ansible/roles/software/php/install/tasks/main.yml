@@ -9,6 +9,9 @@
     components: main
   notify: update apt cache
 
+- name: 'flush handlers'
+  ansible.builtin.meta: flush_handlers
+
 - name: 'install PHP'
   become: true
   apt:
