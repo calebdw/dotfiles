@@ -8,10 +8,15 @@
     force: true
   register: clone
 
+- name: ensure icon directory exists
+  file:
+    path: '{{ ansible_env.HOME }}/.local/share/icons'
+    state: directory
+
 - name: 'Download yubikey touch icon'
   get_url:
     url: 'https://raw.githubusercontent.com/alpinelinux/aports/1f596c2461794305a92b6ee5e53d9bb1c9a6f864/community/yubikey-touch-detector/yubikey-touch-detector.svg'
-    dest: '~/.local/share/icons/yubikey-touch-detector.svg'
+    dest: '{{ ansible_env.HOME }}/.local/share/icons/yubikey-touch-detector.svg'
 
 - when: clone.changed
   block:
