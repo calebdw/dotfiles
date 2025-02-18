@@ -1,0 +1,33 @@
+---
+- name: 'Clone yubikey-touch-detector'
+  git:
+    repo: 'https://github.com/maximbaz/yubikey-touch-detector'
+    dest: '{{ dir_sources }}/yubikey-touch-detector'
+    clone: true
+    update: true
+    force: true
+  register: clone
+
+- name: 'Download yubikey touch icon'
+  get_url:
+    url: 'https://raw.githubusercontent.com/alpinelinux/aports/1f596c2461794305a92b6ee5e53d9bb1c9a6f864/community/yubikey-touch-detector/yubikey-touch-detector.svg'
+    dest: '~/.local/share/icons/yubikey-touch-detector.svg'
+
+- when: clone.changed
+  block:
+    - name: 'Build yubikey-touch-detector'
+      shell: 'make'
+      args:
+        chdir: '{{ dir_sources }}/yubikey-touch-detector'
+
+    - name: 'Install yubikey-touch-detector'
+      become: true
+      shell: 'make install'
+      args:
+        chdir: '{{ dir_sources }}/yubikey-touch-detector'
+
+    - name: Reload systemd daemon for user
+      command: 'systemctl --user daemon-reload'
+
+    - name: Enable and start yubikey-touch-detector service
+      command: 'systemctl --user enable --now yubikey-touch-detector.service'
