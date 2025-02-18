@@ -28,7 +28,7 @@
 - name: 'add wezterm to x-terminal-emulator alternatives'
   become: true
   shell: 'update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator $(which wezterm) 50'
-  when: '"wezterm" not in alternatives_output.stdout'
+  when: '"/wezterm" not in alternatives_output.stdout'
 
 - name: 'check current default x-terminal-emulator'
   become: true
