@@ -35,9 +35,6 @@ alias sudo='sudo '
 alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
 alias s='sail '
 
-# PHP Deployer
-alias dep='vendor/bin/dep'
-
 # Laravel Artisan
 alias a='php artisan'
 alias sa=' sail artisan '
