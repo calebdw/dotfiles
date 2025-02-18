@@ -6,7 +6,7 @@
 - import_tasks: lazygit.yml
 - import_tasks: presenterm.yml
 
-- name: 'Install {{ item }}'
+- name: 'Install cli tools via cargo'
   community.general.cargo:
     name: '{{ item }}'
     state: latest
