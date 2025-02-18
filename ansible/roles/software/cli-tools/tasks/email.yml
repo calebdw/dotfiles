@@ -49,6 +49,11 @@
       apt:
         state: latest
         name: davmail
+    - name: Ensure systemd user directory exists
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/.config/systemd/user"
+        state: directory
+        mode: '0755'
     - name: Create systemd service for davmail
       ansible.builtin.copy:
         content: |
