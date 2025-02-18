@@ -31,16 +31,16 @@
           args:
             chdir: '{{ install_dir }}'
 
-- name: Install himalaya
-  block:
-    - name: Install himalaya
-      command: cargo install --git https://github.com/pimalaya/himalaya.git --all-features
-
-    - name: Write himalaya bash completion script
-      ansible.builtin.copy:
-        content: "{{ lookup('pipe', 'himalaya completion bash') }}"
-        dest: "{{ dir_user_completions }}/himalaya"
-        mode: '0644'
+# - name: Install himalaya
+#   block:
+#     - name: Install himalaya
+#       command: cargo install --git https://github.com/pimalaya/himalaya.git --all-features
+#
+#     - name: Write himalaya bash completion script
+#       ansible.builtin.copy:
+#         content: "{{ lookup('pipe', 'himalaya completion bash') }}"
+#         dest: "{{ dir_user_completions }}/himalaya"
+#         mode: '0644'
 
 - name: Install davmail
   block:
