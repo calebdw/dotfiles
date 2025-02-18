@@ -1,8 +1,8 @@
 ---
+- import_tasks: git.yml
 - import_tasks: bat.yml
 - import_tasks: email.yml
 - import_tasks: fzf.yml
-- import_tasks: git.yml
 - import_tasks: lazygit.yml
 - import_tasks: presenterm.yml
 
