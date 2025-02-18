@@ -1,7 +1,5 @@
 ---
 - name: 'Install tree-sitter-cli'
-  become: true
-  npm:
-    global: true
+  community.general.cargo:
     name: tree-sitter-cli
     state: latest
