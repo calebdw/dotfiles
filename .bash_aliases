@@ -51,4 +51,4 @@ export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/go/bin"
 
 # Bash Completion for all aliases
-complete -F _complete_alias "${!BASH_ALIASES[@]}"
+# complete -F _complete_alias "${!BASH_ALIASES[@]}"
