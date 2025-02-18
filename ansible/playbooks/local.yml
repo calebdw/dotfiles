@@ -5,15 +5,15 @@
     - software/brave-browser
     - software/php/install
     - software/php/manual
-    - software/composer/install
     - software/cargo/install
     - software/go/install
     - software/perl/install
+    - software/nodejs/install
+    - software/composer/install
     - software/cli-tools
     - software/docker
     - software/neovim
     - software/nerd_fonts
-    - software/nodejs/install
     - software/pgadmin
     - software/porter
     - software/tableplus
