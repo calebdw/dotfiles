@@ -1,7 +1,7 @@
 [user]
     name = "Caleb White"
     email = cdwhite3@pm.me
-[includeIf "gitdir:~/projects/"]
+[includeIf "gitdir:~/work/"]
     path = ~/.gitconfig.work
 [alias]
     br = branch -av
