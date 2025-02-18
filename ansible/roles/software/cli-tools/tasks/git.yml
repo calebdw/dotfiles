@@ -1,7 +1,12 @@
 ---
-- name: add git ppa
-  apt_repository:
-    repo: ppa:git-core/ppa
+- name: 'add git APT repository'
+  become: true
+  ansible.builtin.deb822_repository:
+    name: git
+    uris: https://ppa.launchpadcontent.net/git-core/ppa/ubuntu
+    signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xf911ab184317630c59970973e363c90f8f1b6217
+    suites: '{{ ansible_distribution_release }}'
+    components: main
   notify: update apt cache
 
 - name: install git
