@@ -9,7 +9,7 @@
   apt:
     state: latest
     name:
-      # - acl # operations involving ansible become_user
+      - acl # operations involving ansible become_user
       - apt-transport-https
       - autoconf
       - automake
