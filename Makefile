@@ -20,6 +20,7 @@ dots:
 	cp -asfv $(PWD)/.config ~/
 
 scripts:
+	mkdir -p ~/bin
 	cp -asfv $(PWD)/scripts/* ~/bin/
 
 clean-links:
