@@ -45,6 +45,7 @@
 - name: Install davmail
   block:
     - name: Install davmail
+      become: true
       apt:
         state: latest
         name: davmail
