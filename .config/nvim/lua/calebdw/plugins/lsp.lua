@@ -31,6 +31,7 @@ local servers = {
   'sqlls', -- SQL
   'tailwindcss', -- Tailwind CSS
   -- 'tsserver', -- Javascript / TypeScript
+  'ts_ls', -- TypeScript
   'volar', -- Vue
   -- 'vuels', -- Vue
   -- 'zeta_note', -- Markdown
@@ -315,12 +316,29 @@ return {
           }
         end
 
-        if name == 'volar' then
+        if name == 'ts_ls' then
           opts.filetypes = {
             'typescript',
             'javascript',
             'vue',
             'json',
+          }
+        end
+
+        if name == 'volar' then
+          opts.init_options = {
+            plugins = {
+              {
+                name = "@vue/typescript-plugin",
+                location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
+                languages = {"javascript", "typescript", "vue"},
+              },
+            },
+          }
+          opts.filetypes = {
+            'typescript',
+            'javascript',
+            'vue',
           }
         end
 
