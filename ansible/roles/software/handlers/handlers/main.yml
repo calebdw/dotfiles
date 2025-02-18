@@ -1,4 +1,9 @@
 ---
+- name: source bashrc
+  shell: source ~/.bashrc
+  args:
+    executable: /bin/bash
+
 - name: 'update apt cache'
   become: true
   ansible.builtin.apt:

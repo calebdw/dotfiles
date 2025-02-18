@@ -1,0 +1,4 @@
+---
+- name: 'install cargo'
+  shell: curl -sSf https://sh.rustup.rs | sh -s -- -y
+  notify: source bashrc

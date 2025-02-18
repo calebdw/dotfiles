@@ -6,6 +6,7 @@
     - software/php/install
     - software/php/manual
     - software/composer/install
+    - software/cargo/install
     - software/go/install
     - software/cli-tools
     - software/docker
