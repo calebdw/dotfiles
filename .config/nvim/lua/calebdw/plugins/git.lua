@@ -8,7 +8,7 @@ local map = util.map
 --- @param worktree string
 --- @return nil
 local function symlink_shared_files(root, worktree)
-  local shared = root .. '/.shared'
+  local shared = root .. '/../.shared'
   if not Path:new(shared):exists() then return end
   util.symlink_files(shared, root .. '/' .. worktree, true, true)
 end
