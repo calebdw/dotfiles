@@ -1,7 +1,3 @@
-local Job = require('plenary.job')
-local Path = require('plenary.path')
-local scan = require('plenary.scandir')
-
 local M = {}
 
 --- Get relative path to file
@@ -107,6 +103,10 @@ end
 --- @param force? boolean
 --- @return nil
 function M.symlink_files(src, dest, relative, force)
+  local Job = require('plenary.job')
+  local Path = require('plenary.path')
+  local scan = require('plenary.scandir')
+
   relative = relative ~= false
   force = force == true
 
