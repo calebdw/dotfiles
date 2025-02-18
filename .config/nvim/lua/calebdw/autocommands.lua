@@ -63,7 +63,7 @@ vim.api.nvim_create_autocmd({ 'VimEnter' }, {
 
     Job:new({
       command = 'find',
-      args = { 'undo', 'swap', 'backup', '-type', 'f', '-mtime', '+' .. days, '-delete' },
+      args = { 'undo', 'swap', 'backup', '-ignore_readdir_race', '-type', 'f', '-mtime', '+' .. days, '-delete' },
       cwd = cwd,
       on_exit = function(job, code)
         if code == 0 then return end
