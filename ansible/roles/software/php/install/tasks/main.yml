@@ -1,8 +1,13 @@
 ---
-- name: 'add php ppa'
+- name: 'add php APT repository'
   become: true
-  apt_repository:
-    repo: 'ppa:ondrej/php'
+  ansible.builtin.deb822_repository:
+    name: php
+    uris: https://ppa.launchpadcontent.net/ondrej/php/ubuntu
+    signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xb8dc7e53946656efbce4c1dd71daeaab4ad4cab6
+    suites: '{{ ansible_distribution_release }}'
+    components: main
+  notify: update apt cache
 
 - name: 'install PHP'
   become: true
@@ -15,10 +20,12 @@
       - php{{ php_version }}-fpm # FPM-CGI binary
       - php{{ php_version }}-gd # GD module (images)
       - php{{ php_version }}-imap # IMAP module
+      - php{{ php_version }}-intl # intl module
       - php{{ php_version }}-mbstring # MBSTRING module (non-ascii strings)
       - php{{ php_version }}-pgsql # PostgreSQL module
       - php{{ php_version }}-redis # extension for interfacing with Redis
       - php{{ php_version }}-soap # SOAP module
+      - php{{ php_version }}-xdebug # XDebug module
       - php{{ php_version }}-xml # for working with xml data
       - php{{ php_version }}-xmlrpc # XMLRPC-EPI module
       - php{{ php_version }}-zip # required for ZipArchive class
