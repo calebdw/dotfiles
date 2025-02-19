@@ -2,6 +2,7 @@
 - hosts: local
   roles:
     - software/_deps
+    - software/openconnect
     - software/brave-browser
     - software/php/install
     - software/php/manual

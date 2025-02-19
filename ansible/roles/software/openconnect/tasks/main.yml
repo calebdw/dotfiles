@@ -1,0 +1,21 @@
+---
+- name: 'add openconnect APT repository'
+  become: true
+  ansible.builtin.deb822_repository:
+    name: openconnect
+    uris: 'http://download.opensuse.org/repositories/home:/bluca:/openconnect:/release/Ubuntu_{{ ansible_distribution_version }}/'
+    signed_by: 'https://download.opensuse.org/repositories/home:bluca:openconnect:release/Ubuntu_{{ ansible_distribution_version }}/Release.key'
+    suites: /
+  notify: update apt cache
+
+- name: 'flush handlers'
+  ansible.builtin.meta: flush_handlers
+
+- name: 'Install openconnect'
+  become: true
+  apt:
+    state: latest
+    name:
+      - openconnect
+      - network-manager-openconnect
+      - network-manager-openconnect-gnome
