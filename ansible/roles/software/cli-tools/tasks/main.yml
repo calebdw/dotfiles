@@ -6,6 +6,13 @@
 - import_tasks: lazygit.yml
 - import_tasks: presenterm.yml
 
+- name: 'Install cli tools apt'
+  become: true
+  apt:
+    state: latest
+    name:
+      - btop
+
 - name: 'Install cli tools via cargo'
   community.general.cargo:
     name: '{{ item }}'
