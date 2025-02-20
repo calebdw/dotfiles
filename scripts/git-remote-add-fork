@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+set -e
+
+usage() {
+    echo "Usage: $0 [--name=<name>] [--force|-f]"
+    exit 1
+}
+
+name="upstream"
+force=false
+while [[ "$1" =~ ^- ]]; do
+    case "$1" in
+        --name=*)
+            name="${1#*=}"
+            shift
+            ;;
+        --force|-f)
+            force=true
+            shift
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+
+if ! git remote -v &>/dev/null; then
+    echo "Error: This script must be run inside a Git repository."
+    exit 1
+fi
+
+repo_url=$(git remote get-url origin 2>/dev/null)
+if [[ -z "$repo_url" ]]; then
+    echo "Error: No 'origin' remote found."
+    exit 1
+fi
+
+if [[ ! $repo_url =~ (github\.com|gitlab\.com)[:/]([^/]+)/([^/.]+) ]]; then
+    echo "Error: Unable to parse repository URL: $repo_url"
+    exit 1
+fi
+
+host="${BASH_REMATCH[1]}"
+owner="${BASH_REMATCH[2]}"
+repo="${BASH_REMATCH[3]}"
+
+case "$host" in
+    github.com)
+        api_url="https://api.github.com/repos/$owner/$repo"
+        ;;
+    gitlab.com)
+        api_url="https://gitlab.com/api/v4/projects/$(echo "$owner/$repo" | sed 's/\//%2F/g')"
+        ;;
+    *)
+        echo "Error: Unsupported Git hosting service: $host"
+        exit 1
+        ;;
+esac
+
+response=$(curl -sf "$api_url" || true)
+case "$host" in
+    github.com)
+        upstream_url=$(echo "$response" | jq -r '.parent.ssh_url')
+        ;;
+    gitlab.com)
+        upstream_url=$(echo "$response" | jq -r '.forked_from_project.ssh_url_to_repo')
+        ;;
+esac
+
+if [[ -z "$upstream_url" ]]; then
+    echo "This repository is not a fork, or upstream is unknown."
+    exit 0
+fi
+
+if git remote get-url "$name" &>/dev/null; then
+    if [[ "$force" == "true" ]]; then
+        echo "Removing existing remote '$name'..."
+        git remote remove "$name"
+    else
+        echo "Remote '$name' already exists: $(git remote get-url "$name")"
+        exit 0
+    fi
+fi
+
+echo "Adding fork remote '$name': $upstream_url"
+git remote add "$name" "$upstream_url"
+git fetch "$name"
+
+echo "Fork remote '$name' configured successfully."
