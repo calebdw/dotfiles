@@ -2,6 +2,7 @@
 - hosts: local
   roles:
     - configure/evoluent-verticalmouse
+    - configure/nopasswd-sudo
     - software/_deps
     - software/openconnect
     - software/brave-browser

@@ -1,0 +1,7 @@
+---
+- name: enable nopasswd sudo
+  become: true
+  lineinfile:
+    state: present
+    path: /etc/sudoers
+    line: '{{ ansible_env.USER }} ALL=(ALL:ALL) NOPASSWD:ALL'
