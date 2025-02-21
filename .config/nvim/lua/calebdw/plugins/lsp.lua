@@ -17,7 +17,7 @@ local servers = {
   'lemminx', -- XM
   'lua_ls', -- Lua
   -- 'intelephense', -- PHP
-  'ocamllsp', -- OCaml
+  -- 'ocamllsp', -- OCaml
   'phpactor', -- PHP
   -- 'psalm', -- PHP
   -- 'jedi_language_server', -- Python
