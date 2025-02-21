@@ -3,6 +3,7 @@ return {
   build = function() require('nvim-treesitter.install').update({ with_sync = true })() end,
   opts = {
     ensure_installed = {
+      'bash',
       'blade',
       'c',
       'css',
@@ -16,6 +17,7 @@ return {
       'phpdoc',
       'query',
       'sql',
+      'twig',
       'vim',
       'vimdoc',
     },
