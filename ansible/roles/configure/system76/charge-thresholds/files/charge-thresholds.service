@@ -1,0 +1,10 @@
+[Unit]
+Description=Set the charge threshold at startup.
+After=default.target
+
+[Service]
+Type=simple
+ExecStart=system76-power charge-thresholds --profile max_lifespan
+
+[Install]
+WantedBy=default.target

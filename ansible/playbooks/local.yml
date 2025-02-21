@@ -22,11 +22,5 @@
     - software/wezterm
     - software/yubikey
     - configure/mouse
-    # - role: robertdebock.auditd
-    #   become: true
-    #   auditd_rules:
-    #     - file: /home/cwhite/projects/eaglesys/
-    #       permissions:
-    #         - write
-    #         - attribute_change
-    #       keyname: eaglesys
+    - role: configure/system76/charge-thresholds
+      when: "ansible_system_vendor == 'System76'"
