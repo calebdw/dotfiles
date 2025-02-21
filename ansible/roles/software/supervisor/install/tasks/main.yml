@@ -1,0 +1,13 @@
+---
+- name: 'install supervisor'
+  become: true
+  apt:
+    state: latest
+    name: supervisor
+
+- name: 'start supervisor'
+  become: true
+  service:
+    name: supervisor
+    state: started
+    enabled: true

@@ -19,6 +19,7 @@
     - software/nerd_fonts
     - software/pgadmin
     - software/porter
+    - software/supervisor/install
     - software/tableplus
     - software/tree-sitter
     - software/wezterm
