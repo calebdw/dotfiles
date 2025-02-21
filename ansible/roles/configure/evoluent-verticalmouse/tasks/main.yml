@@ -1,5 +1,5 @@
 ---
-- name: 'add mouse udev config'
+- name: 'add {{ mouse_name }} udev config'
   become: true
   template:
     src: "71-mouse-local.hwdb.j2"
