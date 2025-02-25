@@ -7,6 +7,7 @@ all: dots scripts clean-links
 dots:
 	ln -sf $(PWD)/.alacritty.yml ~/
 	ln -sf $(PWD)/.bash_aliases ~/
+	ln -sf $(PWD)/.bash_completion ~/
 	ln -sf $(PWD)/.bashrc ~/
 	ln -sf $(PWD)/.editorconfig ~/
 	ln -sf $(PWD)/.latexmkrc ~/

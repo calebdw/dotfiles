@@ -1,0 +1,8 @@
+---
+- name: 'clone complete-alias'
+  git:
+    repo: 'https://github.com/cykerway/complete-alias'
+    dest: '{{ dir_sources }}/complete-alias'
+    clone: true
+    update: true
+    force: true

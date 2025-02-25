@@ -48,4 +48,6 @@ export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/go/bin"
 
 # Bash Completion for all aliases
-# complete -F _complete_alias "${!BASH_ALIASES[@]}"
+if declare -F _complete_alias > /dev/null; then
+    complete -F _complete_alias "${!BASH_ALIASES[@]}"
+fi
