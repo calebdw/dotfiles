@@ -22,12 +22,17 @@
       - php{{ php_version }}-curl # CURL module
       - php{{ php_version }}-fpm # FPM-CGI binary
       - php{{ php_version }}-gd # GD module (images)
+      - php{{ php_version }}-igbinary
       - php{{ php_version }}-imap # IMAP module
       - php{{ php_version }}-intl # intl module
       - php{{ php_version }}-mbstring # MBSTRING module (non-ascii strings)
+      - php{{ php_version }}-memcached
+      - php{{ php_version }}-msgpack
+      - php{{ php_version }}-mysql
       - php{{ php_version }}-pgsql # PostgreSQL module
       - php{{ php_version }}-redis # extension for interfacing with Redis
       - php{{ php_version }}-soap # SOAP module
+      - php{{ php_version }}-sqlite3
       - php{{ php_version }}-xdebug # XDebug module
       - php{{ php_version }}-xml # for working with xml data
       - php{{ php_version }}-xmlrpc # XMLRPC-EPI module
