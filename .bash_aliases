@@ -47,6 +47,8 @@ export PATH="$PATH:$COMPOSER_HOME/vendor/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/go/bin"
 
+export NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
+
 # Bash Completion for all aliases
 if declare -F _complete_alias > /dev/null; then
     complete -F _complete_alias "${!BASH_ALIASES[@]}"
