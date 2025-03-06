@@ -33,14 +33,19 @@
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     lgb = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --branches
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+[branch]
+    sort = -committerdate
 [checkout]
     defaultRemote = origin
 [credential]
     helper = store
 [color]
     ui = auto
+[column]
+    ui = auto
 [commit]
     gpgsign = true
+    verbose = true
 [core]
     autocrlf = false
     excludesFile = ~/.gitignore
@@ -48,15 +53,24 @@
     commentchar = *
     pager = delta
 [diff]
-    colorMoved = default
+    algorithm = histogram
+    colorMoved = plain
+    renames = true
+    mnemonicPrefix = true
 [fetch]
     prune = true
+    pruneTags = true
+    # all = true
 [format]
     signoff = true
+[help]
+    autocorrect = prompt
 [init]
     defaultBranch = master
 [interactive]
     diffFilter = delta --color-only
+[log]
+    date = iso
 [merge]
     conflictstyle = zdiff3
     tool = nvimdiff2
@@ -65,8 +79,11 @@
     rebase = true
 [push]
     autoSetupRemote = true
+    followTags = true
 [rebase]
     autoSquash = true
+    autoStash = true
+    updateRefs = true
 [rerere]
     enabled = true
     autoupdate = true
@@ -78,6 +95,9 @@
     smtpUser = cdwhite3@pm.me
 [tag]
     gpgSign = true
+    sort = -version:refname
+[url "git@github.com:"]
+    pushInsteadOf = "https://github.com/"
 [worktree]
     guessRemote = true
     useRelativePaths = true
