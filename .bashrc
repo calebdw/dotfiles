@@ -126,5 +126,3 @@ fi
 . "$HOME/.cargo/env"
 
 OCAMLRUNPARAM="b"
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
