@@ -1,0 +1,5 @@
+---
+- name: 'install jj'
+  community.general.cargo:
+    name: jj-cli
+    state: latest

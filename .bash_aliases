@@ -47,6 +47,9 @@ export PATH="$PATH:$COMPOSER_HOME/vendor/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/go/bin"
 
+# need to set to a directory so jj loads all configs
+export JJ_CONFIG="$HOME/.config/jj"
+
 export NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
 
 # Bash Completion for all aliases

@@ -1,0 +1,19 @@
+"$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
+
+[user]
+name = "Caleb White"
+email = "cdwhite3@pm.me"
+
+[git]
+private-commits = "description(glob:'wip:*') | description(glob:'private:*')"
+sign-on-push = true
+
+[ui]
+default-command = "log"
+
+[ui.movement]
+# edit = true
+
+[signing]
+behavior = "drop"
+backend = "gpg"
