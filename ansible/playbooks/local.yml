@@ -5,7 +5,7 @@
     - configure/nopasswd-sudo
     - software/_deps
     - software/bash/complete-alias
-    - software/openconnect
+    # - software/openconnect
     - software/brave-browser
     - software/php/install
     - software/php/manual
