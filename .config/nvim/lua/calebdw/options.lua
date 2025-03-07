@@ -89,6 +89,7 @@ opt.errorformat:append('%-G%.%#') -- ignores all other unmatched lines
 -- Folding --
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr   = 'v:lua.vim.treesitter.foldexpr()'
+-- vim.opt.foldtext   = 'v:lua.vim.treesitter.foldtext()'
 opt.foldenable     = false -- zi toggles
 -- opt.foldlevel = 99
 
@@ -129,7 +130,7 @@ vim.filetype.add({
     -- ['.*%.blade%.php'] = 'blade.html.php',
     -- ['.*%.blade%.php'] = 'html.blade.php',
     ['.*%.antlers%.html'] = 'antlers.html',
-    ['.*%.blade%.php'] = 'blade',
+    -- ['.*%.blade%.php'] = 'blade',
     ['.*%.neon%.dist'] = 'yaml',
   },
 })
