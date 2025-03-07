@@ -30,6 +30,7 @@ local servers = {
   'rust_analyzer', -- Rust
   'sqlls', -- SQL
   'tailwindcss', -- Tailwind CSS
+  'taplo',
   -- 'tsserver', -- Javascript / TypeScript
   'ts_ls', -- TypeScript
   'volar', -- Vue
