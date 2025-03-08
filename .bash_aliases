@@ -15,6 +15,8 @@ alias pip='pip3'
 alias g='git '
 alias b='b4 '
 alias lg='lazygit'
+alias j='jj'
+alias lj='lazyjj'
 
 # Use bat instead of cat if available
 # command -v bat &> /dev/null && alias cat='bat --paging=never'
