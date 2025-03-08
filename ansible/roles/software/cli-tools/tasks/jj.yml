@@ -3,3 +3,7 @@
   community.general.cargo:
     name: jj-cli
     state: latest
+- name: 'install lazyjj'
+  community.general.cargo:
+    name: lazyjj
+    state: latest
