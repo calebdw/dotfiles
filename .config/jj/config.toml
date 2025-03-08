@@ -10,6 +10,7 @@ sign-on-push = true
 
 [ui]
 default-command = "log"
+diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
 
 [ui.movement]
 # edit = true
