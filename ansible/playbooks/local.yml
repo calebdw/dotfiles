@@ -4,7 +4,7 @@
     - configure/evoluent-verticalmouse
     - configure/nopasswd-sudo
     - software/_deps
-    - software/bash/complete-alias
+    - software/bash
     # - software/openconnect
     - software/brave-browser
     - software/php/install

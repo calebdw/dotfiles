@@ -126,3 +126,5 @@ fi
 . "$HOME/.cargo/env"
 
 OCAMLRUNPARAM="b"
+
+command -v starship &> /dev/null && eval "$(starship init bash)"

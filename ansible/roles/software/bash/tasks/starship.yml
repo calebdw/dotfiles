@@ -1,0 +1,5 @@
+---
+- name: Install starship
+  community.general.cargo:
+    name: starship
+    state: latest
