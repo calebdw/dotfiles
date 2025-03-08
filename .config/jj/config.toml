@@ -4,6 +4,9 @@
 name = "Caleb White"
 email = "cdwhite3@pm.me"
 
+[aliases]
+g = ["git"]
+
 [colors]
 "diff token" = { underline = false }
 
@@ -11,13 +14,13 @@ email = "cdwhite3@pm.me"
 private-commits = "description(glob:'wip:*') | description(glob:'private:*')"
 sign-on-push = true
 
+[signing]
+behavior = "keep"
+backend = "gpg"
+
 [ui]
 default-command = "log"
 diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
 
 [ui.movement]
 # edit = true
-
-[signing]
-behavior = "drop"
-backend = "gpg"
