@@ -1,5 +1,9 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+[character]
+success_symbol = '[\$](bold green)'
+error_symbol = '[\$](bold red)'
+
 # custom module for jj status
 [custom.jj]
 ignore_timeout = true
