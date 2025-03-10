@@ -128,3 +128,6 @@ fi
 OCAMLRUNPARAM="b"
 
 command -v starship &> /dev/null && eval "$(starship init bash)"
+
+# Auto-added by fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

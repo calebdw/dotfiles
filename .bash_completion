@@ -1,6 +1,5 @@
 #!/bin/sh
 
 [ -f ~/sources/complete-alias/complete_alias ] && . ~/sources/complete-alias/complete_alias
-[ -f ~/.fzf.bash ] && . ~/.fzf.bash
 command -v jj &> /dev/null && . <(COMPLETE=bash jj)
 command -v starship &> /dev/null && . <(starship completions bash)
