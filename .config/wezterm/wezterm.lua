@@ -1,6 +1,8 @@
 local wezterm = require('wezterm');
 local config = wezterm.config_builder()
 
+config.default_prog = { '/usr/bin/fish', '-l' }
+
 -- Fonts --
 config.font = wezterm.font_with_fallback({
   'FiraCode Nerd Font',

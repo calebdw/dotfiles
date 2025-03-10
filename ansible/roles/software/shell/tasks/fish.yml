@@ -1,0 +1,19 @@
+---
+- name: 'add fish APT repository'
+  become: true
+  ansible.builtin.deb822_repository:
+    name: fish-shell
+    uris: https://ppa.launchpadcontent.net/fish-shell/release-4/ubuntu
+    signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x88421e703edc7af54967ded473c9fcc9e2bb48da
+    suites: '{{ ansible_distribution_release }}'
+    components: main
+  notify: update apt cache
+
+- name: 'flush handlers'
+  ansible.builtin.meta: flush_handlers
+
+- name: 'install fish'
+  become: true
+  apt:
+    state: latest
+    name: fish

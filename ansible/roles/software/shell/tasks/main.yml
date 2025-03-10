@@ -1,3 +1,4 @@
 ---
 - import_tasks: complete-alias.yml
+- import_tasks: fish.yml
 - import_tasks: starship.yml
