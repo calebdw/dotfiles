@@ -114,56 +114,54 @@ return {
   },
   {
     'lewis6991/gitsigns.nvim',
-    opts = function()
-      local gs = require('gitsigns')
+    opts = {
+      -- current_line_blame = false
+      current_line_blame_opts = {
+        virt_text_pos = 'eol',
+      },
+      preview_config = {
+        border = 'rounded',
+      },
+      attach_to_untracked = true,
+      on_attach = function(bufnr)
+        local gs = require('gitsigns')
+        local function Map(m, l, r, opts)
+          opts = opts or {}
+          opts.buffer = bufnr
+          map(m, l, r, opts)
+        end
 
-      return {
-        -- current_line_blame = false
-        current_line_blame_opts = {
-          virt_text_pos = 'eol',
-        },
-        preview_config = {
-          border = 'rounded',
-        },
-        on_attach = function(bufnr)
-          local function Map(m, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            map(m, l, r, opts)
-          end
+        -- Navigation
+        Map('n', ']h', function()
+          if vim.wo.diff then return ']c' end
+          vim.schedule(function() gs.next_hunk() end)
+          return '<Ignore>'
+        end, { expr = true })
 
-          -- Navigation
-          Map('n', ']h', function()
-            if vim.wo.diff then return ']c' end
-            vim.schedule(function() gs.next_hunk() end)
-            return '<Ignore>'
-          end, { expr = true })
+        Map('n', '[h', function()
+          if vim.wo.diff then return '[c' end
+          vim.schedule(function() gs.prev_hunk() end)
+          return '<Ignore>'
+        end, { expr = true })
 
-          Map('n', '[h', function()
-            if vim.wo.diff then return '[c' end
-            vim.schedule(function() gs.prev_hunk() end)
-            return '<Ignore>'
-          end, { expr = true })
+        -- Actions
+        Map({ 'n', 'v' }, '<leader>hs', gs.stage_hunk)
+        Map({ 'n', 'v' }, '<leader>hr', gs.reset_hunk)
+        Map('n', '<leader>hu', gs.undo_stage_hunk)
+        Map('n', '<leader>hS', gs.stage_buffer)
+        Map('n', '<leader>hR', gs.reset_buffer)
+        Map('n', '<leader>hp', gs.preview_hunk)
+        Map('n', '<leader>hb', function() gs.blame_line({ full = true }) end)
+        Map('n', '<leader>hd', function() gs.diffthis('@', { split = 'rightbelow' }) end)
+        Map('n', '<leader>hD', function() gs.diffthis('~') end)
+        Map('n', '<leader>td', gs.toggle_deleted)
+        Map('n', '<leader>tw', gs.toggle_word_diff)
+        Map('n', '<leader>tb', gs.toggle_current_line_blame)
 
-          -- Actions
-          Map({ 'n', 'v' }, '<leader>hs', gs.stage_hunk)
-          Map({ 'n', 'v' }, '<leader>hr', gs.reset_hunk)
-          Map('n', '<leader>hu', gs.undo_stage_hunk)
-          Map('n', '<leader>hS', gs.stage_buffer)
-          Map('n', '<leader>hR', gs.reset_buffer)
-          Map('n', '<leader>hp', gs.preview_hunk)
-          Map('n', '<leader>hb', function() gs.blame_line({ full = true }) end)
-          Map('n', '<leader>hd', function() gs.diffthis('@', { split = 'rightbelow' }) end)
-          Map('n', '<leader>hD', function() gs.diffthis('~') end)
-          Map('n', '<leader>td', gs.toggle_deleted)
-          Map('n', '<leader>tw', gs.toggle_word_diff)
-          Map('n', '<leader>tb', gs.toggle_current_line_blame)
-
-          -- Text object
-          Map({ 'o', 'x' }, 'ih', gs.select_hunk)
-        end,
-      }
-    end,
+        -- Text object
+        Map({ 'o', 'x' }, 'ih', gs.select_hunk)
+      end,
+    },
   },
   {
     'calebdw/git-worktree.nvim',
