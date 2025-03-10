@@ -18,7 +18,7 @@ return {
           },
         },
         file_ignore_patterns = {
-          '.git/',
+          '%.git/',
           'public/vendor',
         },
         -- let telescope search in hidden files
