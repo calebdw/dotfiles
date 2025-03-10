@@ -49,7 +49,7 @@ jj root > /dev/null && jj log --revisions @ --no-graph --ignore-working-copy --c
 # disabled = true
 
 # re-enable git_branch as long as we're not in a jj repo
-[custom.git_branch]
-when = true
-command = "jj root >/dev/null 2>&1 || starship module git_branch"
-description = "Only show git_branch if we're not in a jj repo"
+# [custom.git_branch]
+# when = true
+# command = "jj root >/dev/null 2>&1 || starship module git_branch"
+# description = "Only show git_branch if we're not in a jj repo"
