@@ -15,7 +15,7 @@ private-commits = "description(glob:'wip:*') | description(glob:'private:*')"
 sign-on-push = true
 
 [signing]
-behavior = "keep"
+behavior = "drop"
 backend = "gpg"
 
 [ui]
