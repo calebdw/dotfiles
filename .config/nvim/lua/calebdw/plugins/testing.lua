@@ -32,6 +32,7 @@ return {
           require('neotest-vim-test')({
             allow_file_types = { 'php' },
           }),
+          require("neotest-rust"),
         },
         -- log_level = vim.log.levels.INFO,
       }
@@ -53,6 +54,7 @@ return {
       { 'V13Axel/neotest-pest', branch = 'PHPUnit_Test_Support' },
       'marilari88/neotest-vitest',
       'nvim-neotest/neotest-plenary',
+      'rouge8/neotest-rust',
     },
   },
 }

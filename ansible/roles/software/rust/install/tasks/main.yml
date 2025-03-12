@@ -2,3 +2,9 @@
 - name: 'install cargo'
   shell: curl -sSf https://sh.rustup.rs | sh -s -- -y
   notify: source bashrc
+
+- name: Install nextest
+  community.general.cargo:
+    name: cargo-nextest
+    state: latest
+

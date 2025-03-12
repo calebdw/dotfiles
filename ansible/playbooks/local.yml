@@ -9,7 +9,7 @@
     - software/brave-browser
     - software/php/install
     - software/php/manual
-    - software/cargo/install
+    - software/rust/install
     - software/go/install
     - software/perl/install
     - software/nodejs/install

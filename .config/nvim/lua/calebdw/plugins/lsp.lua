@@ -393,6 +393,12 @@ return {
       'neovim/nvim-lspconfig',
     },
   },
+  {
+  'mrcjkb/rustaceanvim',
+    version = '^5', -- Recommended
+    lazy = false, -- This plugin is already lazy
+    enabled = false, -- TODO configure
+  },
   'glepnir/lspsaga.nvim', -- UI for LSP client
   { -- ui for lsp progress
     'j-hui/fidget.nvim',
