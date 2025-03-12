@@ -12,6 +12,7 @@ g = ["git"]
 
 [git]
 private-commits = "description(glob:'wip:*') | description(glob:'private:*')"
+push-bookmark-prefix = "calebdw/push-"
 sign-on-push = true
 
 [signing]
