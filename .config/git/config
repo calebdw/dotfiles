@@ -48,7 +48,6 @@
     verbose = true
 [core]
     autocrlf = false
-    excludesFile = ~/.gitignore
     editor = nvim
     commentchar = *
     pager = delta
