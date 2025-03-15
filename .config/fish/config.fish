@@ -9,7 +9,6 @@
 fish_vi_key_bindings
 
 # Environment
-set -x JJ_CONFIG ~/.config/jj
 set -x NODE_EXTRA_CA_CERTS /etc/ssl/certs/ca-certificates.crt
 set -x EDITOR nvim
 
