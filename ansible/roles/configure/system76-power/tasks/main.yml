@@ -1,0 +1,21 @@
+---
+- name: 'create systemd service'
+  become: true
+  copy:
+    src: "{{ item }}.service"
+    dest: "/etc/systemd/system/{{ item }}.service"
+  register: service
+  with_items:
+    - charge-thresholds
+    - profile
+
+- name: 'enable and start systemd service'
+  become: true
+  systemd:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+  when: service
+  with_items:
+    - charge-thresholds
+    - profile

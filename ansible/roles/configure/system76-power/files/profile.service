@@ -1,0 +1,10 @@
+[Unit]
+Description=Set the power profile at startup.
+After=default.target
+
+[Service]
+Type=simple
+ExecStart=system76-power profile performance
+
+[Install]
+WantedBy=default.target

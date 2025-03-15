@@ -25,5 +25,5 @@
     - software/tree-sitter
     - software/wezterm
     - software/yubikey
-    - role: configure/system76/charge-thresholds
+    - role: configure/system76-power
       when: "ansible_system_vendor == 'System76'"
