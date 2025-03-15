@@ -3,17 +3,30 @@
 [character]
 success_symbol = '[\$](bold green)'
 error_symbol = '[\$](bold red)'
+vimcmd_symbol = '[N](bold green)'
+vimcmd_replace_one_symbol = '[r](bold purple)'
+vimcmd_replace_symbol = '[R](bold purple)'
+vimcmd_visual_symbol = '[V](bold yellow)'
+
+[cmd_duration]
+format = '⌛[$duration]($style) '
+
+[directory]
+truncate_to_repo = false
+truncation_symbol = ".../"
+
+[memory_usage]
+disabled = false
 
 # custom module for jj status
 [custom.jj]
 ignore_timeout = true
-description = "current jj status"
-symbol = ""
-when = true
+description = "The current jj status"
+detect_folders = [".jj"]
+symbol = "🥋 "
 command = '''
-jj root > /dev/null && jj log --revisions @ --no-graph --ignore-working-copy --color always --limit 1 --template '
+jj log --revisions @ --no-graph --ignore-working-copy --color always --limit 1 --template '
   separate(" ",
-    "🥋",
     change_id.shortest(4),
     bookmarks,
     "|",
@@ -34,22 +47,3 @@ jj root > /dev/null && jj log --revisions @ --no-graph --ignore-working-copy --c
   )
 '
 '''
-
-# disable git modules
-# [git_state]
-# disabled = true
-#
-# [git_commit]
-# disabled = true
-#
-# [git_metrics]
-# disabled = true
-#
-# [git_branch]
-# disabled = true
-
-# re-enable git_branch as long as we're not in a jj repo
-# [custom.git_branch]
-# when = true
-# command = "jj root >/dev/null 2>&1 || starship module git_branch"
-# description = "Only show git_branch if we're not in a jj repo"
