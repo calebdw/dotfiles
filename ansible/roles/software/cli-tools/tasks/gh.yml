@@ -1,0 +1,21 @@
+---
+- name: 'add gh APT repository'
+  become: true
+  ansible.builtin.deb822_repository:
+    name: gh
+    uris: https://cli.github.com/packages
+    signed_by: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+    suites: stable
+    components: main
+    architectures: amd64
+
+  notify: update apt cache
+
+- name: 'flush handlers'
+  ansible.builtin.meta: flush_handlers
+
+- name: install gh
+  become: true
+  apt:
+    state: latest
+    name: gh
