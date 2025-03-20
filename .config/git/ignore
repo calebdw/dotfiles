@@ -5,3 +5,4 @@
 .phpactor.*
 .gitconfig
 /_emails
+/scratch
