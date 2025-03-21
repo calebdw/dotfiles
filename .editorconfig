@@ -11,7 +11,7 @@ trim_trailing_whitespace = true
 [*.patch]
 trim_trailing_whitespace = false
 
-[*.{yml,yaml,neon*,lua,scm,xml,md}]
+[*.{yml,yaml,neon*,lua,scm,xml,md,toml}]
 indent_size = 2
 
 [**/treesitter/**]
