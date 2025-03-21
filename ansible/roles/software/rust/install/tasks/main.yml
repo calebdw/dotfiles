@@ -3,8 +3,10 @@
   shell: curl -sSf https://sh.rustup.rs | sh -s -- -y
   notify: source bashrc
 
-- name: Install nextest
+- name: Install cargo packages
   community.general.cargo:
-    name: cargo-nextest
+    name: '{{ item }}'
     state: latest
-
+  with_items:
+    - 'cargo-nextest'
+    - 'cargo-insta'
