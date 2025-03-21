@@ -23,6 +23,27 @@ sign-on-push = true
 behavior = "drop"
 backend = "gpg"
 
+[templates]
+draft_commit_description = '''
+concat(
+  if(
+    !description && parents.len() > 1,
+    concat(separate(" ",
+      "Merge",
+      if(parents.len() > 2, "branches", "branch"),
+      "into",
+      parents.map(|p| coalesce(
+        p.bookmarks().map(|b| b.name()).join(", "),
+        p.commit_id().short(),
+      )).join(", "),
+    )),
+  ),
+  builtin_draft_commit_description,
+  "\nJJ: ignore-rest\n",
+  diff.git(),
+)
+'''
+
 [ui]
 default-command = "log"
 diff-editor = ["nvim", ".", "-c", "DiffEditor $left $right $output"]
