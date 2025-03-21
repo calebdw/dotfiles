@@ -8,7 +8,7 @@ email = "cdwhite3@pm.me"
 g = ["git"]
 
 [colors]
-"diff token" = { underline = false }
+# "diff token" = { underline = false }
 
 [git]
 private-commits = "description(glob:'wip:*') | description(glob:'private:*')"
