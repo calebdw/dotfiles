@@ -15,6 +15,10 @@ private-commits = "description(glob:'wip:*') | description(glob:'private:*')"
 push-bookmark-prefix = "calebdw/push-"
 sign-on-push = true
 
+
+[revset-aliases]
+'why_immutable(r)' = '(r & immutable()) | roots(r:: & immutable_heads())'
+
 [signing]
 behavior = "drop"
 backend = "gpg"
