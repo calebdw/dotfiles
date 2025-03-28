@@ -85,7 +85,7 @@ return {
         'tailwindcss-language-server',
 
         -- DAP Servers --
-        { 'js-debug-adapter', version = 'v1.76.1' },
+        { 'js-debug-adapter', version = 'v1.97.1' },
         'php-debug-adapter',
         'codelldb',
 
