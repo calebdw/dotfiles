@@ -1,10 +1,3 @@
-# This file is sourced all the time (interactive and non-interactive)
-
-# Use this to guard against running code in non-interactive shells
-# if status is-interactive
-#   ...
-# end
-
 # Settings
 fish_vi_key_bindings
 
@@ -33,8 +26,11 @@ abbr -a lg lazygit
 abbr -a j jj
 abbr -a lj lazyjj
 
-# Completions
-COMPLETE=fish jj | source
+if status is-interactive
+    # Completions
+    COMPLETE=fish jj | source
 
-# Integrations
-starship init fish | source
+    # Integrations
+    atuin init fish | source
+    starship init fish | source
+end

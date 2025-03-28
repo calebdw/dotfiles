@@ -22,3 +22,4 @@
   loop:
     - fd-find
     - ripgrep
+    - atuin
