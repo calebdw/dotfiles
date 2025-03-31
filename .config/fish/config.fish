@@ -31,6 +31,6 @@ if status is-interactive
     COMPLETE=fish jj | source
 
     # Integrations
-    atuin init fish | source
+    atuin init fish --disable-up-arrow | source
     starship init fish | source
 end
