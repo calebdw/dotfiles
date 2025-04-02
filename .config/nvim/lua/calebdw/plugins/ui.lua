@@ -1,13 +1,28 @@
 ---@type LazySpec
 return {
   {
+    'folke/tokyonight.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {
+      -- on_highlights = function(highlights, colors)
+      --   highlights['@variable'].fg = '#ffb777'
+      -- end,
+      style = 'night',
+    },
+    config = function(_, opts)
+      require('tokyonight').setup(opts)
+      vim.cmd.colorscheme('tokyonight')
+    end,
+  },
+  {
     'szw/vim-maximizer',
     cmd = 'MaximizerToggle',
     keys = {
       { '<F3>', mode = { 'n', 'i', 'v' } },
     },
   },
-  'nvim-tree/nvim-web-devicons',
+  { 'nvim-tree/nvim-web-devicons', lazy = true },
   {
     'yamatsum/nvim-nonicons',
     dependencies = 'nvim-tree/nvim-web-devicons',
@@ -29,6 +44,7 @@ return {
   },
   {
     'stevearc/dressing.nvim',
+    event = 'VeryLazy',
     opts = {
       input = {
         relative = 'editor',
@@ -43,13 +59,12 @@ return {
   { -- Pretty List
     'folke/trouble.nvim',
     dependencies = 'nvim-tree/nvim-web-devicons',
-    config = true,
+    opts = {},
   },
   {
     'nvim-lualine/lualine.nvim',
     opts = {
       options = {
-        theme = 'auto',
         globalstatus = true,
       },
       extensions = {
@@ -65,7 +80,6 @@ return {
     dependencies = {
       'nvim-tree/nvim-web-devicons',
       'folke/tokyonight.nvim',
-      'marko-cerovac/material.nvim',
     },
   },
   {
@@ -103,62 +117,9 @@ return {
       },
     },
   },
-  {
-    'folke/tokyonight.nvim',
-    lazy = false,
-    priority = 1000,
-    opts = {
-      hide_inactive_statusline = true,
-      -- on_highlights = function(highlights, colors)
-      --   highlights['@variable'].fg = '#ffb777'
-      -- end,
-      sidebars = {
-        'help',
-        'packer',
-        'qf',
-        'terminal',
-        'vista_kind',
-      },
-      style = 'night',
-      terminal_colors = true,
-    },
-    config = function(_, opts)
-      require('tokyonight').setup(opts)
-      vim.cmd.colorscheme('tokyonight')
-    end,
-  },
-  {
-    'marko-cerovac/material.nvim',
-    enabled = false,
-    lazy = false,
-    priority = 1000,
-    opts = {
-      lualine_style = 'default',
-      contrast = {
-        terminal = true,
-        sidebars = true,
-        floating_windows = true,
-        non_current_windows = false,
-      },
-      plugins = {
-        'dap',
-        'gitsigns',
-        'indent-blankline',
-        'lspsaga',
-        'nvim-cmp',
-        'nvim-web-devicons',
-        'telescope',
-        'trouble',
-      },
-    },
-    config = function(_, opts)
-      vim.g.material_style = 'deep ocean'
-      require('material').setup(opts)
-      vim.cmd.colorscheme('material')
-    end,
-  },
   { -- colorize colors
     'NvChad/nvim-colorizer.lua',
+    event = 'VeryLazy',
     opts = {
       user_default_options = {
         css = true,

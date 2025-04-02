@@ -56,6 +56,7 @@ return {
   },
   {
     'williamboman/mason.nvim',
+    ---@type MasonSettings
     opts = {
       -- log_level = vim.log.levels.DEBUG,
       ui = {
@@ -69,6 +70,7 @@ return {
   },
   { -- bridge between mason and lspconfig
     'williamboman/mason-lspconfig',
+    ---@type MasonLspconfigSettings
     opts = {
       automatic_installation = true,
       ensure_installed = servers,
@@ -159,12 +161,6 @@ return {
             keep = function() return lvl == 'ERROR' or lvl == 'WARN' end,
           })
         end,
-        ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-          border = 'rounded',
-        }),
-        ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-          border = 'rounded',
-        }),
       }
 
       -- local lsp_servers = vim.tbl_values(servers)
@@ -237,9 +233,6 @@ return {
             ['language_server_phpstan.enabled'] = true,
             ['phpunit.enabled'] = true,
             ['language_server_reference_reference_finder.reference_timeout'] = 600,
-            -- ['worse_reflection.stub_dir'] = '%project_root%/_ide_helper',
-            -- ['composer.autoloader_path'] = '%project_root%/.autoload.php',
-            -- ['indexer.exclude_patterns'] = {'/**/_ide_helper*.php'},
           }
         end
 
@@ -376,19 +369,16 @@ return {
     'gbprod/phpactor.nvim',
     -- build = function() require('phpactor.handler.update') end, -- To install/update phpactor when installing this plugin
     opts = {
-      install = {
-        bin = vim.fn.stdpath('data') .. '/mason/bin/phpactor',
-      },
-      lspconfig = {
-        enabled = false,
+      install = { bin = vim.fn.stdpath('data') .. '/mason/bin/phpactor' },
+      lspconfig = { enabled = false },
+    },
+    keys = {
+      {
+        '<leader>pa',
+        function() require('phpactor').rpc() end,
+        desc = 'PHPactor',
       },
     },
-    config = function(_, opts)
-      local phpactor = require('phpactor')
-      phpactor.setup(opts)
-
-      map('n', '<leader>pa', phpactor.rpc)
-    end,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'neovim/nvim-lspconfig',

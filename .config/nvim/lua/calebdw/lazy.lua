@@ -14,7 +14,7 @@ local opts = {
   },
   install = { colorscheme = { "tokyonight", "habamax" } },
   performance = {
-    rtp = { disabled_plugins = { 'netrwPlugin', }, },
+    rtp = { disabled_plugins = { 'netrwPlugin' } },
   },
   ui = { border = 'rounded', },
 }

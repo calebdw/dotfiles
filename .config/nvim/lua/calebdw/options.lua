@@ -89,25 +89,27 @@ opt.errorformat:append("%f|%l col %c|%m")
 opt.errorformat:append('%-G%.%#') -- ignores all other unmatched lines
 
 -- Folding --
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr   = 'v:lua.vim.treesitter.foldexpr()'
+opt.foldmethod = 'expr'
+opt.foldexpr   = 'v:lua.vim.treesitter.foldexpr()'
 -- vim.opt.foldtext   = 'v:lua.vim.treesitter.foldtext()'
 opt.foldenable     = false -- zi toggles
 -- opt.foldlevel = 99
 
 -- Sign Column
-opt.signcolumn     = 'yes:2'
+opt.signcolumn = 'yes:2'
 
 -- Decrease update time
-vim.opt.updatetime = 250
-vim.opt.timeoutlen = 500 -- time for a mapped sequence to complete
+opt.updatetime = 250
+opt.timeoutlen = 500 -- time for a mapped sequence to complete
 
-opt.showmode       = false -- already shown in statusline
+opt.showmode = false -- already shown in statusline
+
+-- opt.winborder = 'rounded'
 
 vim.diagnostic.config({
   float = {
     source = true,
-    border = 'rounded',
+    -- border = 'rounded',
   },
   severity_sort = true,
   signs = {

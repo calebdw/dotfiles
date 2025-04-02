@@ -3,7 +3,7 @@
 
 ---@type LazySpec
 return { -- General
-  'nvim-lua/plenary.nvim', -- common dependency
+  { 'nvim-lua/plenary.nvim', lazy = true }, -- common dependency
   'github/copilot.vim',
   -- Subvert - awesome search/replace - :Subvert/child{,ren}/adult{,s}/g
   -- Coercion - turn fooBar into foo_bar (and many others)
@@ -78,17 +78,14 @@ return { -- General
   -- 'ibhagwan/fzf-lua',
 
   -- LaTeX --
-  {
-    'lervag/vimtex',
-    enabled = false,
-  },
+  { 'lervag/vimtex', enabled = false, },
 
   -- Annotation Toolkit --
-  -- use 'danymat/neogen'
+  -- 'danymat/neogen',
 
   -- Remote Development --
   -- @todo - Setup
-  -- use 'chipsenkbeil/distant.nvim' -- Work on remote machine with local environment
+  -- 'chipsenkbeil/distant.nvim', -- Work on remote machine with local environment
   {
     -- Dev inside Docker containers
     'jamestthompson3/nvim-remote-containers',
