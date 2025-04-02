@@ -121,7 +121,10 @@ return {
     config = function()
       local lsp = require('lspconfig')
       local configs = require('lspconfig.configs')
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      ---@todo can remove when vim.lsp.config is supported
+      ---@see https://github.com/neovim/nvim-lspconfig/issues/3494
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
+      -- local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
       local runtime_path = vim.split(package.path, ';')
       table.insert(runtime_path, 'lua/?.lua')
@@ -173,6 +176,7 @@ return {
           capabilities = capabilities,
           handlers = handlers,
         }
+
         if name == 'antlersls' then
           opts.filetypes = {
             'antlers.html',
@@ -362,7 +366,8 @@ return {
       'b0o/schemastore.nvim', -- json schemas
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig',
-      'hrsh7th/cmp-nvim-lsp',
+      'saghen/blink.cmp',
+      -- 'hrsh7th/cmp-nvim-lsp',
     },
   },
   {
