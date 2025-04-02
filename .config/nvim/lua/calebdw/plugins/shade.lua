@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   'sunjon/shade.nvim',
   -- Conflicts with vim-maximizer and many other plugins

@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   'olimorris/persisted.nvim',
   opts = {

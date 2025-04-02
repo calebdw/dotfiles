@@ -1,4 +1,5 @@
 -- numToStr/FTerm.nvim
+---@type LazySpec
 return {
   'akinsho/toggleterm.nvim',
   opts = {

@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   {
     'ellisonleao/glow.nvim',

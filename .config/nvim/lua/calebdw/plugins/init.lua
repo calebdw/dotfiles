@@ -1,6 +1,7 @@
 -- List of many Neovim plugins:
 -- https://github.com/rockerBOO/awesome-neovim
 
+---@type LazySpec
 return { -- General
   'nvim-lua/plenary.nvim', -- common dependency
   'github/copilot.vim',

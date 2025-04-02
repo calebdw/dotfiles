@@ -1,5 +1,6 @@
 local util = require('calebdw.util')
 
+---@type LazySpec
 return {
   {
     'nvim-neotest/neotest',

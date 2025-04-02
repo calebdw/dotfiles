@@ -40,6 +40,7 @@ local servers = {
   'yamlls', -- YAML
 }
 
+---@type LazySpec
 return {
   {
     'sourcegraph/sg.nvim',

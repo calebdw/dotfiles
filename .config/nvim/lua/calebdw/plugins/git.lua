@@ -54,6 +54,7 @@ local serve_worktree = function(root, worktree)
   }):sync()
 end
 
+---@type LazySpec
 return {
   {
     'NeogitOrg/neogit',

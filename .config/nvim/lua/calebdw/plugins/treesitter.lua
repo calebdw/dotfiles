@@ -1,5 +1,7 @@
+---@type LazySpec
 return {
   'nvim-treesitter/nvim-treesitter',
+  -- dev = true,
   build = function() require('nvim-treesitter.install').update({ with_sync = true })() end,
   opts = {
     ensure_installed = {

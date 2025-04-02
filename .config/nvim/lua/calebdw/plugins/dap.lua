@@ -1,5 +1,6 @@
 local map = require('calebdw.util').map
 
+---@type LazySpec
 return {
   {
     'mfussenegger/nvim-dap',

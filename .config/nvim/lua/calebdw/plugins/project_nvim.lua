@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   'ahmedkhalf/project.nvim',
   name = 'project_nvim',
