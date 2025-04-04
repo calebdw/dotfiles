@@ -1,21 +1,18 @@
 ---
-- name: 'create systemd service'
-  become: true
+- name: Copy systemd unit
   copy:
     src: "{{ item }}.service"
     dest: "/etc/systemd/system/{{ item }}.service"
-  register: service
-  with_items:
+    mode: '0644'
+  loop:
     - charge-thresholds
     - profile
+  register: service
 
-- name: 'enable and start systemd service'
-  become: true
-  systemd:
-    name: "{{ item }}"
+- name: Enable and start service
+  systemd_service:
+    name: "{{ item.item }}"
     enabled: true
     state: started
-  when: service
-  with_items:
-    - charge-thresholds
-    - profile
+  when: item.changed
+  loop: "{{ service.results }}"
