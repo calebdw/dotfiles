@@ -26,6 +26,10 @@ abbr -a lg lazygit
 abbr -a j jj
 abbr -a lj lazyjj
 
+# abbr --command jj g git
+# abbr --command jj ab absorb
+# abbr --command jj sq squash
+
 if status is-interactive
     # Completions
     COMPLETE=fish jj | source

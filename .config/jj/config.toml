@@ -5,7 +5,7 @@ name = "Caleb White"
 email = "cdwhite3@pm.me"
 
 [aliases]
-g = ["git"]
+# g = ["git"]
 
 [colors]
 # "diff token" = { underline = false }
