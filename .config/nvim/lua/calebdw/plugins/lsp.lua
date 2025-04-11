@@ -110,6 +110,7 @@ return {
         'fixjson',
         'luaformatter',
         'prettierd',
+        'pgformatter',
         'sql-formatter',
         'yamlfmt',
       },
