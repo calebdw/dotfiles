@@ -31,9 +31,6 @@ abbr -a lj lazyjj
 # abbr --command jj sq squash
 
 if status is-interactive
-    # Completions
-    COMPLETE=fish jj | source
-
     # Integrations
     atuin init fish --disable-up-arrow | source
     starship init fish | source
