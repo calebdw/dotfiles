@@ -43,7 +43,7 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   desc = 'Git commit message settings',
   group = default,
-  pattern = { 'gitcommit', 'gitsendemail', 'NeogitCommitMessage', 'mail' },
+  pattern = { 'gitcommit', 'gitsendemail', 'NeogitCommitMessage', 'mail', 'jjdescription' },
   callback = function() vim.opt_local.colorcolumn = '72' end,
 })
 
