@@ -5,7 +5,8 @@ name = "Caleb White"
 email = "cdwhite3@pm.me"
 
 [aliases]
-# g = ["git"]
+g = ["git"]
+tug = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "closest_pushable(@)"]
 
 [colors]
 # "diff token" = { underline = false }
@@ -17,6 +18,8 @@ sign-on-push = true
 
 
 [revset-aliases]
+'closest_bookmark(to)' = 'heads(::to & bookmarks())'
+'closest_pushable(to)' = 'heads(::to & ~description(exact:"") & (~empty() | merges()))'
 'why_immutable(r)' = '(r & immutable()) | roots(r:: & immutable_heads())'
 
 [signing]
