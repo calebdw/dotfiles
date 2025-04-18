@@ -1,43 +1,201 @@
 local map = require('calebdw.util').map
 
+-- vim.lsp.set_log_level('debug')
+vim.lsp.config('*', {
+  handlers = {
+    -- https://github.com/neovim/nvim-lspconfig/wiki/User-contributed-tips#use-nvim-notify-to-display-lsp-messages
+    ['window/showMessage'] = function(_, result, ctx)
+      local client = vim.lsp.get_client_by_id(ctx.client_id)
+      if client == nil then return end
+      local lvl = ({ 'ERROR', 'WARN', 'INFO', 'DEBUG' })[result.type]
+      vim.notify(result.message, lvl, {
+        title = 'LSP | ' .. client.name,
+        timeout = 10000,
+        keep = function() return lvl == 'ERROR' or lvl == 'WARN' end,
+      })
+    end,
+  },
+  on_attach = function(_, bufnr)
+    local opts = {
+      buffer = bufnr,
+    }
+
+    map('n', '<leader>gD', vim.lsp.buf.declaration, opts)
+    map('n', '<leader>gt', vim.lsp.buf.type_definition, opts)
+    map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+    map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+  end,
+});
+
 -- Default servers to install
 local servers = {
-  'ansiblels', -- Ansible
-  'antlersls', -- Statamic/Antlers
-  -- 'bashls', -- Bash
-  'cmake', -- CMake
-  'clangd', -- C++
-  'cssls', -- CSS
-  'cssmodules_ls', -- CSS
-  'dockerls', -- Docker
-  'emmet_ls', -- Emmet support
-  'html', -- HTML
-  'jsonls', -- JSON
-  -- 'latex', -- LaTeX
-  'lemminx', -- XM
-  'lua_ls', -- Lua
-  -- 'intelephense', -- PHP
+  ansiblels = {
+    filetypes = {
+      'antlers.html',
+      'antlers',
+      'html',
+    },
+  },
+  antlersls = {}, -- Statamic/Antlers
+  cmake = {}, -- CMake
+  clangd = {}, -- C++
+  cssls = {}, -- CSS
+  cssmodules_ls = {}, -- CSS
+  dockerls = {}, -- Docker
+  emmet_ls = {
+    filetypes = {
+      'antlers.html',
+      'antlers',
+      'blade.html.php',
+      'blade',
+      'html',
+      'css',
+      'sass',
+      'scss',
+    },
+  },
+  html = {
+    filetypes = {
+      'antlers.html',
+      'antlers',
+      'blade.html.php',
+      'blade',
+      'html',
+    },
+  },
+  jsonls = function ()
+    return {
+      settings = {
+        json = {
+          schemas = require('schemastore').json.schemas(),
+          validate = {
+            enable = true,
+          },
+        },
+      }
+    };
+  end,
+  lemminx = {}, -- XM
+  lua_ls = function ()
+    local runtime_path = vim.split(package.path, ';')
+    table.insert(runtime_path, 'lua/?.lua')
+    table.insert(runtime_path, 'lua/?/init.lua')
+
+    return {
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = {
+              -- luasnip globals
+              'ls', 's', 'sn', 'isn', 'c', 'i', 'd', 't', 'f', 'r', 'fmt', 'fmta',
+            },
+          },
+          runtime = { version = 'LuaJIT', path = runtime_path },
+          workspace = {
+            checkThirdParty = false,
+            -- this replaces neodev
+            library = {
+              '${3rd}/luv/library',
+              unpack(vim.api.nvim_get_runtime_file('', true)),
+            },
+          },
+        },
+      }
+    }
+  end,
   -- 'ocamllsp', -- OCaml
-  'phpactor', -- PHP
-  -- 'psalm', -- PHP
-  -- 'jedi_language_server', -- Python
-  'pyright', -- Python
-  -- 'pylyzer', -- Python (Rust)
-  -- 'pylsp', -- Python
-  -- 'quick_lint_js', -- Javascript
+  phpactor = {
+    init_options = {
+      ['language_server_phpstan.enabled'] = true,
+      ['phpunit.enabled'] = true,
+      ['language_server_reference_reference_finder.reference_timeout'] = 600,
+    },
+  },
+  pyright = {
+    settings = {
+      python = {
+        checkOnType = false,
+        diagnostics = true,
+        inlayHints = true,
+        smartCompletion = true,
+      },
+    },
+  },
   -- 'remark_ls', -- Markdown
-  -- 'sqls', -- SQL
-  'rust_analyzer', -- Rust
-  'sqlls', -- SQL
-  'tailwindcss', -- Tailwind CSS
-  'taplo',
+  rust_analyzer = {}, -- Rust
+  sqlls = {}, -- SQL
+  tailwindcss = {
+    filetypes = {
+      'antlers.html',
+      'antlers',
+      'blade.html.php',
+      'blade',
+      'html',
+      'css',
+      'sass',
+      'scss',
+      'vue',
+    },
+    settings = {
+      tailwindCSS = {
+        emmetCompletions = true,
+        experimental = {
+          classRegex = false,
+        },
+        classAttributes = {
+          'class',
+          '@class',
+          'className',
+          'classList',
+          'divClass',
+          'imageClass',
+          'ngClass',
+        },
+      },
+    },
+  },
+  taplo = {}, -- toml
   -- 'tsserver', -- Javascript / TypeScript
-  'ts_ls', -- TypeScript
-  'volar', -- Vue
-  -- 'vuels', -- Vue
-  -- 'zeta_note', -- Markdown
-  -- 'zk', -- Markdown
-  'yamlls', -- YAML
+  ts_ls = {
+    filetypes = {
+      'typescript',
+      'javascript',
+      'vue',
+      'json',
+    },
+  },
+  volar = { -- vue
+    init_options = {
+      plugins = {
+        {
+          name = "@vue/typescript-plugin",
+          location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
+          languages = {"javascript", "typescript", "vue"},
+        },
+      },
+    },
+    filetypes = {
+      'typescript',
+      'javascript',
+      'vue',
+    },
+  },
+  yamlls = {
+    settings = {
+      yaml = {
+        schemaStore = {
+          enable = true,
+        },
+        format = {
+          enable = true,
+          singleQuote = true,
+        },
+        validate = true,
+        hover = true,
+        completion = true,
+      },
+    },
+  },
 }
 
 ---@type LazySpec
@@ -73,7 +231,7 @@ return {
     ---@type MasonLspconfigSettings
     opts = {
       automatic_installation = true,
-      ensure_installed = servers,
+      ensure_installed = vim.tbl_keys(servers),
     },
   },
   {
@@ -120,255 +278,19 @@ return {
   { -- common configs for built-in LSP client
     'neovim/nvim-lspconfig',
     config = function()
-      local lsp = require('lspconfig')
-      local configs = require('lspconfig.configs')
-      ---@todo can remove when vim.lsp.config is supported
-      ---@see https://github.com/neovim/nvim-lspconfig/issues/3494
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
-      -- local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-      local runtime_path = vim.split(package.path, ';')
-      table.insert(runtime_path, 'lua/?.lua')
-      table.insert(runtime_path, 'lua/?/init.lua')
-
-      local on_attach = function(client, bufnr)
-        -- Enable completion triggered by <c-x><c-o> DO NOT USE with nvim-cmp
-        -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-        local opts = {
-          buffer = bufnr,
-        }
-
-        map('n', '<leader>gD', vim.lsp.buf.declaration, opts)
-        map('n', '<leader>gd', vim.lsp.buf.definition, opts)
-        map('n', '<leader>k', vim.lsp.buf.signature_help, opts)
-        map('n', '<leader>K', vim.lsp.buf.hover, opts)
-        map('n', '<leader>gi', vim.lsp.buf.implementation, opts)
-        map('n', '<leader>gt', vim.lsp.buf.type_definition, opts)
-        map('n', '<leader>gr', vim.lsp.buf.references, opts)
-        map('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-        -- map('n', '<leader>rn', vim.lsp.buf.rename, opts)
-        map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
-        map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
-        map('n', '<leader>wl', function() vim.print(vim.lsp.buf.list_workspace_folders()) end, opts)
-      end
-
-      local handlers = {
-        -- https://github.com/neovim/nvim-lspconfig/wiki/User-contributed-tips#use-nvim-notify-to-display-lsp-messages
-        ['window/showMessage'] = function(_, result, ctx)
-          local client = vim.lsp.get_client_by_id(ctx.client_id)
-          if client == nil then return end
-          local lvl = ({ 'ERROR', 'WARN', 'INFO', 'DEBUG' })[result.type]
-          vim.notify(result.message, lvl, {
-            title = 'LSP | ' .. client.name,
-            timeout = 10000,
-            keep = function() return lvl == 'ERROR' or lvl == 'WARN' end,
-          })
-        end,
-      }
-
-      -- local lsp_servers = vim.tbl_values(servers)
-      -- table.insert(lsp_servers, 'blade')
-
-      for _, name in pairs(servers) do
-        -- apparently this has to be in the loop
-        local opts = {
-          on_attach = on_attach,
-          capabilities = capabilities,
-          handlers = handlers,
-        }
-
-        if name == 'antlersls' then
-          opts.filetypes = {
-            'antlers.html',
-            'antlers',
-            'html',
-          }
+      for name, config in pairs(servers) do
+        if type(config) == 'function' then
+          config = config()
         end
 
-        -- if name == 'blade' then
-        --   configs.blade = {
-        --     default_config = {
-        --       cmd = { "laravel-dev-tools", "lsp" },
-        --       filetypes = { 'blade' },
-        --       root_dir = function(fname)
-        --         return lsp.util.find_git_ancestor(fname)
-        --       end,
-        --       settings = {},
-        --     }
-        --   }
-        -- end
-
-        if name == 'emmet_ls' then
-          opts.filetypes = {
-            'antlers.html',
-            'antlers',
-            'blade.html.php',
-            'blade',
-            'html',
-            'css',
-            'sass',
-            'scss',
-          }
-        end
-
-        if name == 'html' then
-          opts.filetypes = {
-            'antlers.html',
-            'antlers',
-            'blade.html.php',
-            'blade',
-            'html',
-          }
-        end
-
-        if name == 'jsonls' then
-          opts.settings = {
-            json = {
-              schemas = require('schemastore').json.schemas(),
-              validate = {
-                enable = true,
-              },
-            },
-          }
-        end
-
-        if name == 'phpactor' then
-          opts.init_options = {
-            ['language_server_phpstan.enabled'] = true,
-            ['phpunit.enabled'] = true,
-            ['language_server_reference_reference_finder.reference_timeout'] = 600,
-          }
-        end
-
-        if name == 'pylyzer' then
-          opts.settings = {
-            python = {
-              checkOnType = false,
-              diagnostics = true,
-              inlayHints = true,
-              smartCompletion = true,
-            },
-          }
-        end
-
-        if name == 'lua_ls' then
-          opts.settings = {
-            Lua = {
-              diagnostics = {
-                globals = {
-                  -- luasnip globals
-                  'ls',
-                  's',
-                  'sn',
-                  'isn',
-                  'c',
-                  'i',
-                  'd',
-                  't',
-                  'f',
-                  'r',
-                  'fmt',
-                  'fmta',
-                },
-              },
-              runtime = { version = 'LuaJIT', path = runtime_path },
-              workspace = {
-                -- this replaces neodev
-                library = {
-                  '${3rd}/luv/library',
-                  unpack(vim.api.nvim_get_runtime_file('', true)),
-                },
-                checkThirdParty = false,
-              },
-            },
-          }
-        end
-
-        if name == 'tailwindcss' then
-          opts.filetypes = {
-            'antlers.html',
-            'antlers',
-            'blade.html.php',
-            'blade',
-            'html',
-            'css',
-            'sass',
-            'scss',
-            'vue',
-          }
-          opts.settings = {
-            tailwindCSS = {
-              emmetCompletions = true,
-              experimental = {
-                classRegex = false,
-              },
-              classAttributes = {
-                'class',
-                '@class',
-                'className',
-                'classList',
-                'divClass',
-                'imageClass',
-                'ngClass',
-              },
-            },
-          }
-        end
-
-        if name == 'ts_ls' then
-          opts.filetypes = {
-            'typescript',
-            'javascript',
-            'vue',
-            'json',
-          }
-        end
-
-        if name == 'volar' then
-          opts.init_options = {
-            plugins = {
-              {
-                name = "@vue/typescript-plugin",
-                location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
-                languages = {"javascript", "typescript", "vue"},
-              },
-            },
-          }
-          opts.filetypes = {
-            'typescript',
-            'javascript',
-            'vue',
-          }
-        end
-
-        if name == 'yamlls' then
-          opts.settings = {
-            yaml = {
-              schemaStore = {
-                enable = true,
-              },
-              format = {
-                enable = true,
-                singleQuote = true,
-              },
-              validate = true,
-              hover = true,
-              completion = true,
-            },
-          }
-        end
-
-        -- vim.lsp.set_log_level('debug')
-        lsp[name].setup(opts)
+        vim.lsp.config(name, config)
+        vim.lsp.enable(name)
       end
     end,
     dependencies = {
       'b0o/schemastore.nvim', -- json schemas
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig',
-      'saghen/blink.cmp',
-      -- 'hrsh7th/cmp-nvim-lsp',
     },
   },
   {
