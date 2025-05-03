@@ -14,6 +14,7 @@ g.maplocalleader = ' '
 -- White characters --
 opt.smartindent = true -- reacts to syntax of code (e.g., C)
 opt.tabstop = 4        -- 1 tab = 4 columns
+opt.softtabstop = 4        -- 1 tab = 4 columns
 opt.shiftwidth = 4     -- indentation rule (<< >>)
 opt.expandtab = true   -- expand tab to spaces
 -- q: comment formatting; n: numbered lists; j: remove comment when joining lines; 1: don't break after one-letter word
