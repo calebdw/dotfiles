@@ -31,7 +31,6 @@ return {
           '--with-filename',
           '--line-number',
           '--column',
-          '--smart-case',
         },
       },
       pickers = {
