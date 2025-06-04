@@ -290,7 +290,7 @@ return {
     'gbprod/phpactor.nvim',
     -- build = function() require('phpactor.handler.update') end, -- To install/update phpactor when installing this plugin
     opts = {
-      install = { bin = vim.fn.stdpath('data') .. '/mason/bin/phpactor' },
+      install = { bin = 'phpactor' },
       lspconfig = { enabled = false },
     },
     keys = {

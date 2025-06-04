@@ -15,16 +15,13 @@ return {
         type = 'server',
         port = '${port}',
         executable = {
-          -- CHANGE THIS to your path!
-          -- command = '/absolute/path/to/codelldb/extension/adapter/codelldb',
-          -- command = registry.get_package('php-debug-adapter'):get_install_path() .. '/php-debug-adapter',
           command = 'codelldb',
           args = { '--port', '${port}' },
         },
       }
       dap.adapters.php = {
         type = 'executable',
-        command = registry.get_package('php-debug-adapter'):get_install_path() .. '/php-debug-adapter',
+        command = 'php-debug-adapter',
       }
 
       dap.configurations.c = {
@@ -147,7 +144,8 @@ return {
   {
     'mxsdev/nvim-dap-vscode-js',
     opts = {
-      debugger_path = vim.fn.stdpath('data') .. '/mason/packages/js-debug-adapter',
+      -- debugger_path = vim.fn.exepath('js-debug-adapter'),
+      debugger_path = 'js-debug-adapter',
       adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
     },
     dependencies = { 'mfussenegger/nvim-dap' },
