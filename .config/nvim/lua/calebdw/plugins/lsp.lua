@@ -156,16 +156,7 @@ local servers = {
     },
   },
   taplo = {}, -- toml
-  -- 'tsserver', -- Javascript / TypeScript
   ts_ls = {
-    filetypes = {
-      'typescript',
-      'javascript',
-      'vue',
-      'json',
-    },
-  },
-  volar = { -- vue
     init_options = {
       plugins = {
         {
@@ -181,6 +172,7 @@ local servers = {
       'vue',
     },
   },
+  vue_ls = {},
   yamlls = {
     settings = {
       yaml = {
