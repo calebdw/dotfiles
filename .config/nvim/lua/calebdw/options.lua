@@ -85,9 +85,9 @@ opt.spell = true
 opt.spelllang = 'en_us'
 
 -- Error Formats --
-opt.errorformat = { '%-G#%.%#' }  -- ignores comment lines
-opt.errorformat:append("%f|%l col %c|%m")
-opt.errorformat:append('%-G%.%#') -- ignores all other unmatched lines
+-- opt.errorformat = { '%-G#%.%#' }  -- ignores comment lines
+-- opt.errorformat:append("%f|%l col %c|%m")
+-- opt.errorformat:append('%-G%.%#') -- ignores all other unmatched lines
 
 -- Folding --
 opt.foldmethod = 'expr'
