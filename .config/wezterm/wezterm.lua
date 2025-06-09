@@ -29,6 +29,10 @@ config.audible_bell = "Disabled"
 
 config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
 
+config.quick_select_patterns = {
+  '[k-z]{6,40}', -- JJ ChangeID
+}
+
 wezterm.on('user-var-changed', function(window, pane, name, value)
     local overrides = window:get_config_overrides() or {}
     if name == "ZEN_MODE" then
