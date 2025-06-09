@@ -29,6 +29,7 @@ config.audible_bell = "Disabled"
 
 config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
 
+config.quick_select_remove_styling = true
 config.quick_select_patterns = {
   '[k-z]{6,40}', -- JJ ChangeID
 }
