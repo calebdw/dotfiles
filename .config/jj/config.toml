@@ -21,6 +21,13 @@ sign-on-push = true
 'closest_bookmark(to)' = 'heads(::to & bookmarks())'
 'closest_pushable(to)' = 'heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))'
 'why_immutable(r)' = '(r & immutable()) | roots(r:: & immutable_heads())'
+# Show more context around the current working copy.
+# The default revset (present(@) | ancestors(immutable_heads().., 2) | present(trunk()))
+# will basically only show mutable revisions. Sometimes you're working on a long diverging
+# branch with other people (who don't like to see their work rebased) and you want to see
+# everything that is not in trunk "around" that branch, including immutable revisions.
+log = "ancestors(reachable(@, trunk()..), 2)"
+
 
 [signing]
 behavior = "drop"
