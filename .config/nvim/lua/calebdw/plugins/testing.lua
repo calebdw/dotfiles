@@ -12,7 +12,8 @@ return {
       { '<leader>rf', function() require('neotest').run.run(vim.fn.expand('%')) end, desc = 'Run test file' },
       { '<leader>rS', function() require('neotest').run.run({ suite = true }) end, desc = 'Run test suite' },
       { '<leader>ro', function() require('neotest').output() end, desc = 'Open test output' },
-      { '<leader>pt', ':w<cr>:TestFile<cr>', desc = 'Run test file (vim-test)' },
+      { '<leader>pt', ':TestFile<cr>', desc = 'Run test file (vim-test)' },
+      { '<leader>pT', ':w<cr>:TestFile<cr>', desc = 'Save and run test file (vim-test)' },
     },
     opts = function()
       return {
