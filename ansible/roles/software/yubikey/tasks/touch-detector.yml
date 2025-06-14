@@ -1,4 +1,10 @@
 ---
+- name: install deps
+  become: true
+  apt:
+    state: latest
+    name: [libgpgme-dev]
+
 - name: 'Clone yubikey-touch-detector'
   git:
     repo: 'https://github.com/maximbaz/yubikey-touch-detector'
@@ -20,14 +26,8 @@
 
 - when: clone.changed
   block:
-    - name: 'Build yubikey-touch-detector'
-      shell: 'make'
-      args:
-        chdir: '{{ dir_sources }}/yubikey-touch-detector'
-
     - name: 'Install yubikey-touch-detector'
-      become: true
-      shell: 'make install'
+      shell: 'go install'
       args:
         chdir: '{{ dir_sources }}/yubikey-touch-detector'
 
