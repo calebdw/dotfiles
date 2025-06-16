@@ -92,7 +92,6 @@ opt.spelllang = 'en_us'
 -- Folding --
 opt.foldmethod = 'expr'
 opt.foldexpr   = 'v:lua.vim.treesitter.foldexpr()'
--- vim.opt.foldtext   = 'v:lua.vim.treesitter.foldtext()'
 opt.foldenable     = false -- zi toggles
 -- opt.foldlevel = 99
 
