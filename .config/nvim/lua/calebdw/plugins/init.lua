@@ -110,9 +110,4 @@ return { -- General
   --     vim.fn['fzf#install']()
   --   end
   -- },
-
-  -- Games --
-  { 'alec-gibson/nvim-tetris', cmd = 'Tetris' },
-  { 'seandewar/nvimesweeper', cmd = 'Nvimesweeper' },
-  { 'seandewar/killersheep.nvim', cmd = 'KillKillKill' },
 }
