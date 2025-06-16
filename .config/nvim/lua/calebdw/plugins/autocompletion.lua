@@ -22,12 +22,28 @@ return {
     appearance = { nerd_font_variant = 'normal' },
     completion = { documentation = { auto_show = true } },
     snippets = { preset = 'luasnip' },
-    signature = { enabled = true }
+    signature = { enabled = true },
+    sources = {
+      default = { 'lsp', 'path', 'snippets', 'buffer', 'emoji' },
+      providers = {
+        emoji = {
+          module = "blink-emoji",
+          name = "Emoji",
+          score_offset = 15, -- Tune by preference
+          should_show_items = function()
+            return vim.tbl_contains(
+              { "gitcommit", "markdown" },
+              vim.o.filetype
+            )
+          end,
+        }
+      },
+    },
   },
   opts_extend = { "sources.default" },
   dependencies = {
-    -- 'rafamadriz/friendly-snippets',
     { 'L3MON4D3/LuaSnip' },
+    'moyiz/blink-emoji.nvim',
   },
 }
 -- return {
