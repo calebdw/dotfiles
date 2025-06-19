@@ -57,12 +57,9 @@ return {
     lazy = false,
     branch = 'main',
     build = ':TSUpdate',
-    opts = { },
+    opts = {},
     config = function(_, opts)
       local nts = require('nvim-treesitter')
-
-      nts.setup(opts)
-      nts.install(parsers)
 
       vim.api.nvim_create_autocmd('FileType', {
         pattern = parsers,
@@ -73,66 +70,44 @@ return {
         end,
       })
 
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'TSUpdate',
+        callback = function()
+          local configs = require('nvim-treesitter.parsers')
+
+          configs.blade.install_info = {
+            path = '~/sources/treesitter/tree-sitter-blade',
+            generate = true,
+            generate_from_json = true,
+          }
+
+          -- configs.phpdoc.install_info = {
+          --   path = '~/sources/treesitter/tree-sitter-phpdoc',
+          --   generate = true,
+          --   generate_from_json = true,
+          -- }
+
+          -- configs.php.install_info = {
+          --   path = '~/sources/treesitter/tree-sitter-php',
+          --   location = 'php',
+          --   generate = true,
+          --   generate_from_json = true,
+          -- }
+
+          -- configs.php_only.install_info = {
+          --   path = '~/sources/treesitter/tree-sitter-php',
+          --   location = 'php_only',
+          --   generate = true,
+          --   generate_from_json = true,
+          -- }
+        end,
+      })
+
+      nts.setup(opts)
+      nts.install(parsers)
+
       map('n', '<leader>it', vim.treesitter.inspect_tree)
       map('n', '<leader>i', vim.show_pos)
-
-      local parser_configs = require('nvim-treesitter.parsers')
-
-      -- parser_config.blade = {
-      --   install_info = {
-      --     url = '~/sources/treesitter/tree-sitter-blade',
-      --     files = {
-      --       'src/parser.c',
-      --       -- 'src/scanner.cc',
-      --     },
-      --     branch = "main",
-      --     generate_requires_npm = true,
-      --     requires_generate_from_grammar = true,
-      --   },
-      --   filetype = 'blade',
-      -- }
-
-      -- parser_config.phpdoc = {
-      --   install_info = {
-      --     url = '~/sources/treesitter/tree-sitter-phpdoc',
-      --     files = {
-      --       'src/parser.c',
-      --       'src/scanner.c',
-      --     },
-      --     branch = "master",
-      --     generate_requires_npm = true,
-      --     requires_generate_from_grammar = true,
-      --   },
-      --   filetype = 'php',
-      -- }
-
-      -- parser_config.php = {
-      --   install_info = {
-      --     url = '~/sources/treesitter/tree-sitter-php/php',
-      --     files = {
-      --       'src/parser.c',
-      --       'src/scanner.c',
-      --     },
-      --     branch = 'master',
-      --     generate_requires_npm = false,
-      --     requires_generate_from_grammar = false,
-      --   },
-      --   filetype = 'php',
-      -- }
-      --
-      -- parser_config.php_only = {
-      --   install_info = {
-      --     url = '~/sources/treesitter/tree-sitter-php/php_only',
-      --     files = {
-      --       'src/parser.c',
-      --       'src/scanner.c',
-      --     },
-      --     branch = 'master',
-      --     generate_requires_npm = false,
-      --     requires_generate_from_grammar = false,
-      --   },
-      --   -- filetype = 'php',
-      -- }
     end,
   },
   {
