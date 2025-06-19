@@ -172,6 +172,13 @@ local servers = {
       'vue',
     },
   },
+  ts_query_ls = {
+    settings = {
+      parser_install_directories = {
+        vim.fs.joinpath(vim.fn.stdpath('data'), '/site/parser/'),
+      },
+    },
+  },
   vue_ls = {},
   yamlls = {
     settings = {
