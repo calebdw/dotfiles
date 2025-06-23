@@ -7,7 +7,6 @@ return {
     config = function()
       local dap = require('dap')
       local widgets = require('dap.ui.widgets')
-      local registry = require('mason-registry')
 
       -- dap.set_log_level('TRACE')
 
