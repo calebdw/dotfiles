@@ -78,6 +78,7 @@ return {
     map({ 'n', 'v' }, '<leader>ft', builtin.tags)
     map({ 'n', 'v' }, '<leader>fq', builtin.quickfix)
     map({ 'n', 'v' }, '<leader>fg', builtin.grep_string)
+    map({ 'n', 'v' }, '<leader>fk', builtin.keymaps)
 
     map({ 'n', 'v' }, '<leader>tc', builtin.git_commits)
     map({ 'n', 'v' }, '<leader>Tb', builtin.git_branches)
