@@ -66,6 +66,9 @@ return {
     opts = {
       options = {
         globalstatus = true,
+        sections = {
+          lualine_b = {'branch', "vim.b.vcsigns_stats or 'diff'", 'diagnostics'},
+        },
       },
       extensions = {
         'fugitive',
