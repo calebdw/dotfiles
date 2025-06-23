@@ -4,16 +4,16 @@ local map = require('calebdw.util').map
 vim.lsp.config('*', {
   handlers = {
     -- https://github.com/neovim/nvim-lspconfig/wiki/User-contributed-tips#use-nvim-notify-to-display-lsp-messages
-    ['window/showMessage'] = function(_, result, ctx)
+    ['window/showMessage'] = function(err, result, ctx)
+      vim.print('LSP Message:', err, result, ctx)
       local client = vim.lsp.get_client_by_id(ctx.client_id)
       if client == nil then return end
       local lvl = ({ 'ERROR', 'WARN', 'INFO', 'DEBUG' })[result.type]
-      vim.notify(result.message, lvl, {
+      vim.notify(result.message, vim.lsp.log_levels[result.type], {
         title = 'LSP | ' .. client.name,
         timeout = 10000,
-        keep = function() return lvl == 'ERROR' or lvl == 'WARN' end,
       })
-    end,
+    end
   },
   on_attach = function(_, bufnr)
     local opts = {
