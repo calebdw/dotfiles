@@ -4,8 +4,8 @@ local map = require('calebdw.util').map
 return {
   'avm99963/vim-jjdescription',
   {
-    "julienvincent/hunk.nvim",
-    cmd = { "DiffEditor" },
+    'julienvincent/hunk.nvim',
+    cmd = 'DiffEditor',
     opts = {},
   },
   {
@@ -47,7 +47,7 @@ return {
       telescope.load_extension("jj")
 
       local vcs_conflicts = function(opts)
-        local res, _ = pcall(telescope.extensions.jj.conflict, opts)
+        local res, _ = pcall(telescope.extensions.jj.conflicts, opts)
         if not res then
           builtin.git_commits(opts)
         end
@@ -70,7 +70,7 @@ return {
       map({ 'n', 'v' }, '<leader>ts', vcs_status)
     end,
     dependencies = {
-      "nvim-telescope/telescope.nvim",
+      'nvim-telescope/telescope.nvim',
     },
   },
 }
