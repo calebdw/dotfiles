@@ -21,7 +21,7 @@ vim.lsp.config('*', {
     }
 
     map('n', '<leader>gD', vim.lsp.buf.declaration, opts)
-    map('n', '<leader>gt', vim.lsp.buf.type_definition, opts)
+    map('n', 'grt', vim.lsp.buf.type_definition, opts)
     map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
     map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
     map('n', '<leader>wl', function() vim.print(vim.lsp.buf.list_workspace_folders()) end, opts)
