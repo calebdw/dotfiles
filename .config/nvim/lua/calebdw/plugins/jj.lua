@@ -34,9 +34,20 @@ return {
       map('n', '<leader>hR', function() actions.hunk_undo(0, { 0, vim.fn.line('$') }) end, { desc = 'Undo the hunks in the file' })
       map('n', '<leader>hd', function() actions.toggle_hunk_diff(0) end, { desc = 'Show diff of hunk under the cursor' })
     end,
-    dependencies = {
-      'algmyr/vclib.nvim',
-    },
+  },
+  {
+    'algmyr/vcmarkers.nvim',
+    opts = {},
+    init = function()
+      local markers = require('vcmarkers')
+      local actions = require('vcmarkers.actions')
+
+      map('n', '<space>m]', function() actions.next_marker(0, vim.v.count1) end, { desc = 'Go to next marker' })
+      map('n', '<space>m[', function() actions.prev_marker(0, vim.v.count1) end, { desc = 'Go to previous marker' })
+      map('n', '<space>ms', function() actions.select_section(0) end, { desc = 'Select the section under the cursor' })
+      map('n', '<space>mf', function() markers.fold.toggle(0) end, { desc = 'Fold outside markers' })
+      map('n', '<space>mc', function() actions.cycle_marker(0) end, { desc = 'Cycle marker representations' })
+    end,
   },
   {
     'zschreur/telescope-jj.nvim',

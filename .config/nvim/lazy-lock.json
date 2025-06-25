@@ -83,6 +83,7 @@
   "trouble.nvim": { "branch": "main", "commit": "85bedb7eb7fa331a2ccbecb9202d8abba64d37b3" },
   "twilight.nvim": { "branch": "main", "commit": "1584c0b0a979b71fd86b18d302ba84e9aba85b1b" },
   "vclib.nvim": { "branch": "main", "commit": "705fd85a17e9cc5066197abb38465ea65b336761" },
+  "vcmarkers.nvim": { "branch": "main", "commit": "26125c16353df1cc4603652f83eb955574436823" },
   "vcsigns.nvim": { "branch": "main", "commit": "d6094fbc21e0c1986ef83dc9f54866a2e2b541f4" },
   "vim-abolish": { "branch": "master", "commit": "dcbfe065297d31823561ba787f51056c147aa682" },
   "vim-browser-search": { "branch": "master", "commit": "89b8361a4c8e37dd89a80f9a04cad40f4452bb2a" },
