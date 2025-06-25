@@ -29,6 +29,7 @@ vim.lsp.config('*', {
 });
 
 -- Default servers to install
+---@type table<string, vim.lsp.Config>
 local servers = {
   ansiblels = {
     filetypes = {
@@ -107,10 +108,12 @@ local servers = {
   -- 'ocamllsp', -- OCaml
   phpactor = {
     init_options = {
+      ['indexer.follow_symlinks'] = true,
       ['language_server_phpstan.enabled'] = true,
       ['phpunit.enabled'] = true,
       ['language_server_reference_reference_finder.reference_timeout'] = 600,
     },
+    root_markers = { '.git', '.jj', 'composer.json', '.phpactor.json', '.phpactor.yml' },
   },
   pyright = {
     settings = {
@@ -297,9 +300,12 @@ return {
     'gbprod/phpactor.nvim',
     -- build = function() require('phpactor.handler.update') end, -- To install/update phpactor when installing this plugin
     opts = {
-      install = { bin = 'phpactor' },
+      install = {
+        bin = vim.fn.stdpath('data') .. '/mason/packages/phpactor/phpactor.phar',
+      },
       lspconfig = { enabled = false },
     },
+    cmd = 'PhpActor',
     keys = {
       {
         '<leader>pa',
