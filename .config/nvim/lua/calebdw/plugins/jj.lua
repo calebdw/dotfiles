@@ -11,10 +11,10 @@ return {
   {
     'algmyr/vcsigns.nvim',
     opts = {
-      target_commit = 1,  -- Nice default for jj with new+squash flow.
       show_delete_count = false,
+      skip_sign_decongestion = true,
       signs = {
-        change_delete = { text = '~' },
+        text = { change_delete = '~' },
       },
     },
     init = function()
