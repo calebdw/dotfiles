@@ -179,10 +179,10 @@ return {
     'theHamsta/nvim-dap-virtual-text',
     opts = {},
   },
-  -- {
-  --   'LiadOz/nvim-dap-repl-highlights',
-  --   opts = {},
-  -- },
+  {
+    'LiadOz/nvim-dap-repl-highlights',
+    opts = {},
+  },
   {
     'nvim-telescope/telescope-dap.nvim',
     init = function()
