@@ -9,6 +9,7 @@ set -x EDITOR nvim
 fish_add_path --path ./vendor/bin
 fish_add_path --path ./node_modules/bin
 fish_add_path ~/go/bin
+fish_add_path ~/.opencode/bin
 fish_add_path -a ~/.config/composer/vendor/bin
 
 # Aliases
