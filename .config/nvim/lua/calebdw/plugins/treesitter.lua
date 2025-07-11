@@ -75,11 +75,11 @@ return {
         callback = function()
           local configs = require('nvim-treesitter.parsers')
 
-          configs.blade.install_info = {
-            path = '~/sources/treesitter/tree-sitter-blade',
-            generate = true,
-            generate_from_json = true,
-          }
+          -- configs.blade.install_info = {
+          --   path = '~/sources/treesitter/tree-sitter-blade',
+          --   generate = true,
+          --   generate_from_json = true,
+          -- }
 
           -- configs.phpdoc.install_info = {
           --   path = '~/sources/treesitter/tree-sitter-phpdoc',
