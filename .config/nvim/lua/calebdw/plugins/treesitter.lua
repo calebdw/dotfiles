@@ -120,16 +120,16 @@ return {
     opts = {
       select = {
         lookahead = true,
-        -- keymaps = {
-        --   ['if'] = '@function.inner',
-        --   ['af'] = '@function.outer',
-        --   ['ic'] = '@class.inner',
-        --   ['ac'] = '@class.outer',
-        --   ['il'] = '@loop.inner',
-        --   ['al'] = '@loop.outer',
-        --   ['ia'] = '@parameter.inner',
-        --   ['aa'] = '@parameter.outer',
-        -- },
+        keymaps = {
+          ['if'] = '@function.inner',
+          ['af'] = '@function.outer',
+          ['ic'] = '@class.inner',
+          ['ac'] = '@class.outer',
+          ['il'] = '@loop.inner',
+          ['al'] = '@loop.outer',
+          ['ia'] = '@parameter.inner',
+          ['aa'] = '@parameter.outer',
+        },
       },
     },
   },
