@@ -107,7 +107,13 @@ return {
     },
   },
   -- Smooth Scrolling --
-  { 'karb94/neoscroll.nvim', config = true },
+  {
+    'karb94/neoscroll.nvim',
+    opts = {
+      -- easing = 'quintic',
+      duration_multiplier = .25,
+    },
+  },
   -- Dim Inactive Codeblocks --
   { 'folke/twilight.nvim', config = true },
   -- Zen Mode --
