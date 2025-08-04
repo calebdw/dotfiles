@@ -3,7 +3,7 @@
   "lsp": {
     "phpactor": {
       "command": [
-        "phpactor",
+        "~/.local/share/nvim/mason/bin/phpactor",
         "language-server"
       ],
       "extensions": [
