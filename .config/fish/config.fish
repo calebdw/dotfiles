@@ -32,7 +32,10 @@ abbr -a lj lazyjj
 # abbr --command jj sq squash
 
 if status is-interactive
+    # set -x _ZO_ECHO 1
+
     # Integrations
     atuin init fish --disable-up-arrow | source
     starship init fish | source
+    zoxide init fish | source
 end

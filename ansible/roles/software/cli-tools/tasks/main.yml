@@ -23,4 +23,5 @@
   loop:
     - fd-find
     - ripgrep
+    - zoxide
     # - atuin
