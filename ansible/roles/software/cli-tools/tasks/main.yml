@@ -24,4 +24,4 @@
     - fd-find
     - ripgrep
     - zoxide
-    # - atuin
+    - atuin
