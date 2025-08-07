@@ -4,7 +4,6 @@
 ---@type LazySpec
 return { -- General
   { 'nvim-lua/plenary.nvim', lazy = true }, -- common dependency
-  'github/copilot.vim',
   -- Subvert - awesome search/replace - :Subvert/child{,ren}/adult{,s}/g
   -- Coercion - turn fooBar into foo_bar (and many others)
   'tpope/vim-abolish',
