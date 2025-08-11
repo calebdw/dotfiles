@@ -7,7 +7,7 @@ vim.opt.rtp:prepend(lazypath)
 
 ---@type LazyConfig
 local opts = {
-  checker = { enabled = true, },
+  -- checker = { enabled = true, },
   dev = { path = '~/sources/neovim' },
   diff = {
     cmd = 'terminal_git',
