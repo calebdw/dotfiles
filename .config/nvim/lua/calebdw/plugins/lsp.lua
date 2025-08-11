@@ -106,8 +106,9 @@ local servers = {
   end,
   -- 'ocamllsp', -- OCaml
   phpactor = {
+    -- cmd = { 'php', '/home/cwhite/sources/php/phpactor/bin/phpactor', 'language-server', '-vvv' },
     init_options = {
-      ['indexer.follow_symlinks'] = true,
+      ['indexer.follow_symlinks'] = false,
       ['language_server_phpstan.enabled'] = true,
       ['phpunit.enabled'] = true,
       ['language_server_reference_reference_finder.reference_timeout'] = 600,
