@@ -7,3 +7,5 @@
 /_emails
 /scratch
 *.conform*
+
+**/.claude/settings.local.json

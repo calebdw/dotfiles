@@ -19,6 +19,7 @@
 
 - Follow existing conventions in each project
 - No comments unless explicitly requested
+- All lines should **always** end with a newline (linux style)
 
 ## Version Control
 
