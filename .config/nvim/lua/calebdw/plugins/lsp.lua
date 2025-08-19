@@ -159,28 +159,30 @@ local servers = {
     },
   },
   taplo = {}, -- toml
-  ts_ls = {
-    init_options = {
-      plugins = {
-        {
-          name = "@vue/typescript-plugin",
-          location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
-          languages = {"javascript", "typescript", "vue"},
-        },
-      },
-    },
-    filetypes = {
-      'typescript',
-      'javascript',
-      'vue',
-    },
-  },
+  -- ts_ls = {},
   ts_query_ls = {
     settings = {
       parser_install_directories = {
         vim.fs.joinpath(vim.fn.stdpath('data'), '/site/parser/'),
       },
     },
+  },
+  vtsls = {
+    settings = {
+      vtsls = {
+        tsserver = {
+          globalPlugins = {
+            {
+              name = '@vue/typescript-plugin',
+              location = vim.fn.stdpath('data') .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+              languages = { 'vue' },
+              configNamespace = 'typescript',
+            },
+          },
+        },
+      },
+    },
+    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
   },
   vue_ls = {},
   yamlls = {
