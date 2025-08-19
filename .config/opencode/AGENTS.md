@@ -27,3 +27,10 @@
 - Only commit when explicitly asked, or when there's existing changes and a pivot in focus
 - Follow conventional commit message formats with good descriptions that explain
   why the changes were made and not just what was changed
+
+## CLI & Shell
+
+- Always use `fd` for finding files
+- Always use `rg` for searching through files
+- Always use `fzf` for fuzzy searching
+- Always use `jj` for version control
