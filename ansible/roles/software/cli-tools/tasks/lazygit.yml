@@ -4,35 +4,38 @@
     url: "https://api.github.com/repos/jesseduffield/lazygit/releases/latest"
     return_content: yes
   register: release_info
-
 - name: Set the latest LazyGit version
   set_fact:
     lazygit_latest_version: "{{ release_info.json.tag_name | regex_replace('^v', '') }}"
-
 - name: Check if LazyGit is installed
   command: lazygit --version
   register: lazygit_installed
   ignore_errors: true
   failed_when: false
   changed_when: false
-
 - name: Set installed LazyGit version
   set_fact:
     lazygit_installed_version: "{{ (lazygit_installed.stdout | regex_search('version=([0-9.]+)', '\\1')).0 | default('') }}"
-
 - when: lazygit_latest_version != lazygit_installed_version
   block:
+    - name: extract download url
+      set_fact:
+        lazygit_url: >-
+          {{
+            release_info.json.assets
+            | selectattr('name', 'match', '.*linux_x86_64\.tar\.gz$')
+            | map(attribute='url')
+            | first
+          }}
     - name: Download LazyGit v{{ lazygit_latest_version }}
       get_url:
-        url: "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_{{ lazygit_latest_version }}_Linux_x86_64.tar.gz"
+        url: "{{ lazygit_url }}"
         dest: "/tmp/lazygit.tar.gz"
-
     - name: Extract LazyGit archive
       unarchive:
         src: "/tmp/lazygit.tar.gz"
         dest: "/tmp"
         creates: "/tmp/lazygit"
-
     - name: Install LazyGit v{{ lazygit_latest_version }}
       become: true
       copy:
