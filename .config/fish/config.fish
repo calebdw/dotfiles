@@ -36,6 +36,7 @@ if status is-interactive
 
     # Integrations
     atuin init fish --disable-up-arrow | source
+    glab completion -s fish | source
     starship init fish | source
     zoxide init fish | source
 end
