@@ -1,0 +1,42 @@
+---
+- name: get the latest glab release
+  uri:
+    url: "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/releases/permalink/latest"
+    return_content: yes
+  register: glab_release_info
+- name: set the latest glab version
+  set_fact:
+    glab_latest_version: "{{ glab_release_info.json.tag_name | regex_replace('^v', '') }}"
+- name: check if glab is installed
+  command: glab version
+  register: glab_installed
+  ignore_errors: true
+  failed_when: false
+  changed_when: false
+- name: set installed glab version
+  set_fact:
+    glab_installed_version: "{{ (glab_installed.stdout | regex_search('glab ([0-9.]+)', '\\1')).0 | default('') }}"
+- name: install glab v{{ glab_latest_version }}
+  when: glab_latest_version != glab_installed_version
+  block:
+    - name: extract download url
+      set_fact:
+        glab_deb_url: >-
+          {{
+            glab_release_info.json.assets.links
+            | selectattr('name', 'match', '.*linux_amd64\.deb$')
+            | map(attribute='direct_asset_url')
+            | first
+          }}
+    - name: download glab v{{ glab_latest_version }}
+      get_url:
+        url: "{{ glab_deb_url }}"
+        dest: "/tmp/glab.deb"
+    - name: install glab v{{ glab_latest_version }}
+      become: true
+      apt:
+        deb: "/tmp/glab.deb"
+    - name: clean up downloaded .deb file
+      file:
+        path: "/tmp/glab.deb"
+        state: absent

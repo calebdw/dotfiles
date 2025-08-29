@@ -2,6 +2,7 @@
 - import_tasks: jj.yml
 - import_tasks: git.yml
 - import_tasks: gh.yml
+- import_tasks: glab.yml
 - import_tasks: bat.yml
 - import_tasks: email.yml
 - import_tasks: fzf.yml
