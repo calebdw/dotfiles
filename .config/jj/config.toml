@@ -18,11 +18,13 @@ fi
 # "diff token" = { underline = false }
 
 [git]
-private-commits = "description(glob:'wip:*') | description(glob:'private:*')"
+private-commits = "wip() | private()"
 sign-on-push = true
 colocate = true
 
 [revset-aliases]
+'wip()' = 'description(glob:"wip:*")'
+'private()' = 'description(glob:"private:*")'
 'closest_bookmark(to)' = 'heads(::to & bookmarks())'
 'closest_pushable(to)' = 'heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))'
 'why_immutable(r)' = '(r & immutable()) | roots(r:: & immutable_heads())'
@@ -32,7 +34,6 @@ colocate = true
 # branch with other people (who don't like to see their work rebased) and you want to see
 # everything that is not in trunk "around" that branch, including immutable revisions.
 log = "ancestors(reachable(@, trunk()..), 2)"
-
 
 [signing]
 behavior = "drop"
