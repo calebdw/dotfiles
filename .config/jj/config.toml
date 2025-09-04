@@ -6,7 +6,13 @@ email = "cdwhite3@pm.me"
 
 [aliases]
 g = ["git"]
-tug = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "closest_pushable(@)"]
+tug = ["util", "exec", "--", "bash", "-c", """
+if [ "x$1" = "x" ]; then
+  jj bookmark move --from "closest_bookmark(@)" --to "closest_pushable(@)"
+else
+  jj bookmark move --to "closest_pushable(@)" "$@"
+fi
+""", ""]
 
 [colors]
 # "diff token" = { underline = false }
