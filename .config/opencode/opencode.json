@@ -15,6 +15,23 @@
       }
     }
   },
+  "mcp": {
+    "voice-mode": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--refresh",
+        "voice-mode"
+      ],
+      "enabled": true,
+      "environment": {
+        "xVOICEMODE_PREFER_LOCAL": "true",
+        "xVOICEMODE_ALWAYS_TRY_LOCAL": "true",
+        "VOICEMODE_DEBUG": "false",
+        "VOICEMODE_SAVE_AUDIO": "false"
+      }
+    }
+  },
   "model": "anthropic/claude-sonnet-4-5-20250929",
   "theme": "system"
 }

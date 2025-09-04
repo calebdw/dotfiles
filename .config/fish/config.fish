@@ -38,5 +38,6 @@ if status is-interactive
     atuin init fish --disable-up-arrow | source
     glab completion -s fish | source
     starship init fish | source
+    # voicemode completions fish | source
     zoxide init fish | source
 end
