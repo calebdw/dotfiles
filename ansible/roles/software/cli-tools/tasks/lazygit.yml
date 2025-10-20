@@ -24,7 +24,7 @@
           {{
             release_info.json.assets
             | selectattr('name', 'match', '.*linux_x86_64\.tar\.gz$')
-            | map(attribute='url')
+            | map(attribute='browser_download_url')
             | first
           }}
     - name: Download LazyGit v{{ lazygit_latest_version }}

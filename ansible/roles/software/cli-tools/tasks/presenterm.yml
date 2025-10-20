@@ -34,7 +34,7 @@
               {{
                 release_info.json.assets
                 | selectattr('name', 'match', '.*-amd64\.deb$')
-                | map(attribute='url')
+                | map(attribute='browser_download_url')
                 | first
               }}
         - name: Download Pandoc v{{ pandoc_latest_version }}
