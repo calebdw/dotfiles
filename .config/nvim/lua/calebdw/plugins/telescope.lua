@@ -10,12 +10,12 @@ return {
         mappings = {
           i = {
             ['<esc>'] = actions.close,
-            ['<c-b>'] = actions.results_scrolling_up,
-            ['<c-f>'] = actions.results_scrolling_down,
+            ['<m-u>'] = actions.results_scrolling_up,
+            ['<m-d>'] = actions.results_scrolling_down,
           },
           n = {
-            ['<c-b>'] = actions.results_scrolling_up,
-            ['<c-f>'] = actions.results_scrolling_down,
+            ['<m-u>'] = actions.results_scrolling_up,
+            ['<m-d>'] = actions.results_scrolling_down,
           },
         },
         file_ignore_patterns = {
@@ -43,9 +43,9 @@ return {
           auto_quoting = true,
           mappings = {
             i = {
-              ['<c-k>'] = lga_actions.quote_prompt(),
-              ['<c-i>'] = lga_actions.quote_prompt({ postfix = ' --iglob ' }),
-              ['<c-u>'] = lga_actions.quote_prompt({ postfix = ' -uu ' }),
+              ['<cm-k>'] = lga_actions.quote_prompt(),
+              ['<cm-i>'] = lga_actions.quote_prompt({ postfix = ' --iglob ' }),
+              ['<cm-u>'] = lga_actions.quote_prompt({ postfix = ' -uu ' }),
             },
           },
         },
