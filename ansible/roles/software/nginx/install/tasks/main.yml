@@ -19,10 +19,9 @@
 
 - name: 'install nginx'
   become: true
-  apt:
+  ansible.builtin.package:
     state: latest
-    name:
-      - nginx
+    name: nginx
 
 - name: 'start nginx'
   become: true

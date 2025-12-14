@@ -8,5 +8,5 @@ roles:
   - name: geerlingguy.composer
   - name: geerlingguy.docker
   - name: geerlingguy.go
-  - name: geerlingguy.pip
+  # - name: geerlingguy.pip
   - name: robertdebock.auditd

@@ -14,7 +14,7 @@
 
 - name: install git
   become: true
-  apt:
+  ansible.builtin.package:
     state: latest
     name:
       - git
@@ -33,12 +33,10 @@
     - Mail::Address
     - Net::SMTP::SSL
 
-- name: 'Install pip packages'
-  pip:
-    name: '{{ item }}'
-    state: latest
+- name: 'Install python packages'
+  shell: 'uv tool install --upgrade {{ item }}'
   loop:
-    - git-dmb
+    - git-delete-merged-branches
     - b4
 
 - name: 'Install cargo packages'

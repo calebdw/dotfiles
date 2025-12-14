@@ -1,7 +1,7 @@
 ---
 - name: 'install supervisor'
   become: true
-  apt:
+  ansible.builtin.package:
     state: latest
     name: supervisor
 

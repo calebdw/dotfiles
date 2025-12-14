@@ -1,5 +1,0 @@
----
-- name: 'install uv'
-  pip:
-    name: uv
-    state: latest

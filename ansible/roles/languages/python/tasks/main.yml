@@ -1,0 +1,19 @@
+---
+- name: 'install python deps'
+  become: true
+  ansible.builtin.package:
+    state: latest
+    name:
+      - python3-docutils
+      - python3-pip
+      - python3-venv
+
+- name: 'install uv'
+  shell: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+- name: 'install pip bash completion'
+  become: true
+  ansible.builtin.copy:
+    content: "{{ lookup('pipe', 'pip completion --bash') }}"
+    dest: '/etc/bash_completion.d/pip'
+    mode: '0644'

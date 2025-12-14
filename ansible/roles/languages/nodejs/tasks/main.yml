@@ -15,10 +15,9 @@
 
 - name: install nodejs and npm
   become: true
-  apt:
+  ansible.builtin.package:
     state: latest
-    name:
-      - nodejs
+    name: nodejs
 
 - name: update npm
   become: true

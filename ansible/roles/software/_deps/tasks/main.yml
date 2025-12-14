@@ -6,7 +6,7 @@
 
 - name: 'install dependencies'
   become: true
-  apt:
+  ansible.builtin.package:
     state: latest
     name:
       - acl # operations involving ansible become_user
@@ -35,9 +35,6 @@
       - luarocks
       - ninja-build
       - pkg-config
-      - python3-docutils
-      - python3-pip
-      - python3-venv
       - software-properties-common # apt-add-repository commands
       - unzip
       - xclip
@@ -50,11 +47,3 @@
     path: "{{ dir_user_completions }}"
     state: directory
     mode: '0755'
-
-- name: 'install pip bash completion'
-  become: true
-  ansible.builtin.copy:
-    content: "{{ lookup('pipe', 'pip completion --bash') }}"
-    dest: '/etc/bash_completion.d/pip'
-    mode: '0644'
-

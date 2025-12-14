@@ -6,16 +6,10 @@
       become: true
       vars:
         docker_users: '{{ ansible_env.USER }}'
-        docker_package_state: latest
-        ansible_distribution: Ubuntu
-        docker_install_compose_plugin: true
-        docker_install_compose: false
+        docker_package_state: latest # default is present
 
 - name: 'install Docker Python library'
-  include_role:
-    name: geerlingguy.pip
-    apply:
-      become: true
-      vars:
-        pip_install_packages:
-          - name: docker
+  become: true
+  ansible.builtin.package:
+    name: python3-docker
+    state: latest

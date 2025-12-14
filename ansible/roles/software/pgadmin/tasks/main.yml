@@ -14,6 +14,6 @@
 
 - name: 'Install PgAdmin'
   become: true
-  apt:
+  ansible.builtin.package:
     state: latest
     name: 'pgadmin4-desktop'

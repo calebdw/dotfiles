@@ -12,13 +12,6 @@
     mode: '0644'
   when: not install_path.stat.exists
 
-- name: 'install required sqlite extension'
-  become: true
-  apt:
-    state: latest
-    name:
-      - php{{ php_version }}-sqlite3
-
 - name: 'download php manual for PsySh'
   become: true
   get_url:

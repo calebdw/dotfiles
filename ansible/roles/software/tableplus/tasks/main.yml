@@ -15,6 +15,6 @@
 
 - name: 'install tableplus'
   become: true
-  apt:
+  ansible.builtin.package:
     state: latest
-    name: 'tableplus'
+    name: tableplus

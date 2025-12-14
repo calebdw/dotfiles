@@ -31,9 +31,7 @@
         chdir: '{{ dir_sources }}/neovim/neovim'
 
 - name: 'Install python neovim module'
-  pip:
-    name: pynvim
-    state: latest
+  shell: 'uv tool install --upgrade pynvim'
 
 - name: 'Install NodeJS neovim module'
   become: true

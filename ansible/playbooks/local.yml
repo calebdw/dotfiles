@@ -4,23 +4,21 @@
     - configure/evoluent-verticalmouse
     - configure/nopasswd-sudo
     - software/_deps
+    - languages/python
+    - languages/php
+    - languages/rust
+    - languages/go
+    - languages/perl
+    - languages/nodejs
     - software/shell
-    # - software/openconnect
     - software/brave-browser
-    - software/php/install
-    - software/php/manual
-    - software/rust/install
-    - software/go/install
-    - software/perl/install
-    - software/nodejs/install
-    - software/composer/install
     - software/cli-tools
     - software/docker
     - software/neovim
     - software/nerd_fonts
     - software/pgadmin
     - software/porter
-    - software/supervisor/install
+    - software/supervisor
     - software/tableplus
     - software/tree-sitter
     - software/wezterm

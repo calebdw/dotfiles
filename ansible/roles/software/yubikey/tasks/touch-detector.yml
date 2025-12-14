@@ -1,9 +1,9 @@
 ---
 - name: install deps
   become: true
-  apt:
+  ansible.builtin.package:
     state: latest
-    name: [libgpgme-dev]
+    name: libgpgme-dev
 
 - name: 'Clone yubikey-touch-detector'
   git:

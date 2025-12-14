@@ -15,6 +15,6 @@
 
 - name: 'install Brave Browser'
   become: true
-  apt:
+  ansible.builtin.package:
     state: latest
     name: 'brave-browser'

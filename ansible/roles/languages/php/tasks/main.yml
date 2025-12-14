@@ -1,0 +1,4 @@
+---
+- import_tasks: install.yml
+- import_tasks: manual.yml
+- import_tasks: composer.yml

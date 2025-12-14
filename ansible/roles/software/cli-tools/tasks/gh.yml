@@ -16,6 +16,6 @@
 
 - name: install gh
   become: true
-  apt:
+  ansible.builtin.package:
     state: latest
     name: gh

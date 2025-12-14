@@ -8,11 +8,10 @@
 - import_tasks: fzf.yml
 - import_tasks: lazygit.yml
 - import_tasks: presenterm.yml
-- import_tasks: uv.yml
 
-- name: 'Install cli tools apt'
+- name: 'Install cli tools'
   become: true
-  apt:
+  ansible.builtin.package:
     state: latest
     name:
       - btop

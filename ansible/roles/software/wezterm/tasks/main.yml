@@ -15,7 +15,7 @@
 
 - name: 'install wezterm'
   become: true
-  apt:
+  ansible.builtin.package:
     state: latest
     name: 'wezterm-nightly'
 
