@@ -1,14 +1,12 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "lsp": {
+    "intelephense": {
+      "disabled": true
+    },
     "phpactor": {
-      "command": [
-        "~/.local/share/nvim/mason/bin/phpactor",
-        "language-server"
-      ],
-      "extensions": [
-        ".php"
-      ],
+      "command": ["~/.local/share/nvim/mason/bin/phpactor", "language-server"],
+      "extensions": [".php"],
       "initialization": {
         "indexer.follow_symlinks": true,
         "language_server_phpstan.enabled": true
@@ -18,11 +16,7 @@
   "mcp": {
     "voice-mode": {
       "type": "local",
-      "command": [
-        "uvx",
-        "--refresh",
-        "voice-mode"
-      ],
+      "command": ["uvx", "--refresh", "voice-mode"],
       "enabled": true,
       "environment": {
         "xVOICEMODE_PREFER_LOCAL": "true",
