@@ -23,7 +23,6 @@ local parsers = {
   'javascript',
   'json',
   'json5',
-  'jsonc',
   'jsdoc',
   'latex',
   'lua',
@@ -109,6 +108,9 @@ return {
       map('n', '<leader>it', vim.treesitter.inspect_tree)
       map('n', '<leader>i', vim.show_pos)
     end,
+    dependencies = {
+      'LiadOz/nvim-dap-repl-highlights',
+    },
   },
   {
     'nvim-treesitter/nvim-treesitter-context',

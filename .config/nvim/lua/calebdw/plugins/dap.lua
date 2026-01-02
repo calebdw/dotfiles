@@ -180,7 +180,7 @@ return {
     opts = {},
   },
   {
-    'LiadOz/nvim-dap-repl-highlights',
+    'LiadOz/nvim-dap-repl-highlights', -- provides dap_repl tree-sitter grammar
     opts = {},
   },
   {
