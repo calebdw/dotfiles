@@ -3,8 +3,8 @@
   become: true
   ansible.builtin.deb822_repository:
     name: fish-shell
-    # uris: https://ppa.launchpadcontent.net/fish-shell/release-4/ubuntu
-    uris: https://ppa.launchpadcontent.net/fish-shell/nightly-master/ubuntu
+    uris: https://ppa.launchpadcontent.net/fish-shell/release-4/ubuntu
+    # uris: https://ppa.launchpadcontent.net/fish-shell/nightly-master/ubuntu
     signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x88421e703edc7af54967ded473c9fcc9e2bb48da
     suites: '{{ ansible_distribution_release }}'
     components: main
