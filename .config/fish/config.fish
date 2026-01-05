@@ -2,12 +2,14 @@
 fish_vi_key_bindings
 
 # Environment
+set -x BUN_INSTALL ~/.bun
 set -x NODE_EXTRA_CA_CERTS /etc/ssl/certs/ca-certificates.crt
 set -x EDITOR nvim
 
 # Paths
 # these are dynamic (depends on the current directory)
 set -x PATH ./vendor/bin ./node_modules/bin $PATH
+fish_add_path $BUN_INSTALL/bin
 fish_add_path ~/go/bin
 fish_add_path ~/.opencode/bin
 fish_add_path -a ~/.config/composer/vendor/bin

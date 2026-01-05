@@ -1,0 +1,6 @@
+---
+- name: install bun
+  ansible.builtin.shell:
+    cmd: curl -fsSL https://bun.com/install | bash
+    creates: '{{ ansible_env.HOME }}/.bun/bin/bun'
+  notify: source bashrc

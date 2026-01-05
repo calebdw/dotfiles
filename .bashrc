@@ -131,3 +131,7 @@ command -v starship &> /dev/null && eval "$(starship init bash)"
 
 # Auto-added by fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

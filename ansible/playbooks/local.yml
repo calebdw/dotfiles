@@ -9,7 +9,7 @@
     - languages/rust
     - languages/go
     - languages/perl
-    - languages/nodejs
+    - languages/js
     - software/shell
     - software/brave-browser
     - software/cli-tools
