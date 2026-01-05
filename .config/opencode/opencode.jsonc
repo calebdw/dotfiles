@@ -40,5 +40,8 @@
         "mcp_timeout": 3000000
     },
     "model": "anthropic/claude-opus-4-5",
+    "plugin": [
+        "opencode-anthropic-auth@0.0.8"
+    ],
     "theme": "system"
 }
