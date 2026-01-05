@@ -135,3 +135,6 @@ command -v starship &> /dev/null && eval "$(starship init bash)"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# tuitube
+export PATH=/home/cwhite/.termcast/compiled/tuitube/bin:$PATH

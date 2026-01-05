@@ -1,0 +1,9 @@
+---
+- name: install yt-dlp
+  ansible.builtin.shell: 'uv tool install --upgrade yt-dlp[default]'
+
+- name: install tuitube
+  ansible.builtin.shell:
+    cmd: curl -sf https://termcast.app/r/tuitube | bash
+    creates: '{{ ansible_env.HOME }}/.termcast/compiled/tuitube/bin/tuitube'
+  notify: source bashrc

@@ -8,6 +8,7 @@
 - import_tasks: fzf.yml
 - import_tasks: lazygit.yml
 - import_tasks: presenterm.yml
+- import_tasks: tuitube.yml
 
 - name: 'Install cli tools'
   become: true

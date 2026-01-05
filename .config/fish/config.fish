@@ -12,6 +12,7 @@ set -x PATH ./vendor/bin ./node_modules/bin $PATH
 fish_add_path $BUN_INSTALL/bin
 fish_add_path ~/go/bin
 fish_add_path ~/.opencode/bin
+fish_add_path ~/.termcast/compiled/tuitube/bin
 fish_add_path -a ~/.config/composer/vendor/bin
 
 # Aliases
