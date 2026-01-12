@@ -31,7 +31,8 @@
                 "xVOICEMODE_PREFER_LOCAL": "true",
                 "xVOICEMODE_ALWAYS_TRY_LOCAL": "true",
                 "VOICEMODE_DEBUG": "false",
-                "VOICEMODE_SAVE_AUDIO": "false"
+                "VOICEMODE_SAVE_AUDIO": "false",
+                "VOICEMODE_TTS_SPEED": "1.5"
             }
         }
     },
