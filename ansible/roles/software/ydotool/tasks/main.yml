@@ -1,0 +1,83 @@
+---
+- name: Install ydotool
+  vars:
+    install_dir: '{{ dir_sources }}/ydotool'
+    build_dir: '{{ dir_sources }}/ydotool/build'
+  block:
+    - name: Install build dependencies
+      become: true
+      ansible.builtin.package:
+        state: present
+        name:
+          - cmake
+          - build-essential
+          - scdoc
+
+    - name: Clone ydotool
+      git:
+        repo: https://github.com/ReimuNotMoe/ydotool.git
+        dest: '{{ install_dir }}'
+        clone: true
+        update: true
+        force: true
+      register: clone
+
+    - name: Create build directory
+      file:
+        path: '{{ build_dir }}'
+        state: directory
+        mode: '0755'
+
+    - name: Configure with CMake
+      command:
+        cmd: cmake ..
+        chdir: '{{ build_dir }}'
+      when: clone.changed
+      register: cmake_config
+
+    - name: Build ydotool
+      command:
+        cmd: make -j {{ ansible_processor_vcpus | default(ansible_processor_count) | default(2) }}
+        chdir: '{{ build_dir }}'
+      when: cmake_config.changed or clone.changed
+
+    - name: Install ydotool
+      become: true
+      command:
+        cmd: make install
+        chdir: '{{ build_dir }}'
+      when: cmake_config.changed or clone.changed
+
+    - name: Ensure uinput module is loaded
+      become: true
+      community.general.modprobe:
+        name: uinput
+        state: present
+
+    - name: Ensure uinput module loads at boot
+      become: true
+      copy:
+        content: "uinput\n"
+        dest: /etc/modules-load.d/uinput.conf
+        mode: '0644'
+
+    - name: Create ydotool.service symlink to ydotoold.service
+      become: true
+      file:
+        src: /usr/lib/systemd/user/ydotoold.service
+        dest: /usr/lib/systemd/user/ydotool.service
+        state: link
+        force: true
+
+    - name: Enable ydotoold user service
+      systemd_service:
+        name: ydotoold
+        scope: user
+        enabled: true
+        daemon_reload: true
+
+    - name: Start ydotoold user service
+      systemd_service:
+        name: ydotoold
+        scope: user
+        state: started
