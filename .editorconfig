@@ -14,7 +14,7 @@ indent_style = tab
 [*.patch]
 trim_trailing_whitespace = false
 
-[*.{yml,yaml,neon*,lua,scm,xml,md,toml}]
+[*.{yml,yaml,neon*,lua,scm,xml,md,toml,json,jsonc}]
 indent_size = 2
 
 [**/treesitter/**]
