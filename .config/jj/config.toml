@@ -5,7 +5,9 @@ name = "Caleb White"
 email = "cdwhite3@pm.me"
 
 [aliases]
+fetch = ["git", "fetch", "--all-remotes"]
 g = ["git"]
+push = ["git", "push"]
 tug = ["util", "exec", "--", "bash", "-c", """
 if [ "x$1" = "x" ]; then
   jj bookmark move --from "closest_bookmark(@)" --to "closest_pushable(@)"
