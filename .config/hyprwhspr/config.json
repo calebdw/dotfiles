@@ -5,6 +5,8 @@
   "recording_mode": "auto",
   "grab_keys": false,
   "use_hypr_bindings": false,
+  "selected_device_path": null,
+  "selected_device_name": null,
   "audio_device_id": null,
   "audio_device_name": null,
   "audio_device_vendor_id": null,
@@ -15,6 +17,9 @@
   "word_overrides": {
     "hyper whisper": "hyprwhspr"
   },
+  "filter_filler_words": true,
+  "filler_words": ["uh", "um", "er", "ah", "eh", "hmm", "hm", "mm", "mhm"],
+  "symbol_replacements": true,
   "whisper_prompt": "Transcribe with proper capitalization, including sentence beginnings, proper nouns, titles, and standard English capitalization rules.",
   "clipboard_behavior": false,
   "clipboard_clear_delay": 5.0,
@@ -37,7 +42,7 @@
   "onnx_asr_model": "nemo-parakeet-tdt-0.6b-v3",
   "onnx_asr_quantization": "int8",
   "onnx_asr_use_vad": true,
-  "mic_osd_enabled": true,
+  "mic_osd_enabled": false,
   "mute_detection": false,
   "audio_ducking": false,
   "audio_ducking_percent": 0,
