@@ -87,14 +87,18 @@ return {
           -- }
 
           -- configs.php.install_info = {
-          --   path = '~/sources/treesitter/tree-sitter-php',
+          --   url = 'https://github.com/tree-sitter/tree-sitter-php',
+          --   revision = '015ce839db5ae9ceda763bf12e071867fbe8cc89',
+          --   -- path = '~/sources/treesitter/tree-sitter-php',
           --   location = 'php',
           --   generate = true,
           --   generate_from_json = true,
           -- }
-
+          --
           -- configs.php_only.install_info = {
-          --   path = '~/sources/treesitter/tree-sitter-php',
+          --   url = 'https://github.com/tree-sitter/tree-sitter-php',
+          --   revision = '015ce839db5ae9ceda763bf12e071867fbe8cc89',
+          --   -- path = '~/sources/treesitter/tree-sitter-php',
           --   location = 'php_only',
           --   generate = true,
           --   generate_from_json = true,
