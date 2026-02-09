@@ -10,7 +10,7 @@
     name: nginx
     uris: 'https://nginx.org/packages/ubuntu'
     signed_by: 'https://nginx.org/keys/nginx_signing.key'
-    suites: '{{ ansible_distribution_release }}'
+    suites: "{{ ansible_facts['distribution_release'] }}"
     components: nginx
   notify: update apt cache
 

@@ -25,4 +25,4 @@
     - software/wezterm
     - software/yubikey
     - role: configure/system76-power
-      when: "ansible_system_vendor == 'System76'"
+      when: ansible_facts['system_vendor'] == 'System76'

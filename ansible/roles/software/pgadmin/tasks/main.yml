@@ -3,7 +3,7 @@
   become: true
   ansible.builtin.deb822_repository:
     name: pgadmin
-    uris: 'https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/{{ ansible_distribution_release }}'
+    uris: "https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/{{ ansible_facts['distribution_release'] }}"
     signed_by: 'https://www.pgadmin.org/static/packages_pgadmin_org.pub'
     suites: pgadmin4
     components: main

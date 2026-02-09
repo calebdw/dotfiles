@@ -4,4 +4,4 @@
   lineinfile:
     state: present
     path: /etc/sudoers
-    line: '{{ ansible_env.USER }} ALL=(ALL:ALL) NOPASSWD:ALL'
+    line: "{{ ansible_facts['env']['USER'] }} ALL=(ALL:ALL) NOPASSWD:ALL"

@@ -24,6 +24,8 @@
   "clipboard_behavior": false,
   "clipboard_clear_delay": 5.0,
   "paste_mode": "ctrl_shift",
+  "paste_keycode_wev": null,
+  "paste_keycode": 47,
   "shift_paste": true,
   "transcription_backend": "onnx-asr",
   "rest_endpoint_url": null,

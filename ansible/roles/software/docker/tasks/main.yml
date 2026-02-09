@@ -5,7 +5,7 @@
     apply:
       become: true
       vars:
-        docker_users: '{{ ansible_env.USER }}'
+        docker_users: "{{ ansible_facts['env']['USER'] }}"
         docker_package_state: latest # default is present
 
 - name: 'install Docker Python library'

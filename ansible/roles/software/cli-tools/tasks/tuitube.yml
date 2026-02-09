@@ -5,5 +5,5 @@
 - name: install tuitube
   ansible.builtin.shell:
     cmd: curl -sf https://termcast.app/r/tuitube | bash
-    creates: '{{ ansible_env.HOME }}/.termcast/compiled/tuitube/bin/tuitube'
+    creates: "{{ ansible_facts['env']['HOME'] }}/.termcast/compiled/tuitube/bin/tuitube"
   notify: source bashrc

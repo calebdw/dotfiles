@@ -51,7 +51,7 @@
         name: davmail
     - name: Ensure systemd user directory exists
       ansible.builtin.file:
-        path: "{{ ansible_env.HOME }}/.config/systemd/user"
+        path: "{{ ansible_facts['env']['HOME'] }}/.config/systemd/user"
         state: directory
         mode: '0755'
     - name: Create systemd service for davmail
@@ -69,7 +69,7 @@
 
           [Install]
           WantedBy=default.target
-        dest: '{{ ansible_env.HOME }}/.config/systemd/user/davmail.service'
+        dest: "{{ ansible_facts['env']['HOME'] }}/.config/systemd/user/davmail.service"
         mode: '0644'
     - name: Enable and start davmail service
       ansible.builtin.systemd_service:

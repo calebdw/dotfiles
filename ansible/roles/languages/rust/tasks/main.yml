@@ -3,10 +3,15 @@
   shell: curl -sSf https://sh.rustup.rs | sh -s -- -y
   notify: source bashrc
 
+- name: Install cargo-nextest (requires --locked)
+  community.general.cargo:
+    name: cargo-nextest
+    state: latest
+    locked: true
+
 - name: Install cargo packages
   community.general.cargo:
     name: '{{ item }}'
     state: latest
   with_items:
-    - 'cargo-nextest'
     - 'cargo-insta'

@@ -37,7 +37,7 @@
 
     - name: Build ydotool
       command:
-        cmd: make -j {{ ansible_processor_vcpus | default(ansible_processor_count) | default(2) }}
+        cmd: make -j {{ ansible_facts['processor_vcpus'] | default(ansible_facts['processor_count']) | default(2) }}
         chdir: '{{ build_dir }}'
       when: cmake_config.changed or clone.changed
 

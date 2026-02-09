@@ -1,5 +1,5 @@
 ---
-dir_sources: "{{ ansible_env.HOME }}/sources"
-dir_user_completions: "{{ ansible_env.HOME }}/.local/share/bash-completion/completions"
+dir_sources: "{{ ansible_facts['env']['HOME'] }}/sources"
+dir_user_completions: "{{ ansible_facts['env']['HOME'] }}/.local/share/bash-completion/completions"
 
 php_version: 8.5
