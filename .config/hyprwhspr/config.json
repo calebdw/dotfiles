@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/goodroot/hyprwhspr/main/share/config.schema.json",
   "primary_shortcut": "SUPER+ALT+D",
   "secondary_shortcut": null,
   "secondary_language": null,
