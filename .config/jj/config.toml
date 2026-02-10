@@ -41,28 +41,25 @@ behavior = "drop"
 backend = "gpg"
 
 [templates]
+new_description = '''
+if(parents.len() > 1, join(" ",
+  "Merge",
+  parents.skip(1).map(|p| bookmarks_or_hash(p)).join(", "),
+  "into",
+  bookmarks_or_hash(parents.first()),
+))
+'''
 draft_commit_description = '''
 concat(
-  if(
-    !description && parents.len() > 1,
-    concat(separate(" ",
-      "Merge",
-      if(parents.len() > 2, "branches", "branch"),
-      "into",
-      parents.map(|p| coalesce(
-        p.bookmarks().map(|b| b.name()).join(", "),
-        p.commit_id().short(),
-      )).join(", "),
-    )),
-  ),
   builtin_draft_commit_description,
   "\nJJ: ignore-rest\n",
-  diff.git(),
+  diff.git()
 )
 '''
-git_push_bookmark = '''
-"calebdw/push-" ++ change_id.short()
-'''
+git_push_bookmark = '"calebdw/push-" ++ change_id.short()'
+
+[template-aliases]
+'bookmarks_or_hash(c)' = 'coalesce(c.bookmarks().map(|b| b.name()).join(", "), c.commit_id().short())'
 
 [ui]
 default-command = "log"
