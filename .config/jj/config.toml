@@ -46,6 +46,7 @@ backend = "gpg"
 auto-update-stale = true
 
 [templates]
+draft_commit_description = 'builtin_draft_commit_description_with_diff'
 new_description = '''
 if(parents.len() > 1, join(" ",
   "Merge",
@@ -53,13 +54,6 @@ if(parents.len() > 1, join(" ",
   "into",
   bookmarks_or_hash(parents.first()),
 ))
-'''
-draft_commit_description = '''
-concat(
-  builtin_draft_commit_description,
-  "\nJJ: ignore-rest\n",
-  diff.git(),
-)
 '''
 git_push_bookmark = '"calebdw/push-" ++ change_id.short()'
 
