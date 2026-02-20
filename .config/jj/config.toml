@@ -8,6 +8,8 @@ email = "cdwhite3@pm.me"
 fetch = ["git", "fetch", "--all-remotes"]
 g = ["git"]
 push = ["git", "push"]
+retrunk = ["rebase", "-d", "trunk()"]
+sudo = ["--ignore-immutable"]
 tug = ["util", "exec", "--", "bash", "-c", """
 if [ "x$1" = "x" ]; then
   jj bookmark move --from "closest_bookmark(@)" --to "closest_pushable(@)"
@@ -40,6 +42,9 @@ log = "ancestors(reachable(@, trunk()..), 2)"
 behavior = "drop"
 backend = "gpg"
 
+[snapshot]
+auto-update-stale = true
+
 [templates]
 new_description = '''
 if(parents.len() > 1, join(" ",
@@ -53,7 +58,7 @@ draft_commit_description = '''
 concat(
   builtin_draft_commit_description,
   "\nJJ: ignore-rest\n",
-  diff.git()
+  diff.git(),
 )
 '''
 git_push_bookmark = '"calebdw/push-" ++ change_id.short()'
@@ -64,6 +69,8 @@ git_push_bookmark = '"calebdw/push-" ++ change_id.short()'
 [ui]
 default-command = "log"
 diff-editor = ["nvim", ".", "-c", "DiffEditor $left $right $output"]
+show-cryptographic-signatures = true
+log-synthetic-elided-nodes = true
 
 [ui.movement]
 # edit = true
