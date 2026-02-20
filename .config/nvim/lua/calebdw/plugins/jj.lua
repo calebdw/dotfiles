@@ -11,6 +11,9 @@ return {
   {
     'algmyr/vcsigns.nvim',
     opts = {
+      diff_opts = {
+        ignore_whitespace_change = true,
+      },
       show_delete_count = false,
       skip_sign_decongestion = true,
       signs = {
@@ -34,6 +37,12 @@ return {
       map({ 'n', 'v' }, '<leader>hr', function() actions.hunk_undo(0) end, { desc = 'Undo the hunk under the cursor' })
       map('n', '<leader>hR', function() actions.hunk_undo(0, { 0, vim.fn.line('$') }) end, { desc = 'Undo the hunks in the file' })
       map('n', '<leader>hd', function() actions.toggle_hunk_diff(0) end, { desc = 'Show diff of hunk under the cursor' })
+      map('n', '<leader>hw', function()
+        local opts = vim.g.vcsigns_diff_opts or {}
+        opts.ignore_whitespace_change = not opts.ignore_whitespace_change
+        vim.g.vcsigns_diff_opts = opts
+        require('vcsigns.updates').shallow_update(0)
+      end, { desc = 'Toggle whitespace in hunk diff' })
     end,
   },
   {
