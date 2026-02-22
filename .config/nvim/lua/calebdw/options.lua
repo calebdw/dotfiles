@@ -1,6 +1,11 @@
 local opt = vim.opt
 local g = vim.g
 
+vim.ui.edit = function(path, opts)
+  vim.cmd.tabedit(path)
+  if opts and opts.line then vim.api.nvim_win_set_cursor(0, { opts.line, (opts.column or 1) - 1 }) end
+end
+
 opt.shell = '/usr/bin/fish'
 
 -- Faster loading for providers
