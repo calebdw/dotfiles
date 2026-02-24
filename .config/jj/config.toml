@@ -10,13 +10,6 @@ g = ["git"]
 push = ["git", "push"]
 retrunk = ["rebase", "-d", "trunk()"]
 sudo = ["--ignore-immutable"]
-tug = ["util", "exec", "--", "bash", "-c", """
-if [ "x$1" = "x" ]; then
-  jj bookmark move --from "closest_bookmark(@)" --to "closest_pushable(@)"
-else
-  jj bookmark move --to "closest_pushable(@)" "$@"
-fi
-""", ""]
 
 [colors]
 # "diff token" = { underline = false }
@@ -25,11 +18,12 @@ fi
 private-commits = "wip() | private()"
 sign-on-push = true
 
+[revsets]
+bookmark-advance-to = 'heads(::@ & mutable() & ~description(exact:"") & (~empty() | merges()))'
+
 [revset-aliases]
 'wip()' = 'description(glob:"wip:*")'
 'private()' = 'description(glob:"private:*")'
-'closest_bookmark(to)' = 'heads(::to & bookmarks())'
-'closest_pushable(to)' = 'heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))'
 'why_immutable(r)' = '(r & immutable()) | roots(r:: & immutable_heads())'
 # Show more context around the current working copy.
 # The default revset (present(@) | ancestors(immutable_heads().., 2) | present(trunk()))
