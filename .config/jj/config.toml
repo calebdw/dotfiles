@@ -10,6 +10,7 @@ g = ["git"]
 push = ["git", "push"]
 retrunk = ["rebase", "-d", "trunk()"]
 sudo = ["--ignore-immutable"]
+tug = ["bookmark", "advance"]
 
 [colors]
 # "diff token" = { underline = false }
@@ -24,6 +25,7 @@ bookmark-advance-to = 'heads(::@ & mutable() & ~description(exact:"") & (~empty(
 [revset-aliases]
 'wip()' = 'description(glob:"wip:*")'
 'private()' = 'description(glob:"private:*")'
+'tip()' = 'exactly(heads(@::), 1)'
 'why_immutable(r)' = '(r & immutable()) | roots(r:: & immutable_heads())'
 # Show more context around the current working copy.
 # The default revset (present(@) | ancestors(immutable_heads().., 2) | present(trunk()))
