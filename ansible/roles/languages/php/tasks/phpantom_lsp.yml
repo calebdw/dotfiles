@@ -1,0 +1,55 @@
+---
+# - name: Get the latest phpantom_lsp version
+#   uri:
+#     url: "https://api.github.com/repos/AJenbo/phpantom_lsp/releases/latest"
+#     return_content: yes
+#   register: phpantom_release_info
+# - name: Set the latest phpantom_lsp version
+#   set_fact:
+#     phpantom_lsp_latest_version: "{{ phpantom_release_info.json.tag_name }}"
+# - name: Check if phpantom_lsp is installed
+#   command: '~/.local/bin/phpantom_lsp --version'
+#   register: phpantom_lsp_installed
+#   ignore_errors: true
+#   failed_when: false
+#   changed_when: false
+# - name: Set installed phpantom_lsp version
+#   set_fact:
+#     phpantom_lsp_installed_version: "{{ (phpantom_lsp_installed.stdout | regex_search('phpantom_lsp ([0-9.]+)', '\\1')).0 | default('') }}"
+# - when: phpantom_lsp_latest_version != phpantom_lsp_installed_version
+#   block:
+#     - name: Extract phpantom_lsp download url
+#       set_fact:
+#         phpantom_lsp_url: >-
+#           {{
+#             phpantom_release_info.json.assets
+#             | selectattr('name', 'match', '.*x86_64-unknown-linux-gnu\.tar\.gz$')
+#             | map(attribute='browser_download_url')
+#             | first
+#           }}
+#     - name: Download phpantom_lsp v{{ phpantom_lsp_latest_version }}
+#       get_url:
+#         url: "{{ phpantom_lsp_url }}"
+#         dest: "/tmp/phpantom_lsp.tar.gz"
+#     - name: Extract phpantom_lsp archive
+#       unarchive:
+#         src: "/tmp/phpantom_lsp.tar.gz"
+#         dest: "/tmp"
+#         creates: "/tmp/phpantom_lsp"
+#     - name: Install phpantom_lsp v{{ phpantom_lsp_latest_version }}
+#       copy:
+#         src: "/tmp/phpantom_lsp"
+#         dest: '~/.local/bin/phpantom_lsp'
+#         mode: '0755'
+#     - name: Clean up phpantom_lsp temp files
+#       file:
+#         path: "{{ item }}"
+#         state: absent
+#       loop:
+#         - /tmp/phpantom_lsp.tar.gz
+#         - /tmp/phpantom_lsp
+
+# - name: 'install phpantom_lsp'
+#   community.general.cargo:
+#     name: phpantom_lsp
+#     state: latest

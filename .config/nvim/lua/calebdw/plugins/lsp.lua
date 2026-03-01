@@ -12,7 +12,7 @@ vim.lsp.config('*', {
         title = 'LSP | ' .. client.name,
         timeout = 10000,
       })
-    end
+    end,
   },
   on_attach = function(_, bufnr)
     local opts = {
@@ -25,7 +25,7 @@ vim.lsp.config('*', {
     map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
     map('n', '<leader>wl', function() vim.print(vim.lsp.buf.list_workspace_folders()) end, opts)
   end,
-});
+})
 
 -- Default servers to install
 ---@type table<string, vim.lsp.Config>
@@ -64,7 +64,7 @@ local servers = {
       'html',
     },
   },
-  jsonls = function ()
+  jsonls = function()
     return {
       settings = {
         json = {
@@ -73,11 +73,11 @@ local servers = {
             enable = true,
           },
         },
-      }
-    };
+      },
+    }
   end,
   lemminx = {}, -- XM
-  lua_ls = function ()
+  lua_ls = function()
     local runtime_path = vim.split(package.path, ';')
     table.insert(runtime_path, 'lua/?.lua')
     table.insert(runtime_path, 'lua/?/init.lua')
@@ -86,10 +86,8 @@ local servers = {
       settings = {
         Lua = {
           diagnostics = {
-            globals = {
-              -- luasnip globals
-              'ls', 's', 'sn', 'isn', 'c', 'i', 'd', 't', 'f', 'r', 'fmt', 'fmta',
-            },
+            -- luasnip globals
+            globals = { 'ls', 's', 'sn', 'isn', 'c', 'i', 'd', 't', 'f', 'r', 'fmt', 'fmta' },
           },
           runtime = { version = 'LuaJIT', path = runtime_path },
           workspace = {
@@ -101,20 +99,20 @@ local servers = {
             },
           },
         },
-      }
+      },
     }
   end,
   -- 'ocamllsp', -- OCaml
-  phpactor = {
-    -- cmd = { 'php', '/home/cwhite/sources/php/phpactor/bin/phpactor', 'language-server', '-vvv' },
-    init_options = {
-      ['indexer.follow_symlinks'] = false,
-      ['language_server_phpstan.enabled'] = true,
-      ['phpunit.enabled'] = true,
-      ['language_server_reference_reference_finder.reference_timeout'] = 600,
-    },
-    root_markers = { '.git', '.jj', 'composer.json', '.phpactor.json', '.phpactor.yml' },
-  },
+  -- phpactor = {
+  --   -- cmd = { 'php', '/home/cwhite/sources/php/phpactor/bin/phpactor', 'language-server', '-vvv' },
+  --   init_options = {
+  --     ['indexer.follow_symlinks'] = false,
+  --     ['language_server_phpstan.enabled'] = true,
+  --     ['phpunit.enabled'] = true,
+  --     ['language_server_reference_reference_finder.reference_timeout'] = 600,
+  --   },
+  --   root_markers = { '.git', '.jj', 'composer.json', '.phpactor.json', '.phpactor.yml' },
+  -- },
   pyright = {
     settings = {
       python = {
@@ -174,7 +172,8 @@ local servers = {
           globalPlugins = {
             {
               name = '@vue/typescript-plugin',
-              location = vim.fn.stdpath('data') .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+              location = vim.fn.stdpath('data')
+                .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
               languages = { 'vue' },
               configNamespace = 'typescript',
             },
@@ -235,8 +234,12 @@ return {
     'williamboman/mason-lspconfig',
     ---@type MasonLspconfigSettings
     opts = {
-      automatic_installation = true,
+      automatic_enable = false,
       ensure_installed = vim.tbl_keys(servers),
+    },
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'williamboman/mason.nvim',
     },
   },
   {
@@ -247,7 +250,7 @@ return {
       start_delay = 500,
       ensure_installed = {
         -- LSP Servers --
-        'phpactor',
+        -- 'phpactor',
         'tailwindcss-language-server',
 
         -- DAP Servers --
@@ -284,13 +287,19 @@ return {
     'neovim/nvim-lspconfig',
     config = function()
       for name, config in pairs(servers) do
-        if type(config) == 'function' then
-          config = config()
-        end
+        if type(config) == 'function' then config = config() end
 
         vim.lsp.config(name, config)
         vim.lsp.enable(name)
       end
+
+      --- @todo add to servers table when supported by lspconfig
+      vim.lsp.config('phpantom_lsp', {
+        cmd = { 'phpantom_lsp' },
+        filetypes = { 'php' },
+        root_markers = { '.git', '.jj', 'composer.json' },
+      })
+      vim.lsp.enable('phpantom_lsp')
     end,
     dependencies = {
       'b0o/schemastore.nvim', -- json schemas
@@ -300,6 +309,7 @@ return {
   },
   {
     'gbprod/phpactor.nvim',
+    enabled = false,
     -- build = function() require('phpactor.handler.update') end, -- To install/update phpactor when installing this plugin
     opts = {
       install = {
@@ -321,7 +331,7 @@ return {
     },
   },
   {
-  'mrcjkb/rustaceanvim',
+    'mrcjkb/rustaceanvim',
     version = '^5', -- Recommended
     lazy = false, -- This plugin is already lazy
     enabled = false, -- TODO configure
