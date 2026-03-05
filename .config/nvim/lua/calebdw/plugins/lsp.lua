@@ -297,7 +297,7 @@ return {
       vim.lsp.config('phpantom_lsp', {
         cmd = { 'phpantom_lsp' },
         filetypes = { 'php' },
-        root_markers = { '.git', '.jj', 'composer.json' },
+        root_markers = { '.jj' },
       })
       vim.lsp.enable('phpantom_lsp')
     end,
