@@ -140,10 +140,11 @@ return {
     },
   },
   {
-    'windwp/nvim-ts-autotag',
-    enabled = false, -- this breaks dot repeating with `>`
+    'tronikelis/ts-autotag.nvim',
     opts = {
-      enable_close_on_slash = true,
+      auto_rename = {
+        enabled = true,
+      },
     },
   },
 }
