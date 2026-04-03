@@ -20,6 +20,11 @@
                 "VOICEMODE_SAVE_AUDIO": "false",
                 "VOICEMODE_TTS_SPEED": "1.5"
             }
+        },
+        "fff": {
+            "type": "local",
+            "command": ["fff-mcp"],
+            "enabled": true
         }
     },
     "experimental": {

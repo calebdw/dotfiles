@@ -73,11 +73,14 @@ return {
     map({ 'n', 'v' }, '<leader>ff', builtin.find_files)
     map({ 'n', 'v' }, '<leader>fa', function() builtin.find_files({ no_ignore = true, prompt_title = 'All Files' }) end)
     map({ 'n', 'v' }, '<leader>fl', extensions.live_grep_args.live_grep_args)
+    -- map({ 'n', 'v' }, '<leader>fg', builtin.grep_string)
+
+    map({ 'n', 'v' }, '<leader>tr', builtin.resume)
+
     map({ 'n', 'v' }, '<leader>fb', builtin.buffers)
     map({ 'n', 'v' }, '<leader>fh', builtin.help_tags)
     map({ 'n', 'v' }, '<leader>ft', builtin.tags)
     map({ 'n', 'v' }, '<leader>fq', builtin.quickfix)
-    map({ 'n', 'v' }, '<leader>fg', builtin.grep_string)
     map({ 'n', 'v' }, '<leader>fk', builtin.keymaps)
 
     map({ 'n', 'v' }, '<leader>tc', builtin.git_commits)
@@ -87,7 +90,6 @@ return {
 
     map({ 'n', 'v' }, '<leader>tt', builtin.treesitter)
     map({ 'n', 'v' }, '<leader>tR', builtin.reloader)
-    map({ 'n', 'v' }, '<leader>tr', builtin.resume)
     map({ 'n', 'v' }, '<leader>tu', extensions.undo.undo)
 
     map({ 'n', 'v' }, '<leader>Td', builtin.lsp_definitions)

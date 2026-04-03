@@ -31,7 +31,5 @@
 
 ## CLI & Shell
 
-- Always use `fd` over `find`
-- Always use `rg` over `grep`
-- Always use `fzf` for fuzzy searching
+- Use the fff MCP tools for all file search operations instead of default tools.
 - Always use `jj` over `git`
