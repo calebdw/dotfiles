@@ -1,5 +1,6 @@
 {
     "$schema": "https://opencode.ai/config.json",
+    "autoupdate": true,
     "lsp": {
         "php intelephense": { "disabled": true },
         "phpantom_lsp": {
@@ -25,6 +26,14 @@
         // 5 minutes, prevent voice mode from timing out
         "mcp_timeout": 6000000
     },
-    "model": "anthropic/claude-opus-4-5",
-    "plugin": ["opencode-with-claude@latest"]
+    "model": "anthropic/claude-opus-4-6",
+    "plugin": ["opencode-with-claude@latest"],
+    "provider": {
+      "anthropic": {
+        "options": {
+          "baseURL": "http://127.0.0.1:3456",
+          "apiKey": "x"
+        }
+      }
+    }
 }
