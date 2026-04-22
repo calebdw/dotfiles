@@ -31,7 +31,7 @@
         // 5 minutes, prevent voice mode from timing out
         "mcp_timeout": 6000000
     },
-    "model": "anthropic/claude-opus-4-7",
+    "model": "anthropic/claude-opus-4-6",
     "plugin": ["opencode-with-claude@latest"],
     "provider": {
       "anthropic": {
