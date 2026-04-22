@@ -4,11 +4,13 @@
   "word_overrides": {
     "hyper whisper": "hyprwhspr"
   },
+  "paste_mode": "ctrl_shift",
   "filter_filler_words": true,
   "transcription_backend": "onnx-asr",
   "audio_feedback": true,
   "start_sound_volume": 0.5,
   "stop_sound_volume": 0.5,
+  "mic_osd_enabled": false,
   "mute_detection": false,
   "audio_ducking_percent": 0
 }
