@@ -1,0 +1,19 @@
+---
+- name: 'add fastfetch APT repository'
+  become: true
+  ansible.builtin.deb822_repository:
+    name: fastfetch
+    uris: https://ppa.launchpadcontent.net/zhangsongcui3371/fastfetch/ubuntu
+    signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xEB65EE19D802F3EB1A13CFE47E2E5CB4D4865F21
+    suites: '{{ ansible_facts["distribution_release"] }}'
+    components: main
+  notify: update apt cache
+
+- name: 'flush handlers'
+  ansible.builtin.meta: flush_handlers
+
+- name: install fastfetch
+  become: true
+  ansible.builtin.package:
+    state: latest
+    name: fastfetch

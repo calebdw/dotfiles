@@ -9,6 +9,7 @@
 - import_tasks: lazygit.yml
 - import_tasks: presenterm.yml
 - import_tasks: tuitube.yml
+- import_tasks: fastfetch.yml
 
 - name: 'Install cli tools'
   become: true
@@ -16,7 +17,6 @@
     state: latest
     name:
       - btop
-      - neofetch
 
 - name: 'Install cli tools via cargo'
   community.general.cargo:
