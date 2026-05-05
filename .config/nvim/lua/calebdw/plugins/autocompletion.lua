@@ -2,6 +2,8 @@
 return {
   'saghen/blink.cmp',
   build = 'cargo build --release',
+  branch = 'v1',
+  -- build = function() require('blink.cmp').build():wait(60000) end,
   event = 'InsertEnter',
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
@@ -27,22 +29,18 @@ return {
       default = { 'lsp', 'path', 'snippets', 'buffer', 'emoji' },
       providers = {
         emoji = {
-          module = "blink-emoji",
-          name = "Emoji",
+          module = 'blink-emoji',
+          name = 'Emoji',
           score_offset = 15, -- Tune by preference
-          should_show_items = function()
-            return vim.tbl_contains(
-              { "gitcommit", "markdown" },
-              vim.o.filetype
-            )
-          end,
-        }
+          should_show_items = function() return vim.tbl_contains({ 'gitcommit', 'markdown' }, vim.o.filetype) end,
+        },
       },
     },
   },
-  opts_extend = { "sources.default" },
+  opts_extend = { 'sources.default' },
   dependencies = {
-    { 'L3MON4D3/LuaSnip' },
+    -- 'saghen/blink.lib',
+    'L3MON4D3/LuaSnip',
     'moyiz/blink-emoji.nvim',
   },
 }
