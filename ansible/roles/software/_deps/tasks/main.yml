@@ -42,8 +42,12 @@
       - webp
       - webp-pixbuf-loader
 
-- name: 'ensure bash completion dir exists'
+- name: 'ensure user directories exist'
   ansible.builtin.file:
-    path: "{{ dir_user_completions }}"
+    path: "{{ item }}"
     state: directory
     mode: '0755'
+  loop:
+    - "{{ dir_user_completions }}"
+    - "{{ dir_systemd_user }}"
+    - "{{ dir_icons }}"
