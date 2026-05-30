@@ -1,0 +1,33 @@
+---
+- name: Install cliphist
+  shell: go install go.senan.xyz/cliphist@latest
+  register: cliphist_install
+  changed_when: cliphist_install.rc == 0
+
+- name: Create cliphist systemd user service
+  ansible.builtin.copy:
+    content: |
+      [Unit]
+      Description=Clipboard history listener for cliphist
+      After=graphical-session.target
+
+      [Service]
+      Type=simple
+      ExecStart=/bin/sh -c 'wl-paste --watch %h/go/bin/cliphist store'
+      Restart=on-failure
+      RestartSec=5
+
+      [Install]
+      WantedBy=graphical-session.target
+    dest: "{{ dir_systemd_user }}/cliphist.service"
+    mode: '0644'
+
+- name: Reload systemd daemon for user
+  command: systemctl --user daemon-reload
+
+- name: Enable and start cliphist service
+  systemd_service:
+    name: cliphist
+    scope: user
+    enabled: true
+    state: started

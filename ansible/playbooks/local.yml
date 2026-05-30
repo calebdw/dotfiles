@@ -12,6 +12,7 @@
     - languages/js
     - software/shell
     - software/brave-browser
+    - software/clipboard
     - software/cli-tools
     - software/docker
     - software/hyprwhspr

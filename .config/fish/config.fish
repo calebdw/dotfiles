@@ -29,6 +29,7 @@ abbr -a b b4
 abbr -a lg lazygit
 abbr -a j jj
 abbr -a lj lazyjj
+abbr -a ch cliphist-fzf
 
 # abbr --command jj g git
 # abbr --command jj ab absorb

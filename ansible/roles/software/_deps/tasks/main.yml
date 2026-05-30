@@ -37,7 +37,6 @@
       - pkg-config
       - software-properties-common # apt-add-repository commands
       - unzip
-      - wl-clipboard # Wayland clipboard support
       # webp support
       - webp
       - webp-pixbuf-loader

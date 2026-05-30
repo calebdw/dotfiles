@@ -1,0 +1,31 @@
+#!/bin/bash
+# Browse clipboard history with fzf and copy selected item
+# Supports text and image preview via chafa
+
+case "$1" in
+    preview)
+        shift
+        if echo "$*" | grep -q '\[\[ binary data'; then
+            tmpfile=$(mktemp /tmp/cliphist-preview-XXXXXX)
+            echo "$*" | cliphist decode > "$tmpfile"
+            mime=$(file --mime-type -b "$tmpfile")
+            if [[ "$mime" == image/* ]]; then
+                chafa --size "${FZF_PREVIEW_COLUMNS}x${FZF_PREVIEW_LINES}" "$tmpfile"
+            else
+                echo "[binary: $mime]"
+            fi
+            rm -f "$tmpfile"
+        else
+            echo "$*" | cliphist decode
+        fi
+        ;;
+    *)
+        selected=$(cliphist list |
+            sort -k 2 -u |
+            sort -nr |
+            fzf --preview-window=wrap \
+                --preview "$(realpath "$0") preview {}")
+
+        [ -n "$selected" ] && echo "$selected" | cliphist decode | wl-copy
+        ;;
+esac

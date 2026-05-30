@@ -1,0 +1,10 @@
+---
+- name: Install wl-clipboard
+  become: true
+  ansible.builtin.package:
+    state: latest
+    name:
+      - wl-clipboard
+      - xdg-utils
+
+- import_tasks: cliphist.yml
