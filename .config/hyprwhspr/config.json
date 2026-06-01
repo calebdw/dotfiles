@@ -4,8 +4,8 @@
   "word_overrides": {
     "hyper whisper": "hyprwhspr"
   },
-  "paste_mode": "ctrl_shift",
   "filter_filler_words": true,
+  "paste_mode": "ctrl_shift",
   "transcription_backend": "onnx-asr",
   "audio_feedback": true,
   "start_sound_volume": 0.5,
