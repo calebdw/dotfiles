@@ -7,8 +7,8 @@ return {
     opts = function()
       local api = require('nvim-tree.api')
 
-      map('n', '<leader>nt', api.tree.toggle)
-      map('n', '<leader>nr', api.tree.reload)
+      map('n', '<leader>nt', function() api.tree.toggle() end)
+      map('n', '<leader>nr', function() api.tree.reload() end)
       map('n', '<leader>nn', function() api.tree.open({ find_file = true }) end)
 
       local on_attach = function(bufnr)
