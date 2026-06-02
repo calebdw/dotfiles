@@ -33,5 +33,10 @@ return {
       function() require('fff').live_grep({ query = vim.fn.expand('<cword>') }) end,
       desc = 'Search current word',
     },
+    {
+      'fr',
+      function() require('fff').resume() end,
+      desc = 'Resume last picker',
+    },
   },
 }
