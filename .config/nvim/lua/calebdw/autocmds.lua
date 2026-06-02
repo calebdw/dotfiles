@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd({ 'TermOpen' }, {
 vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
   desc = 'Highlight when yanking text',
   group = default,
-  callback = function() vim.highlight.on_yank() end,
+  callback = function() vim.hl.hl_op() end,
 })
 
 vim.api.nvim_create_autocmd({ 'FileType' }, {
