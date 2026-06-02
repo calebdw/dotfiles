@@ -5,12 +5,12 @@ name = "Caleb White"
 email = "cdwhite3@pm.me"
 
 [aliases]
-fetch = ["git", "fetch", "--all-remotes"]
-g = ["git"]
-push = ["git", "push"]
-retrunk = ["rebase", "-d", "trunk()"]
-sudo = ["--ignore-immutable"]
-tug = ["bookmark", "advance"]
+fetch = { definition = ["git", "fetch", "--all-remotes"], doc = "Fetch changes from all git remotes" }
+g = { definition = ["git"], doc = "Shorthand for git subcommands" }
+push = { definition = ["git", "push"], doc = "Push bookmarks to git remote" }
+retrunk = { definition = ["rebase", "-d", "trunk()"], doc = "Rebase current change onto trunk" }
+sudo = { definition = ["--ignore-immutable"], doc = "Run subcommand while ignoring immutable commits" }
+tug = { definition = ["bookmark", "advance"], doc = "Advance current bookmark to the working copy" }
 
 [colors]
 # "diff token" = { underline = false }
@@ -23,16 +23,11 @@ sign-on-push = true
 bookmark-advance-to = 'heads(::@ & mutable() & ~description(exact:"") & (~empty() | merges()))'
 
 [revset-aliases]
-'wip()' = 'description(glob:"wip:*")'
-'private()' = 'description(glob:"private:*")'
-'tip()' = 'exactly(heads(@::), 1)'
-'why_immutable(r)' = '(r & immutable()) | roots(r:: & immutable_heads())'
-# Show more context around the current working copy.
-# The default revset (present(@) | ancestors(immutable_heads().., 2) | present(trunk()))
-# will basically only show mutable revisions. Sometimes you're working on a long diverging
-# branch with other people (who don't like to see their work rebased) and you want to see
-# everything that is not in trunk "around" that branch, including immutable revisions.
-log = "ancestors(reachable(@, trunk()..), 2)"
+'wip()' = { definition = 'description(glob:"wip:*")', doc = "Revisions marked as work-in-progress via description" }
+'private()' = { definition = 'description(glob:"private:*")', doc = "Revisions marked as private via description" }
+'tip()' = { definition = 'exactly(heads(@::), 1)', doc = "The single head revision of the current anonymous branch" }
+'why_immutable(r)' = { definition = '(r & immutable()) | roots(r:: & immutable_heads())', doc = "Revisions explaining why the given revision is immutable" }
+log = { definition = "ancestors(reachable(@, trunk()..), 2)", doc = "Extended ancestors for log showing context around working copy" }
 
 [signing]
 behavior = "drop"
@@ -54,7 +49,7 @@ if(parents.len() > 1, join(" ",
 git_push_bookmark = '"calebdw/push-" ++ change_id.short()'
 
 [template-aliases]
-'bookmarks_or_hash(c)' = 'coalesce(c.bookmarks().map(|b| b.name()).join(", "), c.commit_id().short())'
+'bookmarks_or_hash(c)' = { definition = 'coalesce(c.bookmarks().map(|b| b.name()).join(", "), c.commit_id().short())', doc = "Return joined bookmark names or fallback to short commit id" }
 
 [ui]
 default-command = "log"
