@@ -27,6 +27,7 @@
           - build-essential
           - pipewire
           - pipewire-pulse
+          - wtype # ydotool alternative?
 
     - name: Clone hyprwhspr
       git:
