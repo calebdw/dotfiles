@@ -12,7 +12,7 @@
         "voice-mode": {
             "type": "local",
             "command": ["uvx", "--refresh", "voice-mode"],
-            "enabled": true,
+            "enabled": false,
             "environment": {
                 "xVOICEMODE_PREFER_LOCAL": "true",
                 "xVOICEMODE_ALWAYS_TRY_LOCAL": "true",
