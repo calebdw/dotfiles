@@ -3,6 +3,7 @@
   roles:
     - configure/evoluent-verticalmouse
     - configure/nopasswd-sudo
+    - configure/inotify-watches
     - software/_deps
     - languages/python
     - languages/php

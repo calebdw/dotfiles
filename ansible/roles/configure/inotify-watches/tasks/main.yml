@@ -1,0 +1,16 @@
+---
+- name: increase inotify max_user_watches
+  become: true
+  ansible.posix.sysctl:
+    name: fs.inotify.max_user_watches
+    value: "524288"
+    sysctl_file: /etc/sysctl.d/50-inotify.conf
+    reload: true
+
+- name: increase inotify max_user_instances
+  become: true
+  ansible.posix.sysctl:
+    name: fs.inotify.max_user_instances
+    value: "1024"
+    sysctl_file: /etc/sysctl.d/50-inotify.conf
+    reload: true
