@@ -59,3 +59,7 @@ log-synthetic-elided-nodes = true
 
 [ui.movement]
 # edit = true
+
+[fix.tools.rustfmt]
+command = ["cargo", "fmt", "--", "--emit=stdout"]
+patterns = ["glob:'**/*.rs'"]
