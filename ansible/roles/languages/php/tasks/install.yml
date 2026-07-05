@@ -3,8 +3,8 @@
   become: true
   ansible.builtin.deb822_repository:
     name: php
-    uris: https://ppa.launchpadcontent.net/ondrej/php/ubuntu
-    signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xb8dc7e53946656efbce4c1dd71daeaab4ad4cab6
+    uris: https://packages.sury.org/php
+    signed_by: https://packages.sury.org/php/apt.gpg
     suites: "{{ ansible_facts['distribution_release'] }}"
     components: main
   notify: update apt cache
