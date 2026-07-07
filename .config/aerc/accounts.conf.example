@@ -1,3 +1,6 @@
+# When using with Proton Bridge
+#   - need to install certificates: https://man.sr.ht/~rjarry/aerc/providers/protonmail.md
+#   - need to use SSL instead of STARTTLS
 [Personal]
 source = imaps://cdwhite3%40pm.me@127.0.0.1:1143
 source-cred-cmd = keyring get proton-imap $USER
