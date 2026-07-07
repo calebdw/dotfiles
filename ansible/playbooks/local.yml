@@ -25,6 +25,7 @@
     - software/tableplus
     - software/tree-sitter
     - software/wezterm
+    - software/ghostty
     - software/yubikey
     - role: configure/system76-power
       when: ansible_facts['system_vendor'] == 'System76'

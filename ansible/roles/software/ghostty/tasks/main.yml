@@ -1,0 +1,41 @@
+---
+- name: 'add ghostty APT repository'
+  become: true
+  ansible.builtin.deb822_repository:
+    name: ghostty
+    uris: https://ppa.launchpadcontent.net/mkasberg/ghostty-ubuntu/ubuntu
+    signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x0721fdf5fecb88dc6920361657c8ef455ceae491
+    suites: "{{ ansible_facts['distribution_release'] }}"
+    components: main
+  notify: update apt cache
+
+- name: 'flush handlers'
+  ansible.builtin.meta: flush_handlers
+
+- name: 'install ghostty'
+  become: true
+  ansible.builtin.package:
+    state: latest
+    name: ghostty
+
+# - name: 'check if wezterm is in alternatives'
+#   become: true
+#   shell: 'update-alternatives --list x-terminal-emulator'
+#   register: alternatives_output
+#   changed_when: false
+#
+# - name: 'add wezterm to x-terminal-emulator alternatives'
+#   become: true
+#   shell: 'update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator $(which wezterm) 50'
+#   when: '"/wezterm" not in alternatives_output.stdout'
+#
+# - name: 'check current default x-terminal-emulator'
+#   become: true
+#   shell: 'update-alternatives --query x-terminal-emulator | grep "Value: "'
+#   register: current_terminal
+#   changed_when: false
+#
+# - name: 'set wezterm as default terminal emulator'
+#   become: true
+#   shell: 'update-alternatives --set x-terminal-emulator $(which wezterm)'
+#   when: '"wezterm" not in current_terminal.stdout'
