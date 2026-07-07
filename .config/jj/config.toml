@@ -20,9 +20,10 @@ private-commits = "wip() | private()"
 sign-on-push = true
 
 [revsets]
-bookmark-advance-to = 'heads(::@ & mutable() & ~description(exact:"") & (~empty() | merges()))'
+bookmark-advance-to = 'closest_pushable(@)'
 
 [revset-aliases]
+'closest_pushable(to)' = { definition = 'heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))', doc = "The closest pushable revision to the given revision" }
 'wip()' = { definition = 'description(glob:"wip:*")', doc = "Revisions marked as work-in-progress via description" }
 'private()' = { definition = 'description(glob:"private:*")', doc = "Revisions marked as private via description" }
 'tip()' = { definition = 'exactly(heads(@::), 1)', doc = "The single head revision of the current anonymous branch" }
