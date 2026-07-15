@@ -15,6 +15,7 @@ dots:
 	ln -sf $(PWD)/.tmux.conf ~/
 	ln -sf $(PWD)/.vimrc ~/
 	ln -sf $(PWD)/.yamlfmt.yml ~/
+	ln -sf $(PWD)/.config/opencode/AGENTS.md ~/.claude/CLAUDE.md
 	cp -asfv $(PWD)/.gnupg ~/
 	cp -asfv $(PWD)/.config ~/
 
