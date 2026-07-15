@@ -23,7 +23,7 @@ scripts:
 	cp -asfv $(PWD)/scripts/* ~/bin/
 
 clean-links:
-	find ~ -xtype l -delete
+	find ~ -maxdepth 5 -xtype l -delete
 
 clean:
 	find ~ -type l -lname "$(PWD)/*" -delete
