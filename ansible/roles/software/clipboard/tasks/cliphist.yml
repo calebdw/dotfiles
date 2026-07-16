@@ -14,8 +14,9 @@
       [Service]
       Type=simple
       ExecStart=/bin/sh -c 'wl-paste --watch %h/go/bin/cliphist store'
-      Restart=on-failure
+      Restart=always
       RestartSec=5
+      StartLimitIntervalSec=0
 
       [Install]
       WantedBy=graphical-session.target
