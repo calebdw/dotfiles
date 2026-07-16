@@ -67,7 +67,7 @@ return {
       options = {
         globalstatus = true,
         sections = {
-          lualine_b = {'branch', "vim.b.vcsigns_stats or 'diff'", 'diagnostics'},
+          lualine_b = { 'branch', "vim.b.vcsigns_stats or 'diff'", 'diagnostics' },
         },
       },
       extensions = {
@@ -111,7 +111,7 @@ return {
     'karb94/neoscroll.nvim',
     opts = {
       -- easing = 'quintic',
-      duration_multiplier = .25,
+      duration_multiplier = 0.25,
     },
   },
   -- Dim Inactive Codeblocks --
@@ -159,7 +159,6 @@ return {
       presets = {
         bottom_search = false,
         long_message_to_split = true,
-        inc_rename = true,
         lsp_doc_border = true,
       },
     },

@@ -21,6 +21,7 @@ vim.lsp.config('*', {
 
     map('n', '<leader>gD', vim.lsp.buf.declaration, opts)
     map('n', 'grt', vim.lsp.buf.type_definition, opts)
+    map('n', '<leader>rn', vim.lsp.buf.rename, opts)
     map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
     map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
     map('n', '<leader>wl', function() vim.print(vim.lsp.buf.list_workspace_folders()) end, opts)
@@ -340,19 +341,5 @@ return {
   { -- ui for lsp progress
     'j-hui/fidget.nvim',
     tag = 'legacy',
-  },
-  {
-    'smjonas/inc-rename.nvim',
-    opts = {
-      save_in_cmd_history = false,
-    },
-    keys = {
-      {
-        '<leader>rn',
-        function() return ':IncRename ' .. vim.fn.expand('<cword>') end,
-        expr = true,
-        desc = 'Incremental Rename',
-      },
-    },
   },
 }
