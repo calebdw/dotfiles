@@ -1,0 +1,17 @@
+/* Tokyo Night color palette */
+tabbar tab {
+  padding: 0 8px;
+  min-height: 0;
+  color: #565f89;
+  background: #16161e;
+}
+
+tabbar tab:selected {
+  color: #c0caf5;
+  background: #1a1b26;
+}
+
+tabbar tabbox {
+  min-height: 0;
+  background: #16161e;
+}

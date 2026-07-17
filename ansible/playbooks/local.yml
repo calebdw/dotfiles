@@ -26,6 +26,7 @@
     - software/tree-sitter
     - software/wezterm
     - software/ghostty
+    - configure/default-terminal
     - software/yubikey
     - role: configure/system76-power
       when: ansible_facts['system_vendor'] == 'System76'

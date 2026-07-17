@@ -1,0 +1,9 @@
+font-family = FiraCode Nerd Font
+theme = TokyoNight Night
+command = /usr/bin/fish -l
+window-decoration = false
+window-padding-x = 0
+window-padding-y = 0
+gtk-wide-tabs = false
+gtk-toolbar-style = flat
+gtk-custom-css = tabs.css

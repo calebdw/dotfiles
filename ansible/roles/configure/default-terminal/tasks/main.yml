@@ -1,0 +1,8 @@
+---
+- name: 'set {{ default_terminal }} as default terminal emulator'
+  become: true
+  community.general.alternatives:
+    name: x-terminal-emulator
+    link: /usr/bin/x-terminal-emulator
+    path: "{{ lookup('pipe', 'which ' + default_terminal) }}"
+    priority: 50
