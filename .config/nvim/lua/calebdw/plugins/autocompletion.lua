@@ -32,7 +32,7 @@ return {
           module = 'blink-emoji',
           name = 'Emoji',
           score_offset = 15, -- Tune by preference
-          should_show_items = function() return vim.tbl_contains({ 'gitcommit', 'markdown' }, vim.o.filetype) end,
+          should_show_items = function() return vim.tbl_contains({ 'gitcommit', 'mail', 'markdown' }, vim.o.filetype) end,
         },
       },
     },
