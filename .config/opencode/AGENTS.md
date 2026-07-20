@@ -24,7 +24,8 @@
 - Always use `jj` (from jj-vcs) over `git`, unless explicitly asked to use `git`
 - Only commit when explicitly asked, or when there's existing changes and a pivot in focus
 - Follow conventional commit message formats with good descriptions that explain
-  why the changes were made and not just what was changed
+  why the changes were made and not just what was changed. Commit body should be
+  wrapped around 80 chars.
 - use the `--git` flag with `jj show` and `jj diff` to see the git style diffs
 
 ## CLI & Shell
