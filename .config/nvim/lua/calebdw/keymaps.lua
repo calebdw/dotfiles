@@ -65,10 +65,6 @@ map('t', '<C-j>', ':wincmd j<cr>')
 map('t', '<C-k>', ':wincmd k<cr>')
 map('t', '<C-l>', ':wincmd l<cr>')
 
--- Diagnostics
-map('n', '<leader>d', vim.diagnostic.open_float)
-map('n', '<leader>qd', vim.diagnostic.setloclist)
-
 map(
   'n',
   '<leader>gg',
