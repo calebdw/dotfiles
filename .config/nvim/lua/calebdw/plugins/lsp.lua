@@ -15,13 +15,22 @@ vim.lsp.config('*', {
     end,
   },
   on_attach = function(client, bufnr)
-    local opts = { client_id = client, bufnr = bufnr }
+    -- local filter = { client_id = client, bufnr = bufnr }
 
-    vim.lsp.codelens.enable(true, opts)
-    vim.lsp.inlay_hint.enable(true, opts)
-    vim.lsp.linked_editing_range.enable(true, opts)
+    -- vim.lsp.codelens.enable(true, filter)
+    -- vim.lsp.inlay_hint.enable(true, opts)
+    -- vim.lsp.linked_editing_range.enable(true, filter)
 
-    opts = { buf = bufnr }
+    local filter = { bufnr = bufnr }
+    local opts = { buf = bufnr }
+    map('n', 'grh', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(filter), filter) end, opts)
+    map('n', 'grc', function() vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled(filter), filter) end, opts)
+    map(
+      'n',
+      'grl',
+      function() vim.lsp.linked_editing_range.enable(not vim.lsp.linked_editing_range.is_enabled(filter), filter) end,
+      opts
+    )
     map('n', '<leader>gD', vim.lsp.buf.declaration, opts)
     map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
     map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
