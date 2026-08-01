@@ -4,7 +4,7 @@
     "lsp": {
         "php intelephense": { "disabled": true },
         "phpantom_lsp": {
-            "command": ["phpantom_lsp"],
+            "command": ["phpantom_lsp", "--stdio"],
             "extensions": [".php"]
         }
     },
