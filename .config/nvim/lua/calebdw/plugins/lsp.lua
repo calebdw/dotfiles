@@ -30,6 +30,7 @@ vim.lsp.config('*', {
 })
 
 -- Default servers to install
+---@type table<string, function|vim.lsp.Config>
 local servers = {
   ansiblels = {
     filetypes = {
@@ -104,16 +105,6 @@ local servers = {
     }
   end,
   -- 'ocamllsp', -- OCaml
-  -- phpactor = {
-  --   -- cmd = { 'php', '/home/cwhite/sources/php/phpactor/bin/phpactor', 'language-server', '-vvv' },
-  --   init_options = {
-  --     ['indexer.follow_symlinks'] = false,
-  --     ['language_server_phpstan.enabled'] = true,
-  --     ['phpunit.enabled'] = true,
-  --     ['language_server_reference_reference_finder.reference_timeout'] = 600,
-  --   },
-  --   root_markers = { '.git', '.jj', 'composer.json', '.phpactor.json', '.phpactor.yml' },
-  -- },
   phpantom_lsp = {
     root_markers = { '.jj' },
   },
@@ -254,7 +245,6 @@ return {
       start_delay = 500,
       ensure_installed = {
         -- LSP Servers --
-        -- 'phpactor',
         'tailwindcss-language-server',
 
         -- DAP Servers --
@@ -301,29 +291,6 @@ return {
       'b0o/schemastore.nvim', -- json schemas
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig',
-    },
-  },
-  {
-    'gbprod/phpactor.nvim',
-    enabled = false,
-    -- build = function() require('phpactor.handler.update') end, -- To install/update phpactor when installing this plugin
-    opts = {
-      install = {
-        bin = vim.fn.stdpath('data') .. '/mason/packages/phpactor/phpactor.phar',
-      },
-      lspconfig = { enabled = false },
-    },
-    cmd = 'PhpActor',
-    keys = {
-      {
-        '<leader>pa',
-        function() require('phpactor').rpc() end,
-        desc = 'PHPactor',
-      },
-    },
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'neovim/nvim-lspconfig',
     },
   },
   {
