@@ -115,6 +115,9 @@ local servers = {
   --   },
   --   root_markers = { '.git', '.jj', 'composer.json', '.phpactor.json', '.phpactor.yml' },
   -- },
+  phpantom_lsp = {
+    root_markers = { '.jj' },
+  },
   pyright = {
     settings = {
       python = {
@@ -294,14 +297,6 @@ return {
         vim.lsp.config(name, config)
         vim.lsp.enable(name)
       end
-
-      --- @todo add to servers table when supported by lspconfig
-      vim.lsp.config('phpantom_lsp', {
-        cmd = { 'phpantom_lsp' },
-        filetypes = { 'php' },
-        root_markers = { '.jj' },
-      })
-      vim.lsp.enable('phpantom_lsp')
     end,
     dependencies = {
       'b0o/schemastore.nvim', -- json schemas
