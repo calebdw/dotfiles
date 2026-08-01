@@ -30,7 +30,6 @@ vim.lsp.config('*', {
 })
 
 -- Default servers to install
----@type table<string, vim.lsp.Config>
 local servers = {
   ansiblels = {
     filetypes = {
@@ -40,11 +39,11 @@ local servers = {
     },
   },
   antlersls = {}, -- Statamic/Antlers
-  cmake = {}, -- CMake
+  cmake = {},
   clangd = {}, -- C++
-  cssls = {}, -- CSS
-  cssmodules_ls = {}, -- CSS
-  dockerls = {}, -- Docker
+  cssls = {},
+  cssmodules_ls = {},
+  dockerls = {},
   emmet_ls = {
     filetypes = {
       'antlers.html',
@@ -129,8 +128,8 @@ local servers = {
     },
   },
   -- 'remark_ls', -- Markdown
-  rust_analyzer = {}, -- Rust
-  sqlls = {}, -- SQL
+  rust_analyzer = {},
+  sqlls = {},
   tailwindcss = {
     filetypes = {
       'antlers.html',
