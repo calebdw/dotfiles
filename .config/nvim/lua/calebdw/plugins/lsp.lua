@@ -106,6 +106,7 @@ local servers = {
   end,
   -- 'ocamllsp', -- OCaml
   phpantom_lsp = {
+    cmd = { vim.fn.expand('~/.cargo/bin/phpantom_lsp') }, -- use global installation over mason
     root_markers = { '.jj' },
   },
   pyright = {
