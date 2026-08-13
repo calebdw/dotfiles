@@ -27,7 +27,7 @@
   why the changes were made and not just what was changed.
 - Commit body should be wrapped to around 72 chars.
 - use the `--git` flag with `jj show` and `jj diff` to see the git style diffs
-
-## CLI & Shell
-
-- Always use `jj` over `git`
+- Do NOT squash changes unless express permission has been granted, oftentimes
+  I want to review before squashing.
+- When squashing two jj commits that have messages, Neovim open and you will hang;
+  either use `--use-destination-message` or provide a message with `--message`
