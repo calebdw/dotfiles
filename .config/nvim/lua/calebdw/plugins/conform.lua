@@ -19,12 +19,14 @@ return {
     opts = {
       log_level = vim.log.levels.WARN,
       formatters = {
-        prettier = {
-          prepend_args = { '--ignore-unknown' },
+        prettier = { prepend_args = { '--ignore-unknown' } },
+        pint_blade = {
+          inherit = 'pint',
+          prepend_args = { '--blade' },
         },
       },
       formatters_by_ft = {
-        blade = { 'prettier', 'blade-formatter', stop_after_first = true },
+        blade = { 'pint_blade' },
         json = { 'prettier', 'jq', stop_after_first = true },
         javascript = { 'prettier', stop_after_first = true },
         lua = { 'stylua' },
