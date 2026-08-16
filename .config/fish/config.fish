@@ -39,9 +39,19 @@ if status is-interactive
     # set -x _ZO_ECHO 1
 
     # Integrations
-    atuin init fish --disable-up-arrow | source
-    glab completion -s fish | source
-    starship init fish | source
-    # voicemode completions fish | source
-    zoxide init fish | source
+    if type -q atuin
+        atuin init fish --disable-up-arrow | source
+    end
+    if type -q glab
+        glab completion -s fish | source
+    end
+    if type -q starship
+        starship init fish | source
+    end
+    if type -q voicemode
+        voicemode completions fish | source
+    end
+    if type -q zoxide
+        zoxide init fish | source
+    end
 end
