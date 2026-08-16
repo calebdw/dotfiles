@@ -50,3 +50,5 @@
     - "{{ dir_user_completions }}"
     - "{{ dir_systemd_user }}"
     - "{{ dir_icons }}"
+    - "~/Pictures/Screenshots"
+    - "~/Videos/Recordings"
