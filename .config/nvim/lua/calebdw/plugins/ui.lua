@@ -120,11 +120,7 @@ return {
   {
     'folke/zen-mode.nvim',
     cmd = 'ZenMode',
-    opts = {
-      wezterm = {
-        enabled = true,
-      },
-    },
+    opts = {},
   },
   { -- colorize colors
     'NvChad/nvim-colorizer.lua',

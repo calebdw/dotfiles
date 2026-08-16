@@ -24,7 +24,6 @@
     - software/supervisor
     - software/tableplus
     - software/tree-sitter
-    - software/wezterm
     - software/ghostty
     - configure/default-terminal
     - software/yubikey
