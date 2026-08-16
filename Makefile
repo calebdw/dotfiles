@@ -5,15 +5,9 @@ SHELL:=/bin/bash
 all: dots scripts clean-links
 
 dots:
-	ln -sf $(PWD)/.alacritty.yml ~/
-	ln -sf $(PWD)/.bash_aliases ~/
-	ln -sf $(PWD)/.bash_completion ~/
-	ln -sf $(PWD)/.bashrc ~/
 	ln -sf $(PWD)/.editorconfig ~/
 	ln -sf $(PWD)/.latexmkrc ~/
 	ln -sf $(PWD)/.pg_format ~/
-	ln -sf $(PWD)/.tmux.conf ~/
-	ln -sf $(PWD)/.vimrc ~/
 	ln -sf $(PWD)/.yamlfmt.yml ~/
 	ln -sf $(PWD)/.config/opencode/AGENTS.md ~/.claude/CLAUDE.md
 	cp -asfv $(PWD)/.gnupg ~/
