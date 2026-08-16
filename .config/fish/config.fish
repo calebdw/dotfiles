@@ -26,7 +26,6 @@ abbr -a sa sail artisan
 abbr -a nv nvim
 abbr -a g git
 abbr -a b b4
-abbr -a lg lazygit
 abbr -a j jj
 abbr -a lj lazyjj
 abbr -a ch cliphist-fzf

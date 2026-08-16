@@ -6,7 +6,6 @@
 - import_tasks: bat.yml
 - import_tasks: email.yml
 - import_tasks: fzf.yml
-- import_tasks: lazygit.yml
 - import_tasks: presenterm.yml
 - import_tasks: tuitube.yml
 - import_tasks: fastfetch.yml
