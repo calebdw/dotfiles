@@ -7,6 +7,18 @@ return {
 
     return {
       defaults = {
+        layout_strategy = 'flex',
+        layout_config = {
+          flex = {
+            flip_columns = 140,
+          },
+          horizontal = {
+            preview_width = 0.55,
+          },
+          vertical = {
+            preview_height = 0.66,
+          },
+        },
         mappings = {
           i = {
             ['<esc>'] = actions.close,
