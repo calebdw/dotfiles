@@ -19,6 +19,12 @@ return {
             preview_height = 0.66,
           },
         },
+        dynamic_preview_title = true,
+        path_display = {
+          filename_first = {
+            -- reverse_directories = true,
+          },
+        },
         mappings = {
           i = {
             ['<esc>'] = actions.close,
