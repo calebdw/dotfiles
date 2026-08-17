@@ -1,0 +1,11 @@
+---
+# Omarchy's own installer, which is sh.rustup.rs with -y. That already selects
+# the stable toolchain, so there is no `rustup default stable` to follow it.
+# The rust branch of that script needs no sudo despite its requires-sudo tag.
+#
+# Not the pacman `rustup`: this puts it in ~/.cargo, which precedes /usr/bin on
+# the PATH, so the packaged one would be installed and then shadowed.
+- name: 'install rustup and the stable toolchain'
+  ansible.builtin.command:
+    cmd: 'omarchy-install-dev-env rust'
+    creates: "{{ ansible_facts['env']['HOME'] }}/.cargo/bin/rustup"

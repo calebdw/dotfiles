@@ -1,0 +1,41 @@
+---
+# Off by default in playbooks/local.yml: Omarchy has its own clipboard
+# history, and this duplicates it. Kept because the fzf browser
+# (scripts/cliphist-fzf, `ch` in fish) is nicer than the menu.
+#
+# extra/cliphist now, not `go install go.senan.xyz/cliphist@latest` as the
+# Ubuntu-era role did -- which is also why nothing needs a go toolchain.
+- name: 'install cliphist'
+  become: true
+  community.general.pacman:
+    name:
+      - cliphist
+      - chafa # image previews in scripts/cliphist-fzf
+    state: present
+
+# cliphist ships no unit: it is a store command that wl-paste pipes into, so
+# the watcher has to be defined here.
+- name: 'install the cliphist watcher unit'
+  ansible.builtin.copy:
+    content: |
+      [Unit]
+      Description=Clipboard history listener for cliphist
+      PartOf=graphical-session.target
+
+      [Service]
+      ExecStart=/bin/sh -c 'wl-paste --watch cliphist store'
+      Restart=on-failure
+
+      [Install]
+      WantedBy=graphical-session.target
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/systemd/user/cliphist.service"
+    mode: '0644'
+  register: cliphist_unit
+
+- name: 'enable cliphist'
+  ansible.builtin.systemd_service:
+    name: cliphist
+    scope: user
+    enabled: true
+    state: "{{ 'restarted' if cliphist_unit.changed else 'started' }}"
+    daemon_reload: true

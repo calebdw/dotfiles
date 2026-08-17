@@ -1,0 +1,24 @@
+---
+# The capture paths are read out of .config/uwsm/env.d/capture rather than
+# restated here, so the repo stays the only place they are written down. This
+# is the same shell that uwsm sources at login, and `make dots` has already
+# linked the file (setup: all ansible), so a failure here means dots did not
+# run.
+#
+# They have to exist up front because omarchy-capture-screenrecording refuses
+# to record into a missing directory and only sends a notification.
+# omarchy-capture-screenshot mkdir -p's its own, so it is along for the ride.
+- name: 'read capture directories'
+  ansible.builtin.shell:
+    cmd: |
+      . "$HOME/.config/uwsm/env.d/capture"
+      printf '%s\n%s\n' "$OMARCHY_SCREENSHOT_DIR" "$OMARCHY_SCREENRECORD_DIR"
+  register: capture_dirs
+  changed_when: false
+
+- name: 'ensure capture directories exist'
+  ansible.builtin.file:
+    path: '{{ item }}'
+    state: directory
+    mode: '0755'
+  loop: "{{ capture_dirs.stdout_lines }}"

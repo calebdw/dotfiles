@@ -1,0 +1,17 @@
+---
+# `omarchy theme set` is a real action, not a file write: it renders the theme
+# templates, swaps the backgrounds, and runs a per-app setter for chromium,
+# tmux, vscode, gnome and the rest. Nothing this repo could own as a config.
+- name: 'query current theme'
+  ansible.builtin.slurp:
+    src: "{{ ansible_facts['env']['HOME'] }}/.local/state/omarchy/current/theme.name"
+  register: theme_current
+  failed_when: false
+
+# The display name, as shown by `omarchy theme list`. What is on disk is the
+# slug, hence the lower/replace on the comparison.
+- name: 'set theme'
+  vars:
+    omarchy_theme: 'Tokyo Night'
+  ansible.builtin.command: 'omarchy theme set "{{ omarchy_theme }}"'
+  when: (theme_current.content | default('') | b64decode | trim) != (omarchy_theme | lower | replace(' ', '-'))

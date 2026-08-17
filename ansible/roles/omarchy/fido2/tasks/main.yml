@@ -1,0 +1,24 @@
+---
+# Enrolment cannot be automated -- `pamu2fcfg` blocks waiting for a physical
+# touch on the key -- so this does not try. It checks, tells you the command,
+# and waits. Everything the command does (installing libfido2 and pam-u2f,
+# adding pam_u2f to /etc/pam.d/sudo and /etc/pam.d/polkit-1) is left to it.
+- name: 'check for an enrolled fido2 credential'
+  become: true
+  ansible.builtin.stat:
+    path: /etc/fido2/fido2
+  register: fido2_cred
+
+- name: 'enrol the fido2 key by hand'
+  ansible.builtin.pause:
+    prompt: |
+
+      No FIDO2 credential at /etc/fido2/fido2.
+
+      Run this in another terminal, with the YubiKey plugged in:
+
+          omarchy setup security fido2
+
+      Touch the key when it lights up. Then come back here and press Enter to
+      carry on, or Ctrl-C then A to abandon the run.
+  when: not fido2_cred.stat.exists

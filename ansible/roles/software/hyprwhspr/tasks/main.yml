@@ -1,45 +1,32 @@
 ---
-- name: Install hyprwhspr
+# Off by default in playbooks/local.yml: voxtype does the same job and is what
+# is installed. Kept because .config/hyprwhspr/config.json is still in this
+# repo and this is what would make it live again.
+#
+# aur/hyprwhspr, not the git clone the Ubuntu-era role used. ydotool arrives as
+# a package dependency, so there is nothing to do about uinput here either.
+- name: 'install hyprwhspr'
+  ansible.builtin.include_role:
+    name: software/packages
+    tasks_from: aur
   vars:
-    install_dir: '{{ dir_sources }}/hyprwhspr'
-  block:
-    - name: Install hyprwhspr dependencies
-      become: true
-      ansible.builtin.package:
-        state: latest
-        name:
-          - python3
-          - python3-pip
-          - python3-venv
-          - python3-dev
-          - python3-numpy
-          - python3-scipy
-          - python3-evdev
-          - python3-pyperclip
-          - python3-requests
-          - python3-psutil
-          - python3-rich
-          - python3-gi
-          - gir1.2-gtk-4.0
-          - git
-          - cmake
-          - make
-          - build-essential
-          - pipewire
-          - pipewire-pulse
-          - wtype # ydotool alternative?
+    aur_packages: ['hyprwhspr']
 
-    - name: Clone hyprwhspr
-      git:
-        repo: https://github.com/goodroot/hyprwhspr.git
-        dest: '{{ install_dir }}'
-        clone: true
-        update: true
-        force: true
-      register: clone
-
-    - name: Run automated hyprwhspr setup
-      command: '{{ install_dir }}/bin/hyprwhspr setup auto --backend onnx-asr'
-      register: setup_result
-      changed_when: setup_result.rc == 0
-      when: clone.changed
+# `setup auto` is the non-interactive path; plain `setup` is a wizard with
+# fifty-odd prompts. It detects the backend, installs it, downloads the model,
+# and enables and starts the systemd unit, so nothing else belongs here.
+#
+# --backend matches .config/hyprwhspr/config.json rather than letting it
+# auto-detect. Hyprland keybindings are not configured without
+# --hypr-bindings, which is deliberate: bind them in .config/hypr yourself.
+#
+# `creates` is the launcher's own completeness check, and it is doing more
+# than saving time. setup writes the config back through
+# ConfigManager.save_config(), which is tempfile + os.replace on an unresolved
+# path -- that swaps this repo's symlinked config.json for a regular file, the
+# same way `sed -i` does. It also writes sparsely, dropping any setting that
+# matches a default. Run `make check` after enabling this role.
+- name: 'run the automated hyprwhspr setup'
+  ansible.builtin.command:
+    cmd: 'hyprwhspr setup auto --backend onnx-asr'
+    creates: "{{ ansible_facts['env']['HOME'] }}/.local/share/hyprwhspr/venv/bin/python"

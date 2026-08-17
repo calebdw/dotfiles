@@ -2,11 +2,5 @@
 # Install with `ansible-galaxy install -r requirements.yml`
 # Update with `ansible-galaxy install -r requirements.yml --force`
 collections:
+  # provides the `pacman` module, the only non-builtin this playbook uses
   - name: community.general
-
-roles:
-  - name: geerlingguy.composer
-  - name: geerlingguy.docker
-  - name: geerlingguy.go
-  # - name: geerlingguy.pip
-  - name: robertdebock.auditd

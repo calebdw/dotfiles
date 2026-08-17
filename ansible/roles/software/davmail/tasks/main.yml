@@ -1,0 +1,31 @@
+---
+- name: 'install davmail'
+  ansible.builtin.include_role:
+    name: software/packages
+    tasks_from: aur
+  vars:
+    aur_packages: ['davmail']
+
+- name: 'ensure the user unit directory exists'
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/systemd/user"
+    state: directory
+    mode: '0755'
+
+# The unit is a `copy` rather than a linked config because register/changed
+# is what drives the restart below, and because davmail ships no unit of its
+# own.
+- name: 'install davmail user unit'
+  ansible.builtin.copy:
+    src: 'davmail.service'
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/systemd/user/davmail.service"
+    mode: '0644'
+  register: davmail_unit
+
+- name: 'enable davmail'
+  ansible.builtin.systemd_service:
+    name: davmail
+    scope: user
+    enabled: true
+    state: "{{ 'restarted' if davmail_unit.changed else 'started' }}"
+    daemon_reload: true

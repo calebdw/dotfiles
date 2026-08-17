@@ -1,0 +1,24 @@
+---
+# Reusable by any role that owns an AUR package of its own:
+#
+#   - ansible.builtin.include_role:
+#       name: packages
+#       tasks_from: aur
+#     vars:
+#       aur_packages: ['davmail']
+#
+# yay must not run as root and shells out to sudo itself, outside ansible's
+# become, so this stays non-interactive only if sudo does not prompt -- either
+# the `sudo` role's drop-in or a warm timestamp from `omarchy-sudo-keepalive`.
+- name: 'check which AUR packages are already installed'
+  ansible.builtin.command: 'pacman -Q {{ item }}'
+  loop: "{{ aur_packages }}"
+  register: aur_query
+  changed_when: false
+  failed_when: false
+
+- name: 'install missing AUR packages'
+  ansible.builtin.command: 'yay -S --needed --noconfirm {{ item.item }}'
+  loop: "{{ aur_query.results | rejectattr('rc', 'equalto', 0) | list }}"
+  loop_control:
+    label: "{{ item.item }}"

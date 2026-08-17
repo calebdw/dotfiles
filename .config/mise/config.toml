@@ -1,0 +1,10 @@
+[tools]
+claude = "latest"
+codex = "latest"
+gh = "latest"
+glab = "latest"
+go = "latest"
+node = "latest"
+opencode = "latest"
+pi = "latest"
+python = "latest"

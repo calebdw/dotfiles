@@ -1,20 +1,30 @@
 ---
-- name: 'add {{ mouse_name }} udev config'
+# The hwdb entry corrects the wheel click angle the device misreports, which
+# is not the same thing as Hyprland's scroll_factor (that multiplies deltas).
+# Drop the role from the playbook if Hyprland's input config turns out to be
+# enough on its own. Run `lsusb` to find the vid, pid and name.
+- name: 'add the Evoluent VerticalMouse hwdb entry'
   become: true
-  template:
-    src: "71-mouse-local.hwdb.j2"
-    dest: "{{ mouse_udev_path }}/71-mouse-local.hwdb"
-    owner: "root"
-    group: "root"
+  vars:
+    mouse_vid: '1a7c'
+    mouse_pid: '0197'
+    mouse_name: 'Evoluent Evoluent VerticalMouse D'
+    mouse_click_angle: 30
+    mouse_click_count: 192 # per full rotation
+  ansible.builtin.template:
+    src: '71-mouse-local.hwdb.j2'
+    dest: '/etc/udev/hwdb.d/71-mouse-local.hwdb'
+    owner: root
+    group: root
     mode: '0644'
   register: mouse_udev
 
 - when: mouse_udev.changed
   block:
-    - name: 'update systemd hardware dabase'
+    - name: 'update systemd hardware database'
       become: true
-      command: 'systemd-hwdb update'
+      ansible.builtin.command: 'systemd-hwdb update'
 
     - name: 'reload udev input configs'
       become: true
-      shell: 'udevadm trigger /dev/input/event*'
+      ansible.builtin.shell: 'udevadm trigger /dev/input/event*'

@@ -1,0 +1,18 @@
+---
+# Arch ships MAKEFLAGS commented out, so make falls back to a single job and
+# every AUR build compiles on one core. Runs before software/packages for
+# obvious reasons.
+#
+# $(nproc) is left unexpanded on purpose: makepkg.conf is sourced by bash, so
+# it is evaluated at build time and stays right if the machine changes.
+#
+# Not set here: BUILDDIR=/tmp/makepkg, which would build on tmpfs and save the
+# I/O. Uncomment it in the file if you want it -- it is a smaller win than the
+# core count and it puts a large build's intermediates in RAM.
+- name: 'build AUR packages on every core'
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/makepkg.conf
+    regexp: '^#?MAKEFLAGS='
+    line: 'MAKEFLAGS="-j$(nproc)"'
+    state: present

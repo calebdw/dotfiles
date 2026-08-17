@@ -1,7 +1,16 @@
 ---
-- name: enable nopasswd sudo
+# Optional, and off by default in playbooks/local.yml. This grants every
+# process running as your user -- including agents -- root without a prompt.
+# Omarchy's own `omarchy-sudo-passwordless` says the same thing and expires
+# the drop-in after 15 minutes via a systemd timer; this one is permanent.
+- name: 'enable passwordless sudo'
   become: true
-  lineinfile:
-    state: present
-    path: /etc/sudoers
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/10-nopasswd
     line: "{{ ansible_facts['env']['USER'] }} ALL=(ALL:ALL) NOPASSWD:ALL"
+    state: present
+    create: true
+    owner: root
+    group: root
+    mode: '0440'
+    validate: 'visudo -cf %s'

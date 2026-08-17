@@ -1,5 +1,0 @@
----
-- name: 'Install tree-sitter-cli'
-  community.general.cargo:
-    name: tree-sitter-cli
-    state: latest

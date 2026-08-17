@@ -1,11 +1,29 @@
 ---
-- name: 'install deps'
+# pcsclite and ccid are the smartcard stack the YubiKey's PIV/OpenPGP applets
+# need; yubikey-manager (ykman) drives the key itself.
+- name: 'install yubikey packages'
   become: true
-  ansible.builtin.package:
-    state: latest
+  community.general.pacman:
     name:
-      - scdaemon
-      - pcscd
       - yubikey-manager
+      - yubikey-touch-detector
+      - pcsclite
+      - ccid
+    state: present
 
-- import_tasks: touch-detector.yml
+# Socket-activated, so nothing runs until something opens the socket.
+- name: 'enable smartcard daemon'
+  become: true
+  ansible.builtin.systemd_service:
+    name: pcscd.socket
+    enabled: true
+    state: started
+
+# The unit ships with the package; only the enablement is ours.
+- name: 'enable yubikey touch detector'
+  ansible.builtin.systemd_service:
+    name: yubikey-touch-detector.service
+    scope: user
+    enabled: true
+    state: started
+    daemon_reload: true

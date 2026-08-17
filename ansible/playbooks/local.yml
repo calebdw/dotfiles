@@ -1,31 +1,21 @@
 ---
 - hosts: local
   roles:
+    # - configure/nopasswd-sudo
+    - configure/makepkg
     - configure/evoluent-verticalmouse
-    - configure/nopasswd-sudo
-    - configure/inotify-watches
-    - software/_deps
-    - languages/python
-    - languages/php
-    - languages/rust
-    - languages/go
-    - languages/perl
-    - languages/js
-    - software/shell
-    - software/brave-browser
-    - software/clipboard
-    - software/cli-tools
-    - software/docker
-    - software/hyprwhspr
-    - software/neovim
-    - software/nerd_fonts
-    - software/pgadmin
-    - software/porter
-    - software/supervisor
-    - software/tableplus
-    - software/tree-sitter
-    - software/ghostty
-    - configure/default-terminal
+    - omarchy/fido2
+    - omarchy/terminal
+    - omarchy/browser
+    - omarchy/editor
+    - omarchy/theme
+    - omarchy/capture
+    - toolchains/mise
+    - toolchains/php
+    - toolchains/rust
+    - software/packages
     - software/yubikey
-    - role: configure/system76-power
-      when: ansible_facts['system_vendor'] == 'System76'
+    # - software/davmail  # not in use at the moment
+    - software/tuitube
+    # - software/cliphist  # omarchy has its own clipboard history
+    # - software/hyprwhspr  # voxtype does this job instead

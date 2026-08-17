@@ -1,8 +1,0 @@
----
-- name: install perl
-  become: true
-  ansible.builtin.package:
-    state: latest
-    name:
-      - perl
-      - cpanminus

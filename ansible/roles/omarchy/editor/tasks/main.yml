@@ -1,0 +1,14 @@
+---
+# This one stays a command because the command works: it writes
+# ~/.local/state/omarchy/defaults/editor and returns. The coding agent has no
+# role at all -- `omarchy default agent` ends with `exec omarchy-agent` and
+# never comes back, so its one-word file lives in this repo instead, at
+# .config/omarchy/defaults/agent.
+- name: 'query default editor'
+  ansible.builtin.command: 'omarchy default editor'
+  register: editor_current
+  changed_when: false
+
+- name: 'set nvim as the default editor'
+  ansible.builtin.command: 'omarchy default editor nvim'
+  when: editor_current.stdout != 'nvim'

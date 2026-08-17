@@ -1,0 +1,12 @@
+[Unit]
+Description=DavMail POP/IMAP/SMTP/Caldav/Carddav/LDAP Exchange Gateway
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/davmail %h/.config/davmail/davmail.properties
+Restart=on-failure
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

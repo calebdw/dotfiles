@@ -1,0 +1,24 @@
+---
+- name: 'check whether brave is installed'
+  ansible.builtin.command: 'pacman -Q brave-bin'
+  register: browser_installed
+  changed_when: false
+  failed_when: false
+
+# Does more than pacman would: also creates the managed-policy directory and
+# installs the Omarchy chromium flags and theme integration.
+- name: 'install brave'
+  ansible.builtin.command: 'omarchy install browser brave'
+  when: browser_installed.rc != 0
+
+# Not a config file this repo could own: `omarchy default browser` shells out
+# to `xdg-settings`, which rewrites ~/.config/mimeapps.list in place alongside
+# every other handler you have registered.
+- name: 'query default browser'
+  ansible.builtin.command: 'omarchy default browser'
+  register: browser_current
+  changed_when: false
+
+- name: 'set brave as the default browser'
+  ansible.builtin.command: 'omarchy default browser brave'
+  when: browser_current.stdout != 'brave'

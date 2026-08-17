@@ -1,0 +1,22 @@
+---
+# `omarchy install terminal` installs the package and writes
+# ~/.config/xdg-terminals.list in one go. It also copies its stock config into
+# ~/.config/<terminal>, but only when that path does not already exist, so
+# running `make dots` first leaves this repo's ghostty config alone.
+#
+# No `become`: omarchy-pkg-add calls sudo itself when it is not already root,
+# and the rest of the script writes into $HOME -- under become that would be
+# root's. Same non-prompting sudo requirement as the AUR tasks.
+#
+# The font is not set through `omarchy font set`, which rewrites the font line
+# in .config/ghostty/config with a plain `sed -i` and would replace this
+# repo's symlink with a regular file. It lives in that config instead.
+- name: 'check whether ghostty is installed'
+  ansible.builtin.command: 'pacman -Q ghostty'
+  register: terminal_installed
+  changed_when: false
+  failed_when: false
+
+- name: 'install ghostty and make it the default terminal'
+  ansible.builtin.command: 'omarchy install terminal ghostty'
+  when: terminal_installed.rc != 0

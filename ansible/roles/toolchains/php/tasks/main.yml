@@ -1,0 +1,90 @@
+---
+# Arch ships a single php; bcmath, curl, iconv, intl, mbstring, zip, pdo_mysql
+# and pdo_sqlite are built in and already enabled in php.ini. php-sqlite owns
+# pdo_sqlite.so and sqlite3.so.
+- name: 'install php packages'
+  become: true
+  community.general.pacman:
+    name:
+      - php
+      - php-sqlite
+      - php-gd
+      - php-pgsql
+      - php-redis
+      - php-memcached
+      - php-igbinary
+      - xdebug
+      - composer
+    state: present
+
+# `replace` rather than `lineinfile`: if the commented line is not there,
+# lineinfile would append a second `extension=` directive and PHP would warn
+# about loading the module twice.
+#
+# imap and xmlrpc are not available at all, both removed from PHP core
+# upstream. soap is: the php package ships soap.so with php.ini's line
+# commented out, so add `soap` here if you ever want it back.
+- name: 'enable php extensions in php.ini'
+  become: true
+  ansible.builtin.replace:
+    path: /etc/php/php.ini
+    regexp: '^;extension={{ item }}$'
+    replace: 'extension={{ item }}'
+  loop:
+    - pdo_pgsql
+    - pgsql
+    - sqlite3
+    - gd
+
+- name: 'find extension configs dropped in by php-* packages'
+  ansible.builtin.find:
+    paths: /etc/php/conf.d
+    patterns: '*.ini'
+  register: php_conf_d
+
+# Arch ships these commented out (xdebug is the obvious one). If the package
+# is installed it is because this play asked for it, so turn it on.
+- name: 'enable extensions shipped as separate packages'
+  become: true
+  ansible.builtin.replace:
+    path: '{{ item.path }}'
+    regexp: '^;(zend_extension|extension)='
+    replace: '\1='
+  loop: "{{ php_conf_d.files }}"
+  loop_control:
+    label: '{{ item.path }}'
+
+# Keep this list short: cpx is npx for composer, so anything you run
+# occasionally is `cpx vendor/package` and does not need installing.
+# laravel/installer is the case in point -- it is `cpx laravel/installer new`
+# when you actually want it.
+- name: 'check composer global packages'
+  ansible.builtin.command: 'composer global show {{ item }}'
+  loop:
+    - cpx/cpx
+  register: composer_check
+  changed_when: false
+  failed_when: false
+
+- name: 'install composer global packages'
+  ansible.builtin.command: 'composer global require {{ item.item }}'
+  loop: "{{ composer_check.results | rejectattr('rc', 'equalto', 0) | list }}"
+  loop_control:
+    label: '{{ item.item }}'
+
+# What makes `doc strlen` work in a PsySH REPL, which now means `cpx tinker`.
+# PsySH searches XDG data dirs and takes the first hit, and $XDG_DATA_HOME
+# comes before /usr/local/share, so this needs no root -- unlike the Ubuntu
+# version of this task. psysh.org only publishes the v2 sqlite; the newer
+# php_manual.php format 404s there.
+- name: 'create the psysh data directory'
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.local/share/psysh"
+    state: directory
+    mode: '0755'
+
+- name: 'install the php manual for psysh'
+  ansible.builtin.get_url:
+    url: 'https://psysh.org/manual/en/php_manual.sqlite'
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/share/psysh/php_manual.sqlite"
+    mode: '0644'

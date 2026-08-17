@@ -1,0 +1,6 @@
+---
+# Not packaged anywhere, and the vendor installer is the only supported route.
+- name: 'install tuitube'
+  ansible.builtin.shell:
+    cmd: 'curl -sf https://termcast.app/r/tuitube | bash'
+    creates: "{{ ansible_facts['env']['HOME'] }}/.termcast/compiled/tuitube/bin/tuitube"

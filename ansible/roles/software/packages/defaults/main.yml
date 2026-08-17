@@ -1,0 +1,52 @@
+---
+# Packages Omarchy already installs are deliberately absent from these lists:
+#   bat btop chromium docker docker-buildx docker-compose fastfetch fd fzf git
+#   imagemagick lazydocker lazygit luarocks mise neovim ripgrep starship tmux
+#   tree-sitter-cli unzip wl-clipboard wtype yt-dlp zoxide
+
+packages_pacman:
+  # build tools
+  - cmake
+  - ninja
+
+  # shell
+  - fish
+
+  # version control
+  - jujutsu
+  - lazyjj
+  - b4 # send patches to mailing lists
+
+  # rust
+  - cargo-nextest
+  - cargo-insta
+
+  # python
+  - uv
+  - python-pynvim # optional dep of the neovim package, for :help python
+
+  # shell tooling
+  - atuin
+  - bat-extras
+
+  # mail
+  - aerc
+  - w3m # aerc's text/html filter
+
+  # documents and presentations
+  - presenterm
+  - typst
+  - pandoc-cli
+
+packages_aur:
+  - phpantom_lsp
+  - tableplus
+  # Both halves named explicitly, server first. The pgadmin4 meta package
+  # would build server + desktop + web from source and drag in apache for a
+  # web deployment you do not use -- but -desktop-bin alone is not enough
+  # either: it depends on `pgadmin4-server` unversioned, and yay resolves that
+  # to the source package of that name rather than to -server-bin, which only
+  # provides it. Installing -server-bin first satisfies the dependency, so
+  # nothing gets compiled.
+  - pgadmin4-server-bin
+  - pgadmin4-desktop-bin

@@ -1,0 +1,17 @@
+---
+# Only packages with nothing to configure belong in these lists. Anything that
+# needs a unit enabled or a config written owns its own role and installs
+# itself there -- see `yubikey` and `davmail`.
+- name: 'install packages from the official repos'
+  become: true
+  community.general.pacman:
+    name: '{{ packages_pacman }}'
+    # `present` rather than `latest`: this is a rolling release and
+    # `omarchy update` owns upgrades. This play only guarantees a package is here.
+    state: present
+    update_cache: true
+
+- name: 'install packages from the AUR'
+  ansible.builtin.include_tasks: aur.yml
+  vars:
+    aur_packages: '{{ packages_aur }}'
