@@ -10,6 +10,8 @@ g = { definition = ["git"], doc = "Shorthand for git subcommands" }
 push = { definition = ["git", "push"], doc = "Push bookmarks to git remote" }
 retrunk = { definition = ["rebase", "-d", "trunk()"], doc = "Rebase current change onto trunk" }
 sudo = { definition = ["--ignore-immutable"], doc = "Run subcommand while ignoring immutable commits" }
+clone-fork = { definition = ["util", "exec", "--", "jj-clone-fork"], doc = "Clone a fork, add upstream remote, and set trunk()" }
+setup-fork = { definition = ["util", "exec", "--", "jj-remote-add-fork"], doc = "Add upstream remote for a fork and set trunk()" }
 tug = { definition = ["bookmark", "advance"], doc = "Advance current bookmark to the working copy" }
 
 [colors]

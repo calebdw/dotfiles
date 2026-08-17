@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -e
+
+usage() {
+    echo "Usage: $0 <fork-url> [directory]"
+    echo ""
+    echo "Clone a forked repository, add the upstream remote, fetch it,"
+    echo "and set trunk() to track the upstream default branch."
+    exit 1
+}
+
+if [[ -z "$1" || "$1" =~ ^- ]]; then
+    usage
+fi
+
+fork_url="$1"
+dir="$2"
+
+repo_name=$(basename "$fork_url" .git)
+target_dir="${dir:-$repo_name}"
+
+jj git clone "$fork_url" "$target_dir"
+cd "$target_dir"
+
+jj-remote-add-fork
