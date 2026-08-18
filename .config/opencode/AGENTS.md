@@ -13,6 +13,13 @@
 - Prefer running single tests, not the whole test suite, for performance
 - When debugging, determine the root cause rather than addressing symptoms
 
+## Path Handling
+
+- Never guess filesystem paths. If a path is not known from tool output or user-provided context, run `pwd` or read the current working directory before using it.
+- Assume the current working directory is usually the right project directory unless the user says otherwise.
+- Do not invent `/home/user/...`, package-relative, or other placeholder paths. Resolve real paths with tools first.
+- If a file cannot be found, inspect the current directory and search from there instead of retrying with guessed absolute paths.
+
 ## Coding Style
 
 - Follow existing conventions in each project
