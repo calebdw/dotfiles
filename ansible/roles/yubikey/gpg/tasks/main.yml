@@ -1,0 +1,86 @@
+---
+# Only the public key is here -- the secret keys live on the YubiKey and
+# cannot be exported. Setting up a new machine is: import the public key,
+# trust it, and let gpg build the card stubs that point at the hardware.
+# .gnupg/gpg-agent.conf and scdaemon.conf are linked by `make dots`.
+
+- name: 'the key'
+  ansible.builtin.set_fact:
+    gpg_fingerprint: '99981A649E1CA829A335E77493EDE5A0C788BC38'
+
+# `make dots` creates ~/.gnupg with `cp -as`, which leaves it 0755, and gpg
+# warns "unsafe permissions on homedir" on every invocation.
+- name: 'lock down the gnupg homedir'
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.gnupg"
+    state: directory
+    mode: '0700'
+
+# Imported unconditionally rather than skipped when the key is already
+# present: subkey expiry gets extended roughly yearly, and the whole point of
+# keeping the key here is that re-exporting it and re-running this propagates
+# the new dates. gpg merges rather than replacing, and says "unchanged: 1"
+# when there was nothing new.
+- name: 'import the public key'
+  ansible.builtin.command: 'gpg --import {{ role_path }}/files/public-key.asc'
+  register: gpg_import
+  changed_when: "'unchanged' not in gpg_import.stderr"
+
+# Without this gpg treats your own key as untrusted and warns on every
+# signature it verifies. Setting it again is a no-op.
+- name: 'trust the key ultimately'
+  ansible.builtin.shell:
+    cmd: 'echo {{ gpg_fingerprint }}:6: | gpg --import-ownertrust'
+  changed_when: false
+
+# Recorded before anything touches the card, to compare against afterwards --
+# the next task creates the stubs as a side effect of listing them, so its
+# return code says nothing about whether they are new.
+- name: 'note the card stubs already present'
+  ansible.builtin.find:
+    paths: "{{ ansible_facts['env']['HOME'] }}/.gnupg/private-keys-v1.d"
+    patterns: '*.key'
+  register: gpg_stubs_before
+
+# `gpg --card-status` is what writes the secret-key stubs: not keys, just
+# pointers recording that the private halves are on a card. Without them gpg
+# has a public key it cannot sign with.
+- name: 'check for the card stubs'
+  ansible.builtin.command: 'gpg --list-secret-keys {{ gpg_fingerprint }}'
+  register: gpg_stubs
+  changed_when: false
+  failed_when: false
+
+- name: 'plug in the yubikey'
+  ansible.builtin.pause:
+    prompt: |
+
+      No GPG secret-key stubs yet, so gpg cannot sign with the card.
+
+      Plug the YubiKey in, then press Enter. The next task runs
+      `gpg --card-status`, which creates the stubs.
+  when: gpg_stubs.rc != 0
+
+- name: 'create the card stubs'
+  ansible.builtin.command: 'gpg --card-status'
+  when: gpg_stubs.rc != 0
+
+- name: 'note the card stubs now present'
+  ansible.builtin.find:
+    paths: "{{ ansible_facts['env']['HOME'] }}/.gnupg/private-keys-v1.d"
+    patterns: '*.key'
+  register: gpg_stubs_after
+
+# yubikey-touch-detector enumerates the shadowed private keys once at startup
+# and inotify-watches those files; stubs written afterwards are invisible to
+# it and GPG touches go unannounced. yubikey/tools has to run before this role
+# -- gpg cannot reach the card until pcscd is up -- so on a fresh machine the
+# detector always starts before the stubs exist and comes up half blind.
+- name: 'restart the touch detector'
+  ansible.builtin.systemd_service:
+    name: yubikey-touch-detector.service
+    scope: user
+    state: restarted
+  when: >-
+    gpg_stubs_after.files | map(attribute='path') | sort
+    != gpg_stubs_before.files | map(attribute='path') | sort

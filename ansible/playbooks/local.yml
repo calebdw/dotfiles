@@ -4,7 +4,9 @@
     # - configure/nopasswd-sudo
     - configure/makepkg
     - configure/evoluent-verticalmouse
-    - omarchy/fido2
+    - yubikey/tools
+    - yubikey/gpg
+    - yubikey/fido2
     - omarchy/terminal
     - omarchy/browser
     - omarchy/editor
@@ -14,7 +16,6 @@
     - toolchains/php
     - toolchains/rust
     - software/packages
-    - software/yubikey
     # - software/davmail  # not in use at the moment
     - software/tuitube
     # - software/cliphist  # omarchy has its own clipboard history
