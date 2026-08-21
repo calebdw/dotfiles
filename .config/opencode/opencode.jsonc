@@ -8,24 +8,7 @@
             "extensions": [".php"]
         }
     },
-    "mcp": {
-        "voice-mode": {
-            "type": "local",
-            "command": ["uvx", "--refresh", "voice-mode"],
-            "enabled": false,
-            "environment": {
-                "xVOICEMODE_PREFER_LOCAL": "true",
-                "xVOICEMODE_ALWAYS_TRY_LOCAL": "true",
-                "VOICEMODE_DEBUG": "false",
-                "VOICEMODE_SAVE_AUDIO": "false",
-                "VOICEMODE_TTS_SPEED": "1.5"
-            }
-        }
-    },
-    "experimental": {
-        // 5 minutes, prevent voice mode from timing out
-        "mcp_timeout": 6000000
-    },
+    "mcp": {},
     "model": "anthropic/claude-opus-5",
     "plugin": ["opencode-with-claude@latest"],
     "provider": {
