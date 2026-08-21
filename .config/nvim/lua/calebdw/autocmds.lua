@@ -61,9 +61,19 @@ vim.api.nvim_create_autocmd({ 'VimEnter' }, {
       vim.schedule(function() vim.notify(msg, vim.log.levels.ERROR) end)
     end
 
+    -- nvim creates these on demand, so backup/ never appears while 'backup' and
+    -- 'writebackup' are off, and find exits 1 on a start point that is missing
+    -- (-ignore_readdir_race only covers entries that vanish mid-scan).
+    local dirs = vim.tbl_filter(
+      function(dir) return vim.uv.fs_stat(cwd .. '/' .. dir) ~= nil end,
+      { 'undo', 'swap', 'backup' }
+    )
+
+    if #dirs == 0 then return end
+
     Job:new({
       command = 'find',
-      args = { 'undo', 'swap', 'backup', '-ignore_readdir_race', '-type', 'f', '-mtime', '+' .. days, '-delete' },
+      args = vim.list_extend(dirs, { '-ignore_readdir_race', '-type', 'f', '-mtime', '+' .. days, '-delete' }),
       cwd = cwd,
       on_exit = function(job, code)
         if code == 0 then return end
