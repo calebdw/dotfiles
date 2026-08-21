@@ -38,6 +38,9 @@ packages_pacman:
   - typst
   - pandoc-cli
 
+  # appimages
+  - fuse2 # AppImages mount through FUSE 2, which Arch does not ship by default
+
 packages_aur:
   - phpantom_lsp
   - tableplus
