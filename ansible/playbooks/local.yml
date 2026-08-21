@@ -18,5 +18,6 @@
     - software/packages
     # - software/davmail  # not in use at the moment
     - software/tuitube
+    - software/xiphos
     # - software/cliphist  # omarchy has its own clipboard history
     # - software/hyprwhspr  # voxtype does this job instead

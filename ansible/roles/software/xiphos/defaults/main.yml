@@ -1,0 +1,23 @@
+---
+# Module name -> the remote source that carries it. Everything here is on
+# CrossWire.
+#
+# These are module names, not titles. `installmgr -s` lists the sources and
+# `installmgr -rl CrossWire` lists the 400-odd modules that one carries, which
+# is how to find the name of anything added here later.
+xiphos_modules:
+  # King James Version (1769) with Strongs Numbers and Morphology and
+  # CatchWords. KJVA is the same text including the Apocrypha, if that is ever
+  # wanted instead.
+  KJV: CrossWire
+  # Scofield Reference Notes, 1917 Edition.
+  Scofield: CrossWire
+  # Webster's Dictionary 1828, and the 1913 Revised Unabridged. Not to be
+  # confused with `Webster`, which is the Webster Bible -- a translation, not a
+  # dictionary.
+  Webster1828: CrossWire
+  Webster1913: CrossWire
+
+# installmgr will not touch the network without this, and this is the whole
+# flag -- there is no shorter spelling and no config setting that replaces it.
+xiphos_installmgr_internet: '--allow-internet-access-and-risk-tracing-and-jail-or-martyrdom'

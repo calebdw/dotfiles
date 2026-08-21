@@ -1,0 +1,60 @@
+---
+# sword comes in as a dependency of xiphos, and brings /usr/bin/installmgr and
+# /etc/sword.conf with it. Both are what the tasks below drive, so there is
+# nothing to install separately.
+- name: 'install xiphos'
+  become: true
+  community.general.pacman:
+    name: ['xiphos']
+    state: present
+    update_cache: true
+
+# installmgr refuses to start at all ("SWORD configuration not found") unless a
+# config directory already exists at SWORD_PATH, and it will not create one
+# itself, so this has to come first.
+- name: 'ensure the user module directory exists'
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.sword/mods.d"
+    state: directory
+    mode: '0755'
+
+# -sc fetches the master list of remote sources, which is what makes any of
+# them addressable by name below. `creates` is not there to save time: -init
+# overwrites the existing config, so an unguarded second run would discard any
+# source added by hand in Xiphos' own module manager.
+- name: 'initialise the sword module installer'
+  ansible.builtin.command:
+    cmd: 'installmgr {{ xiphos_installmgr_internet }} -init -sc'
+    creates: "{{ ansible_facts['env']['HOME'] }}/.sword/InstallMgr/InstallMgr.conf"
+  environment:
+    SWORD_PATH: "{{ ansible_facts['env']['HOME'] }}/.sword"
+
+# SWORD_PATH is what decides where modules get written. Without it /etc/sword.conf
+# wins, which points DataPath at root-owned /usr/share/sword, and every install
+# dies with "(write permissions?)" -- an existing ~/.sword does not override it.
+# Reads are the other way round: SWORD picks up ~/.sword on its own, so Xiphos
+# finds these modules with nothing set in its environment.
+#
+# -r and -ri in one command because -ri alone fails with "does not make
+# available module" against a source whose catalogue has not been fetched, and
+# -sc above fetches the source list, not the catalogues. Refreshing once per
+# missing module re-fetches the same catalogue a few times over on a first
+# run; the trade is that `creates` then keeps a converged machine off the
+# network entirely, which a separate always-run refresh task could not do.
+#
+# failed_when because installmgr exits 0 whether or not it worked -- it reports
+# failure only as a line on stdout. Left on the exit status alone, a broken run
+# reports "changed" every time and never installs anything.
+#
+# The conf is the module name lowercased: StrongsGreek -> strongsgreek.conf.
+- name: 'install sword modules'
+  ansible.builtin.command:
+    cmd: 'installmgr {{ xiphos_installmgr_internet }} -r {{ item.value }} -ri {{ item.value }} {{ item.key }}'
+    creates: "{{ ansible_facts['env']['HOME'] }}/.sword/mods.d/{{ item.key | lower }}.conf"
+  environment:
+    SWORD_PATH: "{{ ansible_facts['env']['HOME'] }}/.sword"
+  register: xiphos_install
+  failed_when: "'Error installing module' in (xiphos_install.stdout | default(''))"
+  loop: '{{ xiphos_modules | dict2items }}'
+  loop_control:
+    label: '{{ item.key }}'
