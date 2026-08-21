@@ -18,7 +18,7 @@ desktop notifications that need the session bus. Dots are linked first so
 Grouped by subject, referenced by path (`roles_path = ./roles`).
 
 | Role | Owns |
-|---|---|
+| --- | --- |
 | `configure/nopasswd-sudo` | permanent passwordless sudo (off by default) |
 | `configure/makepkg` | MAKEFLAGS, so AUR builds use every core |
 | `configure/evoluent-verticalmouse` | hwdb wheel-click fix |
@@ -30,9 +30,9 @@ Grouped by subject, referenced by path (`roles_path = ./roles`).
 | `omarchy/editor` | default editor |
 | `omarchy/theme` | theme |
 | `omarchy/capture` | screenshot and screen recording directories |
-| `toolchains/mise` | whatever `.config/mise/config.toml` lists |
-| `toolchains/php` | packages, php.ini extensions, composer globals |
-| `toolchains/rust` | rustup via Omarchy's installer |
+| `runtimes/mise` | whatever `.config/mise/config.toml` lists |
+| `runtimes/php` | packages, php.ini extensions, composer globals |
+| `runtimes/rust` | rustup via Omarchy's installer |
 | `software/packages` | packages that need no configuring |
 | `software/davmail` | package, user unit, enablement |
 | `software/tuitube` | vendor installer |
@@ -49,7 +49,7 @@ small file, and a file belongs in the repo rather than being reapplied every
 run.
 
 | Setting | Omarchy writes | Here |
-|---|---|---|
+| --- | --- | --- |
 | terminal | `~/.config/xdg-terminals.list` | `omarchy/terminal` installs; the list is derived |
 | agent | a one-word file, then `exec omarchy-agent` | `.config/omarchy/defaults/agent` |
 | editor | `~/.local/state/omarchy/defaults/editor` | `omarchy/editor` -- `make dots` only links `~/.config` |
