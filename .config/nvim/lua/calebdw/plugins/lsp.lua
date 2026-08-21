@@ -49,7 +49,6 @@ local servers = {
     },
   },
   antlersls = {}, -- Statamic/Antlers
-  cmake = {},
   clangd = {}, -- C++
   cssls = {},
   cssmodules_ls = {},
@@ -113,6 +112,7 @@ local servers = {
       },
     }
   end,
+  neocmake = {}, -- CMake; the pypi cmake-language-server is stuck on pygls 1.x
   -- 'ocamllsp', -- OCaml
   phpantom_lsp = {
     cmd = { vim.fn.expand('~/.cargo/bin/phpantom_lsp') }, -- use global installation over mason
