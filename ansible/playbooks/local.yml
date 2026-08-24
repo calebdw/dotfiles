@@ -12,6 +12,7 @@
     - omarchy/editor
     - omarchy/theme
     - omarchy/capture
+    - omarchy/voxtype
     - runtimes/mise
     - runtimes/php
     - runtimes/rust

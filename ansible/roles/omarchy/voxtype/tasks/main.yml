@@ -1,0 +1,81 @@
+---
+# Omarchy installs voxtype itself, so this role does not install the package.
+# What it does is the one step omarchy leaves alone: swapping the stock Whisper
+# binary for the ONNX build, which is the only one compiled with the parakeet
+# feature. Without it, `engine = "parakeet"` in .config/voxtype/config.toml
+# fails with "not compiled with --features parakeet" and the daemon is dead in
+# the water.
+#
+# Why parakeet at all: on this hardware (AVX2, no usable GPU) Whisper base.en
+# measured at a real-time factor of ~0.075 plus a ~1.4s fixed floor, and
+# anything larger was worse -- small.en projects to ~22s on an 80s dictation.
+# Parakeet TDT measures at RTF ~0.05 with no fixed floor, so it is both faster
+# and markedly more accurate. Settings live in .config/voxtype/config.toml.
+- name: 'check whether voxtype is installed'
+  ansible.builtin.command: 'pacman -Q voxtype-bin'
+  register: voxtype_installed
+  changed_when: false
+  failed_when: false
+
+# Everything below is a no-op without the package. Omarchy's own first-run hook
+# offers the install, so not having it is a deliberate state, not an error.
+- name: 'configure voxtype'
+  when: voxtype_installed.rc == 0
+  block:
+    # --status prints "Backend: ONNX (AVX2)" once the swap has happened. Match
+    # on that rather than on "Active engine", which reports the *configured*
+    # engine and would read "Parakeet" from config.toml before the binary that
+    # can actually run it is in place.
+    - name: 'check which voxtype binary variant is active'
+      ansible.builtin.command: 'voxtype setup onnx --status'
+      register: voxtype_onnx_status
+      changed_when: false
+
+    # `become` here, unlike the other omarchy roles: this subcommand does not
+    # shell out to sudo itself, it just refuses to run unprivileged. It only
+    # repoints the binary in /usr/lib/voxtype, so root touching it is fine --
+    # which is not true of the model download below.
+    - name: 'switch voxtype to the ONNX binary'
+      become: true
+      ansible.builtin.command: 'voxtype setup onnx --enable'
+      when: "'Backend: ONNX' not in voxtype_onnx_status.stdout"
+      register: voxtype_onnx_enable
+
+    # Read the model out of the config this repo already ships rather than
+    # restating it here, the same way omarchy/capture reads its directories out
+    # of .config/uwsm/env.d/capture. config.toml stays the only place the model
+    # is named. The regex anchors on the parakeet- prefix to skip the
+    # `model = "base.en"` line in [whisper], which is still there as a fallback.
+    - name: 'read the configured parakeet model'
+      ansible.builtin.set_fact:
+        voxtype_parakeet_model: >-
+          {{ (lookup('file', ansible_facts['env']['HOME'] + '/.config/voxtype/config.toml')
+              | regex_search('(?m)^model\s*=\s*"(parakeet[^"]+)"', '\1'))[0] }}
+
+    # `voxtype setup onnx --enable` only swaps the binary; it does not fetch a
+    # model, and plain `--download` ignores the configured engine and checks the
+    # Whisper model instead. So the name has to be passed explicitly or a fresh
+    # machine ends up with the ONNX binary and nothing to run on it.
+    #
+    # Deliberately not become: as root this writes to /root/.local/share and
+    # /root/.config and the daemon never sees it -- voxtype prints that warning
+    # itself. `creates` keeps it from re-running, which matters because the
+    # download also rewrites [engine] and [parakeet] in config.toml. That write
+    # is in-place, so it follows this repo's symlink instead of replacing it
+    # (the configure TUI does the opposite -- tempfile + rename, which detaches
+    # the file and is what `make check` is there to catch).
+    - name: 'download the configured parakeet model'
+      ansible.builtin.command:
+        cmd: "voxtype setup --download --model {{ voxtype_parakeet_model }}"
+        creates: "{{ ansible_facts['env']['HOME'] }}/.local/share/voxtype/models/{{ voxtype_parakeet_model }}"
+      register: voxtype_model
+
+    # The unit ships with the package and omarchy enables it; this only has to
+    # pick up a new binary or a newly downloaded model. The model is held
+    # resident (on_demand_loading = false), so a restart is the only way in.
+    - name: 'restart voxtype for the new binary or model'
+      ansible.builtin.systemd_service:
+        name: voxtype
+        scope: user
+        state: restarted
+      when: voxtype_onnx_enable.changed or voxtype_model.changed
