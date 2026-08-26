@@ -4,6 +4,7 @@
     # - configure/nopasswd-sudo
     - configure/makepkg
     - configure/evoluent-verticalmouse
+    - configure/nautilus
     - yubikey/tools
     - yubikey/gpg
     - yubikey/fido2

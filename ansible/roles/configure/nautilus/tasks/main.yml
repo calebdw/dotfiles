@@ -1,0 +1,32 @@
+---
+# Nautilus dropped its own sort-directories-first in 43 and reads GTK's
+# instead -- `migrated-gtk-settings` in org.gnome.nautilus.preferences is that
+# one-time move having run, and there is no per-app key left to set. So this
+# is not only a Nautilus setting: gtk4 is what Nautilus and every GTK4 file
+# chooser read, and the unversioned schema is GTK3's, which is what an older
+# app's open/save dialog still uses. Both, or half the dialogs on the machine
+# sort the other way.
+#
+# Nothing here belongs in the repo as a file: dconf keeps these in a binary
+# database at ~/.config/dconf/user that `make dots` could not link.
+#
+# Not community.general.dconf, the obvious module for this. It imports psutil
+# to go hunting for a session bus, and psutil is not installed -- a package to
+# pull in for two booleans. gsettings comes with glib2, is already here, and
+# inherits the bus of the session the playbook is told to run from anyway.
+- name: 'query the file chooser sort order'
+  ansible.builtin.command: 'gsettings get {{ item }} sort-directories-first'
+  register: nautilus_sort_current
+  changed_when: false
+  loop:
+    - 'org.gtk.gtk4.Settings.FileChooser'
+    - 'org.gtk.Settings.FileChooser'
+
+# Looping over the results of the query, rather than the schemas again, is
+# what keeps the list in one place -- each result carries its own `item`.
+- name: 'sort directories before files'
+  ansible.builtin.command: 'gsettings set {{ item.item }} sort-directories-first true'
+  when: (item.stdout | trim) != 'true'
+  loop: '{{ nautilus_sort_current.results }}'
+  loop_control:
+    label: '{{ item.item }}'

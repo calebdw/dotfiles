@@ -22,6 +22,7 @@ Grouped by subject, referenced by path (`roles_path = ./roles`).
 | `configure/nopasswd-sudo` | permanent passwordless sudo (off by default) |
 | `configure/makepkg` | MAKEFLAGS, so AUR builds use every core |
 | `configure/evoluent-verticalmouse` | hwdb wheel-click fix |
+| `configure/nautilus` | GTK file chooser sorts directories before files |
 | `yubikey/tools` | ykman, touch detector, smartcard daemon |
 | `yubikey/gpg` | imports the public key, builds the card stubs |
 | `yubikey/fido2` | prompts you to enrol the key for sudo and polkit |
