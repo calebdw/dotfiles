@@ -10,6 +10,12 @@
     },
     "mcp": {},
     "model": "anthropic/claude-opus-5",
+    "permission": {
+        "external_directory": {
+            "~/**": "allow",
+            "/tmp/**": "allow"
+        }
+    },
     "plugin": ["opencode-with-claude@latest"],
     "provider": {
       "anthropic": {
