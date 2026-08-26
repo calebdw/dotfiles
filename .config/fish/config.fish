@@ -23,7 +23,7 @@ alias ll='ls -lhAF --group-directories-first'
 abbr -a a php artisan
 abbr -a s sail
 abbr -a sa sail artisan
-abbr -a nv nvim
+abbr -a n nvim
 abbr -a g git
 abbr -a b b4
 abbr -a j jj
