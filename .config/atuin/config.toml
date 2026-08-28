@@ -175,6 +175,7 @@
 ## This applies for new installs. Old installs will keep the old behaviour unless configured otherwise.
 enter_accept = true
 search_mode = "daemon-fuzzy"
+smart_sort = true
 
 ## Defaults to false. If enabled, when triggered after &&, || or |, Atuin will complete commands to chain rather than replace the current line.
 # command_chaining = false
