@@ -29,10 +29,23 @@ device = "default"
 sample_rate = 16000
 
 # Maximum recording duration in seconds (safety limit)
-max_duration_secs = 600
+#
+# HARD CAP: keep this under 400. Parakeet's exported ONNX has its relative
+# positional encoding table frozen at the NeMo default of 5000 encoder frames.
+# At 12.5 frames/sec (10ms hop, 8x subsampling) that is exactly 400.0s of
+# audio. Go past it and inference dies in the first attention layer with
+# "Attempting to broadcast an axis by a dimension other than 1. 1170 by 6170"
+# and the whole recording is lost -- there is no partial result and the audio
+# is not retained anywhere. Lost a 493s recording to this on 2026-08-27.
+# 360 leaves margin for the frame-count rounding.
+max_duration_secs = 360
 
-# Pause MPRIS media players during recording
-pause_media = true
+# Pause MPRIS media players during recording. Off because playerctl is not
+# installed, so this only logged "playerctl not found" on every recording.
+# Media pauses anyway, but not because of this: opening the Bluetooth mic
+# flips the headset from a2dp-sink to headset-head-unit, which destroys the
+# A2DP sink out from under the player.
+pause_media = false
 
 [audio.feedback]
 # Enable audio feedback sounds (beeps when recording starts/stops)
@@ -120,3 +133,12 @@ model = "parakeet-tdt-0.6b-v3-int8"
 # defaulting to tdt, which is what the -tdt- models want anyway. Set it
 # explicitly to keep the warning out of the log.
 model_type = "tdt"
+
+[meeting]
+enabled = true
+
+[meeting.diarization]
+enabled = false
+
+[meeting.audio]
+source = "mic"
