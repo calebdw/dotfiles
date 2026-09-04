@@ -1,8 +1,8 @@
 #:schema https://jj-vcs.github.io/jj/prerelease/config-schema.json
 
 [user]
-name = "Caleb White"
-email = "cdwhite3@pm.me"
+name = {{ .name | quote }}
+email = {{ .email | quote }}
 
 [aliases]
 fetch = { definition = ["git", "fetch", "--all-remotes"], doc = "Fetch changes from all git remotes" }

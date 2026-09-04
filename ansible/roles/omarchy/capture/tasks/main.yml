@@ -2,7 +2,7 @@
 # The capture paths are read out of .config/uwsm/env.d/capture rather than
 # restated here, so the repo stays the only place they are written down. This
 # is the same shell that uwsm sources at login, and `make dots` has already
-# linked the file (setup: all ansible), so a failure here means dots did not
+# applied the file (setup: all ansible), so a failure here means dots did not
 # run.
 #
 # They have to exist up front because omarchy-capture-screenrecording refuses

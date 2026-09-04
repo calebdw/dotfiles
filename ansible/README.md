@@ -4,13 +4,13 @@ Converges an Omarchy machine to this configuration. Omarchy owns the desktop;
 this playbook owns the toolchain.
 
 ```bash
+# bootstrap is in the repo README: chezmoi init --apply, then
 sudo pacman -S ansible
-make setup      # from the repo root: links dotfiles, then runs the playbook
-make ansible    # just the playbook
+make ansible    # from the repo root
 ```
 
 Run it from a terminal in your Hyprland session -- the `omarchy` roles end in
-desktop notifications that need the session bus. Dots are linked first so
+desktop notifications that need the session bus. Dots are applied first so
 `omarchy install ...` finds the configs already there and leaves them alone.
 
 ## Roles
@@ -55,18 +55,18 @@ run.
 | --- | --- | --- |
 | terminal | `~/.config/xdg-terminals.list` | `omarchy/terminal` installs; the list is derived |
 | agent | a one-word file, then `exec omarchy-agent` | `.config/omarchy/defaults/agent` |
-| editor | `~/.local/state/omarchy/defaults/editor` | `omarchy/editor` -- `make dots` only links `~/.config` |
+| editor | `~/.local/state/omarchy/defaults/editor` | `omarchy/editor` -- chezmoi only applies `~/.config` |
 | browser | all of `mimeapps.list`, via `xdg-settings` | `omarchy/browser` |
 | theme | templates, backgrounds, per-app setters | `omarchy/theme` |
 
-`cat >`, `printf >` and `>>` follow symlinks, so the file versions survive
-being set from the menus. `sed -i` does not -- hence no `omarchy font set`,
-and hence `make check`.
+chezmoi copies files rather than linking them, so `sed -i` mutates the home
+copy and leaves source intact. `make check` (`chezmoi status`) reports that
+drift. Still skip `omarchy font set`: the font belongs in the ghostty config.
 
 ## Conventions
 
-- Config lives in the repo and is linked by `make dots`; the play only points
-  at it. Systemd units are the exception, since `copy` can `register` a change
+- Config lives in `home/` and is applied by chezmoi; the play only points at
+  it. Systemd units are the exception, since `copy` can `register` a change
   and trigger `daemon-reload`.
 - Steps needing a human use `ansible.builtin.pause` with the exact command in
   the prompt, guarded by a check so re-runs stay quiet.

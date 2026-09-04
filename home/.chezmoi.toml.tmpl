@@ -1,0 +1,11 @@
+{{- $name := promptStringOnce . "name" "Full name" -}}
+{{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $workEmail := promptStringOnce . "work_email" "Work email (empty if none)" -}}
+
+sourceDir = {{ joinPath .chezmoi.homeDir "sources" "dotfiles" | quote }}
+workingTree = {{ joinPath .chezmoi.homeDir "sources" "dotfiles" | quote }}
+
+[data]
+    name = {{ $name | quote }}
+    email = {{ $email | quote }}
+    work_email = {{ $workEmail | quote }}

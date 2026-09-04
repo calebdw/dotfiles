@@ -1,49 +1,30 @@
 SHELL:=/bin/bash
 
-.PHONY: all setup dots scripts check clean ansible clean-links
+.PHONY: all setup dots check clean ansible
 
-all: dots scripts clean-links
+all: dots
 
 # Fresh machine: install Omarchy, clone this repo, run `make setup`.
-# Dots are linked before the playbook runs, so `omarchy install ...` finds the
+# Dots are applied before the playbook runs, so `omarchy install ...` finds the
 # configs already in place and leaves them alone.
 setup: all ansible
 
+# Source lives in this repo (`~/sources/dotfiles`), not ~/.local/share/chezmoi.
+# ~/.config/chezmoi/chezmoi.toml is created on first `chezmoi init` from
+# home/.chezmoi.toml.tmpl and is what later `chezmoi apply` reads.
 dots:
-	ln -sf $(PWD)/.editorconfig ~/
-	ln -sf $(PWD)/.latexmkrc ~/
-	ln -sf $(PWD)/.pg_format ~/
-	ln -sf $(PWD)/.yamlfmt.yml ~/
-	ln -sf $(PWD)/.config/opencode/AGENTS.md ~/.claude/CLAUDE.md
-	cp -asfv $(PWD)/.gnupg ~/
-	cp -asfv $(PWD)/.config ~/
-
-# ~/.local/bin, not ~/bin: nothing on this system puts ~/bin on PATH, so
-# scripts installed there (including the git-/jj- subcommands, which git and
-# jj can only find via PATH) were unreachable.
-scripts:
-	mkdir -p ~/.local/bin
-	cp -asfv $(PWD)/scripts/* ~/.local/bin/
+	chezmoi apply -S $(PWD)
 
 # Omarchy migrations, `omarchy font set` and `omarchy display text size`
-# rewrite config files with a plain `sed -i` (no --follow-symlinks), which
-# replaces the symlink with a regular file and quietly detaches it from this
-# repo. This reports any that have come loose so the change can be ported back
-# in deliberately rather than clobbered by the next `make dots`.
+# rewrite config files with a plain `sed -i`. chezmoi copies rather than
+# linking, so those writes land on the home copy; this reports the drift so
+# the change can be ported back with `chezmoi re-add` rather than clobbered
+# by the next apply.
 check:
-	@cd $(PWD)/.config && find . -type f -printf '%P\n' | while read -r f; do \
-		t="$$HOME/.config/$$f"; \
-		if [ -e "$$t" ] && [ ! -L "$$t" ]; then echo "detached: $$t"; fi; \
-	done
-
-# Only broken links that this repo made. Without the -lname filter this
-# deletes every dangling symlink in $HOME five levels deep, including ones
-# that have nothing to do with these dotfiles.
-clean-links:
-	find ~ -maxdepth 5 -xtype l -lname "$(PWD)/*" -delete
+	chezmoi status -S $(PWD)
 
 clean:
-	find ~ -type l -lname "$(PWD)/*" -delete
+	find ~ -maxdepth 5 -type l -lname "$(PWD)/*" -delete
 
 # Omarchy's own toggle: writes a NOPASSWD drop-in and arms a systemd timer to
 # delete it 15 minutes later. Two things need it. ansible's own `become`,

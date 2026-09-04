@@ -16,6 +16,7 @@ packages_pacman:
   - jujutsu
   - lazyjj
   - b4 # send patches to mailing lists
+  - chezmoi
 
   # rust
   - cargo-nextest

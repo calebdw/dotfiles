@@ -1,6 +1,6 @@
 ---
 # mise itself comes with Omarchy. The tool list is not here on purpose -- it
-# is .config/mise/config.toml in this repo, linked by `make dots`, so `mise
+# is home/dot_config/mise/config.toml in this repo, applied by chezmoi, so `mise
 # use -g` on the CLI and the playbook cannot disagree about it.
 - name: 'install mise tools'
   ansible.builtin.command: 'mise install'

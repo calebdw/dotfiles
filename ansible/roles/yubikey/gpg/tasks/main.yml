@@ -2,14 +2,14 @@
 # Only the public key is here -- the secret keys live on the YubiKey and
 # cannot be exported. Setting up a new machine is: import the public key,
 # trust it, and let gpg build the card stubs that point at the hardware.
-# .gnupg/gpg-agent.conf and scdaemon.conf are linked by `make dots`.
+# .gnupg/gpg-agent.conf and scdaemon.conf are applied by chezmoi.
 
 - name: 'the key'
   ansible.builtin.set_fact:
     gpg_fingerprint: '99981A649E1CA829A335E77493EDE5A0C788BC38'
 
-# `make dots` creates ~/.gnupg with `cp -as`, which leaves it 0755, and gpg
-# warns "unsafe permissions on homedir" on every invocation.
+# chezmoi's private_dot_gnupg is 0700, but re-assert it here so a homedir
+# created some other way still does not warn "unsafe permissions on homedir".
 - name: 'lock down the gnupg homedir'
   ansible.builtin.file:
     path: "{{ ansible_facts['env']['HOME'] }}/.gnupg"

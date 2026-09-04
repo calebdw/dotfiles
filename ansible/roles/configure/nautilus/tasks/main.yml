@@ -8,7 +8,7 @@
 # sort the other way.
 #
 # Nothing here belongs in the repo as a file: dconf keeps these in a binary
-# database at ~/.config/dconf/user that `make dots` could not link.
+# database at ~/.config/dconf/user that chezmoi should not manage.
 #
 # Not community.general.dconf, the obvious module for this. It imports psutil
 # to go hunting for a session bus, and psutil is not installed -- a package to

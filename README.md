@@ -6,26 +6,39 @@
 
 🏡 is where the 💚 is.
 
-Configs live here and are symlinked into place. [Omarchy](https://omarchy.org)
+Configs live in `home/` and are applied by [chezmoi](https://www.chezmoi.io)
+into `$HOME` as regular files, not symlinks. [Omarchy](https://omarchy.org)
 owns the desktop; the Ansible playbook owns the toolchain.
+
+The chezmoi source directory is this repo (`~/sources/dotfiles`), not
+`~/.local/share/chezmoi`. `.chezmoiroot` points chezmoi at `home/` so ansible,
+the Makefile, and this README stay at the repo root.
 
 ## Fresh machine
 
-Install Omarchy, then:
+Install Omarchy, then from a terminal in your Hyprland session:
 
 ```bash
+# -b puts the binary in ~/.local/bin, not ./bin. --source keeps the clone in
+# ~/sources/dotfiles, not ~/.local/share/chezmoi. https, not ssh: the key is
+# on a YubiKey and is not set up yet. git config rewrites pushes to ssh once
+# it is linked. It will prompt for the email that git/jj templates use.
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin" \
+  init --apply --source "$HOME/sources/dotfiles" calebdw
+
 sudo pacman -S ansible
-# https, not ssh: the key is on a YubiKey and is not set up yet. git config
-# rewrites pushes to ssh once it is linked.
-git clone https://github.com/calebdw/dotfiles.git ~/sources/dotfiles
 cd ~/sources/dotfiles
-make setup
+make ansible
 ```
 
-Run it from a terminal in your Hyprland session. Two expected interruptions:
-`omarchy-sudo-passwordless` wants a confirmation and one sudo, and if no FIDO2
-key is enrolled the play stops and tells you to run
-`omarchy setup security fido2` in another terminal.
+`init` writes `~/.config/chezmoi/chezmoi.toml` from `home/.chezmoi.toml.tmpl`
+(`sourceDir` / `workingTree`, so later `chezmoi apply` does not need `--source`).
+`--apply` puts the configs in place before the playbook, so `omarchy install ...`
+finds them and leaves them alone.
+
+Two expected interruptions during `make ansible`: `omarchy-sudo-passwordless`
+wants a confirmation and one sudo, and if no FIDO2 key is enrolled the play
+stops and tells you to run `omarchy setup security fido2` in another terminal.
 
 Then, by hand:
 
@@ -40,7 +53,9 @@ credential -- the private key wrapped with a secret that never leaves the
 YubiKey. The device keeps no copy, so `ssh-keygen -K` cannot recover it and
 the copies you hold are the only ones that exist.
 
-Symlinks point at wherever the repo is; move it and re-run `make dots`.
+Edit files in `home/` (chezmoi names: `dot_config` is `~/.config`,
+`private_dot_gnupg` is `~/.gnupg`), then `chezmoi apply`. `chezmoi edit --apply
+~/.config/nvim/init.lua` does both.
 
 ## After the GPG key changes
 
@@ -67,18 +82,16 @@ key has not changed.
 
 | Target | Does |
 |---|---|
-| `make` | `dots`, `scripts`, `clean-links` |
+| `make` | `chezmoi apply` |
 | `make setup` | the above, then the playbook |
-| `make dots` | symlinks `.config`, `.gnupg` and the top-level dotfiles into `$HOME` |
-| `make scripts` | symlinks `scripts/` into `~/.local/bin` |
+| `make dots` | `chezmoi apply` from this repo |
 | `make ansible` | just the playbook |
-| `make check` | reports configs that have come unlinked |
-| `make clean-links` | removes this repo's broken symlinks |
-| `make clean` | removes all of this repo's symlinks |
+| `make check` | `chezmoi status` — home files that drifted from source |
+| `make clean` | removes leftover symlinks from the old linker |
 
 `make check` exists because some Omarchy commands rewrite configs with a plain
-`sed -i`, which replaces the symlink with a regular file and quietly detaches
-it -- the next `make dots` would then clobber the change. Port it back by hand
-before re-linking.
+`sed -i`. chezmoi copies files, so that no longer detaches a symlink; it
+leaves the home copy different from source. Port the change back with
+`chezmoi re-add <file>` before the next apply overwrites it.
 
 See [ansible/README.md](ansible/README.md) for the roles.

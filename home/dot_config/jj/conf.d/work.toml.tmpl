@@ -1,0 +1,6 @@
+{{- if .work_email -}}
+--when.repositories = ["~/work"]
+
+[user]
+email = {{ .work_email | quote }}
+{{ end -}}

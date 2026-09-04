@@ -1,0 +1,2 @@
+# Target paths. aerc accounts stay machine-local.
+.config/aerc/accounts.conf

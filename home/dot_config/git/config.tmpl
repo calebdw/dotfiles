@@ -1,8 +1,10 @@
 [user]
-    name = "Caleb White"
-    email = cdwhite3@pm.me
+    name = {{ .name | quote }}
+    email = {{ .email | quote }}
+{{- if .work_email }}
 [includeIf "gitdir:~/work/"]
     path = ~/.gitconfig.work
+{{- end }}
 [alias]
     br = branch -av
     brdel = branch -D
@@ -91,7 +93,7 @@
     smtpServer = 127.0.0.1
     smtpServerPort = 1025
     smtpEncryption = ssl
-    smtpUser = cdwhite3@pm.me
+    smtpUser = {{ .email | quote }}
 [tag]
     gpgSign = true
     sort = -version:refname

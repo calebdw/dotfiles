@@ -1,7 +1,7 @@
 ---
 # Off by default in playbooks/local.yml: Omarchy has its own clipboard
 # history, and this duplicates it. Kept because the fzf browser
-# (scripts/cliphist-fzf, `ch` in fish) is nicer than the menu.
+# (~/.local/bin/cliphist-fzf, `ch` in fish) is nicer than the menu.
 #
 # extra/cliphist now, not `go install go.senan.xyz/cliphist@latest` as the
 # Ubuntu-era role did -- which is also why nothing needs a go toolchain.
@@ -10,7 +10,7 @@
   community.general.pacman:
     name:
       - cliphist
-      - chafa # image previews in scripts/cliphist-fzf
+      - chafa # image previews in cliphist-fzf
     state: present
 
 # cliphist ships no unit: it is a store command that wl-paste pipes into, so
