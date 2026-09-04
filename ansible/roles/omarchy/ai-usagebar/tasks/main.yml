@@ -1,0 +1,34 @@
+---
+- name: 'install AI usage bar'
+  ansible.builtin.include_role:
+    name: software/packages
+    tasks_from: aur
+  vars:
+    aur_packages: ['ai-usagebar-bin']
+
+- name: 'list Omarchy plugins'
+  ansible.builtin.command: 'omarchy plugin list --json'
+  register: omarchy_plugins
+  changed_when: false
+
+- name: 'install AI usage bar plugin'
+  ansible.builtin.command: 'omarchy plugin add https://github.com/akitaonrails/ai-usagebar.git --enable --yes'
+  when: "'akitaonrails.ai-usagebar' not in (omarchy_plugins.stdout | from_json | map(attribute='id'))"
+
+- name: 'enable AI usage bar plugin'
+  ansible.builtin.command: 'omarchy plugin enable akitaonrails.ai-usagebar'
+  when: >-
+    omarchy_plugins.stdout | from_json
+    | selectattr('id', 'equalto', 'akitaonrails.ai-usagebar')
+    | rejectattr('enabled')
+    | list
+    | length > 0
+
+- name: 'disable stock agents widget'
+  ansible.builtin.command: 'omarchy plugin disable omarchy.agents'
+  when: >-
+    omarchy_plugins.stdout | from_json
+    | selectattr('id', 'equalto', 'omarchy.agents')
+    | selectattr('enabled')
+    | list
+    | length > 0

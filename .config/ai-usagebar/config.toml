@@ -1,0 +1,11 @@
+[ui]
+primary = "anthropic"
+
+[zai]
+enabled = false
+
+[openrouter]
+enabled = false
+
+[supergrok]
+enabled = true

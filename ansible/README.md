@@ -31,6 +31,7 @@ Grouped by subject, referenced by path (`roles_path = ./roles`).
 | `omarchy/editor` | default editor |
 | `omarchy/theme` | theme |
 | `omarchy/capture` | screenshot and screen recording directories |
+| `omarchy/ai-usagebar` | multi-provider usage widget, with SuperGrok enabled |
 | `runtimes/mise` | whatever `.config/mise/config.toml` lists |
 | `runtimes/php` | packages, php.ini extensions, composer globals |
 | `runtimes/rust` | rustup via Omarchy's installer |
