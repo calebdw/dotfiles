@@ -53,17 +53,16 @@
               | regex_search('(?m)^model\s*=\s*"(parakeet[^"]+)"', '\1'))[0] }}
 
     # `voxtype setup onnx --enable` only swaps the binary; it does not fetch a
-    # model, and plain `--download` ignores the configured engine and checks the
-    # Whisper model instead. So the name has to be passed explicitly or a fresh
-    # machine ends up with the ONNX binary and nothing to run on it.
+    # model, and plain `--download` still does not follow the configured engine.
+    # So the name has to be passed explicitly or a fresh machine ends up with
+    # the ONNX binary and nothing to run on it. As of 1.0, download no longer
+    # selects the model (`--activate` is required for that); we omit it so this
+    # cannot rewrite [engine] / [parakeet] in config.toml.
     #
     # Deliberately not become: as root this writes to /root/.local/share and
     # /root/.config and the daemon never sees it -- voxtype prints that warning
-    # itself. `creates` keeps it from re-running, which matters because the
-    # download also rewrites [engine] and [parakeet] in config.toml. That write
-    # is in-place, so it follows this repo's symlink instead of replacing it
-    # (the configure TUI does the opposite -- tempfile + rename, which detaches
-    # the file and is what `make check` is there to catch).
+    # itself. `voxtype config set` and `voxtype configure` both tempfile+rename,
+    # which detaches this repo's symlink -- `make check` is there to catch that.
     - name: 'download the configured parakeet model'
       ansible.builtin.command:
         cmd: "voxtype setup --download --model {{ voxtype_parakeet_model }}"

@@ -40,11 +40,10 @@ sample_rate = 16000
 # 360 leaves margin for the frame-count rounding.
 max_duration_secs = 360
 
-# Pause MPRIS media players during recording. Off because playerctl is not
-# installed, so this only logged "playerctl not found" on every recording.
-# Media pauses anyway, but not because of this: opening the Bluetooth mic
-# flips the headset from a2dp-sink to headset-head-unit, which destroys the
-# A2DP sink out from under the player.
+# Pause MPRIS media players during recording. 1.0 talks D-Bus directly, so
+# playerctl is no longer required. Still off: opening the Bluetooth mic
+# flips the headset from a2dp-sink to headset-head-unit, which already
+# destroys the A2DP sink out from under the player.
 pause_media = false
 
 [audio.feedback]
