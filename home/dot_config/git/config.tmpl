@@ -3,7 +3,7 @@
     email = {{ .email | quote }}
 {{- if .work_email }}
 [includeIf "gitdir:~/work/"]
-    path = ~/.gitconfig.work
+    path = config.work
 {{- end }}
 [alias]
     br = branch -av
