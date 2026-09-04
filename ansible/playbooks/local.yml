@@ -16,6 +16,11 @@
     - omarchy/voxtype
     - omarchy/ai-usagebar
     - omarchy/vpn
+    - role: omarchy/plugins
+      omarchy_plugins:
+        - { id: akitaonrails.ai-usagebar, url: 'https://github.com/akitaonrails/ai-usagebar.git' }
+        - { id: quickshell.spotify, url: 'https://github.com/stappmus/Omarchy-Spotify.git' }
+        - { id: jkoestinger.vpn, url: 'https://github.com/jkoestinger/omarchy-vpn.git' }
     - runtimes/mise
     - runtimes/php
     - runtimes/rust

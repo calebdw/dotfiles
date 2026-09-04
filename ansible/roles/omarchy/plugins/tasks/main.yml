@@ -1,0 +1,24 @@
+---
+- name: 'list Omarchy plugins'
+  ansible.builtin.command: 'omarchy plugin list --json'
+  register: installed_omarchy_plugins
+  changed_when: false
+
+- name: 'install missing Omarchy plugins'
+  ansible.builtin.command: 'omarchy plugin add {{ item.url }} --enable --yes'
+  loop: '{{ omarchy_plugins }}'
+  loop_control:
+    label: '{{ item.id }}'
+  when: "item.id not in (installed_omarchy_plugins.stdout | from_json | map(attribute='id'))"
+
+- name: 'enable installed Omarchy plugins'
+  ansible.builtin.command: 'omarchy plugin enable {{ item.id }}'
+  loop: '{{ omarchy_plugins }}'
+  loop_control:
+    label: '{{ item.id }}'
+  when: >-
+    installed_omarchy_plugins.stdout | from_json
+    | selectattr('id', 'equalto', item.id)
+    | rejectattr('enabled')
+    | list
+    | length > 0
