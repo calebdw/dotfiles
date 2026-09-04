@@ -32,6 +32,7 @@ Grouped by subject, referenced by path (`roles_path = ./roles`).
 | `omarchy/theme` | theme |
 | `omarchy/capture` | screenshot and screen recording directories |
 | `omarchy/ai-usagebar` | multi-provider usage widget, with SuperGrok enabled |
+| `omarchy/vpn` | upstream VPN widget with NetworkManager OpenConnect support |
 | `runtimes/mise` | whatever `.config/mise/config.toml` lists |
 | `runtimes/php` | packages, php.ini extensions, composer globals |
 | `runtimes/rust` | rustup via Omarchy's installer |

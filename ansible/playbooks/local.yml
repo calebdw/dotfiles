@@ -15,6 +15,7 @@
     - omarchy/capture
     - omarchy/voxtype
     - omarchy/ai-usagebar
+    - omarchy/vpn
     - runtimes/mise
     - runtimes/php
     - runtimes/rust

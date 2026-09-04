@@ -1,0 +1,24 @@
+---
+- name: 'install NetworkManager OpenConnect support'
+  become: true
+  community.general.pacman:
+    name: networkmanager-openconnect
+    state: present
+
+- name: 'list Omarchy plugins'
+  ansible.builtin.command: 'omarchy plugin list --json'
+  register: omarchy_plugins
+  changed_when: false
+
+- name: 'install VPN plugin'
+  ansible.builtin.command: 'omarchy plugin add https://github.com/jkoestinger/omarchy-vpn.git --enable --yes'
+  when: "'jkoestinger.vpn' not in (omarchy_plugins.stdout | from_json | map(attribute='id'))"
+
+- name: 'enable VPN plugin'
+  ansible.builtin.command: 'omarchy plugin enable jkoestinger.vpn'
+  when: >-
+    omarchy_plugins.stdout | from_json
+    | selectattr('id', 'equalto', 'jkoestinger.vpn')
+    | rejectattr('enabled')
+    | list
+    | length > 0
