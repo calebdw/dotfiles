@@ -22,3 +22,29 @@
     | rejectattr('enabled')
     | list
     | length > 0
+
+- name: 'disable replaced Omarchy plugins'
+  ansible.builtin.command: 'omarchy plugin disable {{ item }}'
+  loop: '{{ omarchy_disabled_plugins | default([]) }}'
+  when: >-
+    installed_omarchy_plugins.stdout | from_json
+    | selectattr('id', 'equalto', item)
+    | selectattr('enabled')
+    | list
+    | length > 0
+
+- name: 'read Omarchy shell config'
+  ansible.builtin.slurp:
+    src: "{{ ansible_facts['env']['HOME'] }}/.config/omarchy/shell.json"
+  register: omarchy_shell_config
+
+- name: 'place Omarchy bar widgets'
+  ansible.builtin.command: 'omarchy bar move {{ item.id }} --after {{ item.after }}'
+  loop: '{{ omarchy_plugins }}'
+  loop_control:
+    label: '{{ item.id }}'
+  vars:
+    right_ids: "{{ (omarchy_shell_config.content | b64decode | from_json).bar.layout.right | map(attribute='id') | list }}"
+  when:
+    - item.after is defined
+    - (item.after ~ ',' ~ item.id) not in (right_ids | join(','))

@@ -21,6 +21,11 @@
         - { id: akitaonrails.ai-usagebar, url: 'https://github.com/akitaonrails/ai-usagebar.git' }
         - { id: quickshell.spotify, url: 'https://github.com/stappmus/Omarchy-Spotify.git' }
         - { id: jkoestinger.vpn, url: 'https://github.com/jkoestinger/omarchy-vpn.git' }
+        - { id: crmne.hyprmoncfg, url: 'https://github.com/crmne/omarchy-hyprmoncfg.git', after: omarchy.audio }
+        - { id: omaplug, url: 'https://github.com/fross100/omaplug.git' }
+        - { id: io.github.grichard99.omaproton-vpn, url: 'https://github.com/grichard99/omaproton-vpn.git' }
+      omarchy_disabled_plugins:
+        - omarchy.monitor
     - runtimes/mise
     - runtimes/php
     - runtimes/rust
