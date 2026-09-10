@@ -6,10 +6,19 @@
   vars:
     aur_packages: ['ai-usagebar-bin']
 
+# The stock Agents widget and this one occupy the same slot. Disable it here
+# rather than in omarchy/plugins so commenting this role out leaves Agents
+# alone. List plugins in this role: the plugins role's register is not
+# visible here (private_role_vars), and that role runs after this one.
+- name: 'list Omarchy plugins'
+  ansible.builtin.command: 'omarchy plugin list --json'
+  register: installed_omarchy_plugins
+  changed_when: false
+
 - name: 'disable stock agents widget'
   ansible.builtin.command: 'omarchy plugin disable omarchy.agents'
   when: >-
-    omarchy_plugins.stdout | from_json
+    installed_omarchy_plugins.stdout | from_json
     | selectattr('id', 'equalto', 'omarchy.agents')
     | selectattr('enabled')
     | list
