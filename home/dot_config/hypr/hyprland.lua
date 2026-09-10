@@ -43,3 +43,6 @@ o.window("^(nm-openconnect-auth-dialog)$", { float = true, center = true })
 -- Floated with no size rule on purpose: GTK asks for the size the form
 -- actually needs, and a dialog is the one case where that is the right answer.
 o.window({ class = "^(xiphos)$", title = "^(Copy/Export Passage)$" }, { float = true, center = true })
+
+-- Added by hyprmoncfg: its generated monitor rules load last, so nothing before this can override the applied layout.
+do local path = os.getenv("HOME") .. "/.config/hypr/hyprmoncfg-monitors.lua"; local file = io.open(path, "r"); if file then file:close(); dofile(path) end end
