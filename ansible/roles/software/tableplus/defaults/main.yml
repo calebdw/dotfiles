@@ -1,0 +1,6 @@
+---
+# TablePlus only keeps the current build on the pool. The path differs by
+# arch; the filename is discovered at runtime so a yanked version cannot
+# 404 the play the way the AUR package just did.
+tableplus_deb_arch: "{{ 'amd64' if ansible_facts['architecture'] == 'x86_64' else 'arm64' }}"
+tableplus_pool: "{{ 'https://deb.tableplus.com/debian/24/pool/main/t/tableplus/' if ansible_facts['architecture'] == 'x86_64' else 'https://deb.tableplus.com/debian/24-arm/pool/main/t/tableplus/' }}"

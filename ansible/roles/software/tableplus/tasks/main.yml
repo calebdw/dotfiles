@@ -1,0 +1,56 @@
+---
+# The AUR package pins a TablePlus debian deb. TablePlus only keeps the
+# current build on the pool, so a lag of one release 404s the fetch and the
+# AUR package cannot be built. Install from the pool ourselves.
+- name: 'install tableplus runtime dependencies'
+  become: true
+  community.general.pacman:
+    name: ['gtksourceview3', 'libgee', 'gnome-keyring']
+    state: present
+
+- name: 'check for tableplus'
+  ansible.builtin.stat:
+    path: /opt/tableplus/tableplus
+  register: tableplus_bin
+
+- name: 'install tableplus from the vendor pool'
+  when: not tableplus_bin.stat.exists
+  block:
+    - name: 'discover the current tableplus deb'
+      ansible.builtin.uri:
+        url: '{{ tableplus_pool }}'
+        return_content: true
+      register: tableplus_index
+
+    - name: 'set the tableplus deb filename'
+      ansible.builtin.set_fact:
+        tableplus_deb: "{{ tableplus_index.content | regex_search('tableplus_[0-9.]+_' ~ tableplus_deb_arch ~ '\\.deb') }}"
+
+    - name: 'fail if the pool listing has no deb'
+      ansible.builtin.assert:
+        that: tableplus_deb | default('') | length > 0
+        fail_msg: 'no tableplus deb found at {{ tableplus_pool }}'
+
+    - name: 'install tableplus'
+      become: true
+      ansible.builtin.shell:
+        cmd: |
+          set -euo pipefail
+          work=$(mktemp -d)
+          trap 'rm -rf "$work"' EXIT
+          curl -fsSL -o "$work/tableplus.deb" "{{ tableplus_pool }}{{ tableplus_deb }}"
+          bsdtar -xOf "$work/tableplus.deb" data.tar.zst | bsdtar -x -C "$work"
+          install -d /opt/tableplus /usr/local/bin
+          install -Dm755 "$work/opt/tableplus/tableplus" /opt/tableplus/tableplus
+          cp -a "$work/opt/tableplus/resource" /opt/tableplus/
+          printf '#!/bin/sh\nexec /opt/tableplus/tableplus "$@"\n' > /usr/local/bin/tableplus
+          chmod 755 /usr/local/bin/tableplus
+        executable: /bin/bash
+        creates: /opt/tableplus/tableplus
+
+- name: 'install tableplus desktop entry'
+  become: true
+  ansible.builtin.copy:
+    src: tableplus.desktop
+    dest: /usr/share/applications/tableplus.desktop
+    mode: '0644'

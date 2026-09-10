@@ -44,7 +44,6 @@ packages_pacman:
 
 packages_aur:
   - phpantom_lsp
-  - tableplus
   # Both halves named explicitly, server first. The pgadmin4 meta package
   # would build server + desktop + web from source and drag in apache for a
   # web deployment you do not use -- but -desktop-bin alone is not enough

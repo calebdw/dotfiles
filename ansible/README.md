@@ -39,6 +39,7 @@ Grouped by subject, referenced by path (`roles_path = ./roles`).
 | `runtimes/rust` | rustup via Omarchy's installer |
 | `software/packages` | packages that need no configuring |
 | `software/davmail` | package, user unit, enablement |
+| `software/tableplus` | current vendor deb; AUR pins a yanked build |
 | `software/tuitube` | vendor installer |
 | `software/xiphos` | package, sword modules, one-shot settings seed |
 
