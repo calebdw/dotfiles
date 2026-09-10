@@ -1,2 +1,6 @@
 # Target paths. aerc accounts stay machine-local.
 .config/aerc/accounts.conf
+
+# Xiphos rewrites this on every launch (current verse, pane sizes, accumulating
+# locale tags). Durable prefs are seeded once by ansible/roles/software/xiphos.
+.config/xiphos/**

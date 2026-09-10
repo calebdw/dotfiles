@@ -58,3 +58,22 @@
   loop: '{{ xiphos_modules | dict2items }}'
   loop_control:
     label: '{{ item.key }}'
+
+# settings.xml is not in chezmoi. Xiphos rewrites it on every launch -- current
+# verse, pane sizes, and a growing pile of empty <locale/> / <special> tags --
+# so tracking the live file just produces a dirty `make check` after any use.
+# lineinfile / the xml module cannot converge it either: after a few sessions
+# the file is not well-formed. Seed the durable prefs once; after that Xiphos
+# owns the file.
+- name: 'ensure the xiphos config directory exists'
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/xiphos"
+    state: directory
+    mode: '0755'
+
+- name: 'seed xiphos settings if missing'
+  ansible.builtin.template:
+    src: settings.xml.j2
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/xiphos/settings.xml"
+    mode: '0644'
+    force: false

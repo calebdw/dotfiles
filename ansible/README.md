@@ -40,6 +40,7 @@ Grouped by subject, referenced by path (`roles_path = ./roles`).
 | `software/packages` | packages that need no configuring |
 | `software/davmail` | package, user unit, enablement |
 | `software/tuitube` | vendor installer |
+| `software/xiphos` | package, sword modules, one-shot settings seed |
 
 One role, one thing, each commentable out of the play on its own. Whatever
 installs something also configures and enables it -- there is no role that
@@ -68,7 +69,8 @@ drift. Still skip `omarchy font set`: the font belongs in the ghostty config.
 
 - Config lives in `home/` and is applied by chezmoi; the play only points at
   it. Systemd units are the exception, since `copy` can `register` a change
-  and trigger `daemon-reload`.
+  and trigger `daemon-reload`. Xiphos `settings.xml` is the other: the app
+  rewrites it on every launch, so the role seeds it once and leaves it alone.
 - Steps needing a human use `ansible.builtin.pause` with the exact command in
   the prompt, guarded by a check so re-runs stay quiet.
 - Every root task uses `become: true`. `make ansible` runs

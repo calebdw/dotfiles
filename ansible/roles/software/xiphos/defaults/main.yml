@@ -17,6 +17,10 @@ xiphos_modules:
   # dictionary.
   Webster1828: CrossWire
   Webster1913: CrossWire
+  # Strong's numbers: the KJV module above is the Strong's edition, and the
+  # lexicon pane is pointed at these in the settings seed.
+  StrongsGreek: CrossWire
+  StrongsHebrew: CrossWire
 
 # installmgr will not touch the network without this, and this is the whole
 # flag -- there is no shorter spelling and no config setting that replaces it.
