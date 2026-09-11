@@ -38,6 +38,7 @@ Grouped by subject, referenced by path (`roles_path = ./roles`).
 | `runtimes/php` | packages, php.ini extensions, composer globals |
 | `runtimes/rust` | rustup via Omarchy's installer |
 | `software/packages` | packages that need no configuring |
+| `software/protonmail-bridge` | Qt GUI, cert trust, aerc seed; login is a pause; headless unit stays off |
 | `software/davmail` | package, user unit, enablement |
 | `software/tableplus` | current vendor deb; AUR pins a yanked build |
 | `software/tuitube` | vendor installer |

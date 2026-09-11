@@ -1,0 +1,16 @@
+# Proton Mail Bridge. IMAP/SMTP passwords live in the secret service
+# (`keyring get proton-imap $USER`), not here. Bridge defaults to STARTTLS;
+# aerc and git send-email both want SSL, so the first-run CLI switches the
+# listeners. Trusting the self-signed cert is the other first-run step --
+# see ansible/roles/software/protonmail-bridge.
+[Personal]
+source = imaps://{{ .email | replace "@" "%40" }}@127.0.0.1:1143
+source-cred-cmd = keyring get proton-imap $USER
+outgoing = smtps://{{ .email | replace "@" "%40" }}@127.0.0.1:1025
+outgoing-cred-cmd = keyring get proton-smtp $USER
+default = INBOX
+from = {{ .name }} <{{ .email }}>
+cache-headers = true
+check-mail = 1m
+copy-to = Sent
+folders-sort = INBOX, Drafts, Sent, Starred, Archive, Spam, Trash

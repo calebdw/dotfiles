@@ -30,6 +30,7 @@
     - runtimes/php
     - runtimes/rust
     - software/packages
+    - software/protonmail-bridge
     # - software/davmail  # not in use at the moment
     - software/tableplus
     - software/tuitube

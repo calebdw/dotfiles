@@ -1,0 +1,4 @@
+-- Extra autostart processes.
+-- The Qt GUI is the long-running Bridge process (tray + IMAP/SMTP). It
+-- shares a lock with protonmail-bridge.service, so that unit stays off.
+-- o.launch_on_start("protonmail-bridge")

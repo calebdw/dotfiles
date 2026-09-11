@@ -1,0 +1,106 @@
+---
+# Proton Mail Bridge exposes local IMAP/SMTP for a paid Proton account.
+# aerc talks to 127.0.0.1; the bridge password lives in the secret service,
+# not in accounts.conf. Login, switching the listeners to SSL, exporting the
+# TLS cert, and storing the password cannot be automated -- the CLI blocks
+# for the account password and a 2FA touch -- so those stay a pause, same
+# pattern as yubikey/fido2.
+#
+# The Qt GUI is the long-running process (tray + IMAP/SMTP), same as on
+# PopOS. It shares a lock with the --noninteractive user unit that ships
+# with -core, so that unit stays disabled. Autostart is hypr/autostart.lua.
+# aerc's account file is seeded once from the chezmoi example and then
+# left machine-local, matching .chezmoiignore. gnome-keyring is an Omarchy
+# dep and already the Secret Service Bridge uses; python-keyring comes in
+# with yubikey-manager. Neither belongs here.
+- name: 'install proton mail bridge'
+  become: true
+  community.general.pacman:
+    name: protonmail-bridge
+    state: present
+
+- name: 'check for a logged-in bridge vault'
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/protonmail/bridge-v3/vault.enc"
+  register: proton_vault
+
+- name: 'log in to proton mail bridge by hand'
+  ansible.builtin.pause:
+    prompt: |
+
+      Proton Mail Bridge has no account yet.
+
+      Open Proton Mail Bridge from the launcher (or `protonmail-bridge`).
+      Log in, set IMAP and SMTP security to SSL (matching aerc's
+      imaps/smtps and git sendemail.smtpEncryption), copy the bridge
+      password from the account settings, and export the TLS cert to:
+
+          {{ ansible_facts['env']['HOME'] }}/.config/protonmail/bridge-v3
+
+      Then store the bridge password (not the Proton account password):
+
+          keyring set proton-imap "$USER"
+          keyring set proton-smtp "$USER"
+
+      Come back here and press Enter to carry on, or Ctrl-C then A to
+      abandon the run.
+  when: not proton_vault.stat.exists
+
+- name: 're-check for a logged-in bridge vault'
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/protonmail/bridge-v3/vault.enc"
+  register: proton_vault
+
+- name: 'check for the exported bridge TLS certificate'
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/protonmail/bridge-v3/cert.pem"
+  register: proton_cert
+
+- name: 'install the bridge cert as a trust anchor'
+  become: true
+  ansible.builtin.copy:
+    src: "{{ ansible_facts['env']['HOME'] }}/.config/protonmail/bridge-v3/cert.pem"
+    dest: /etc/ca-certificates/trust-source/anchors/protonmail-bridge.pem
+    mode: '0644'
+    remote_src: true
+  register: proton_anchor
+  when: proton_cert.stat.exists
+
+- name: 'rebuild the CA trust store'
+  become: true
+  ansible.builtin.command: update-ca-trust
+  when: proton_anchor.changed | default(false)
+
+- name: 'check for aerc accounts.conf'
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/aerc/accounts.conf"
+  register: aerc_accounts
+
+- name: 'check for the aerc accounts example'
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/aerc/accounts.conf.example"
+  register: aerc_accounts_example
+
+- name: 'fail if aerc accounts example is missing'
+  ansible.builtin.assert:
+    that: aerc_accounts_example.stat.exists
+    fail_msg: 'run chezmoi apply first so ~/.config/aerc/accounts.conf.example is in place'
+  when: not aerc_accounts.stat.exists
+
+- name: 'seed aerc accounts.conf if missing'
+  ansible.builtin.copy:
+    src: "{{ ansible_facts['env']['HOME'] }}/.config/aerc/accounts.conf.example"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/aerc/accounts.conf"
+    mode: '0600'
+    force: false
+    remote_src: true
+  when: not aerc_accounts.stat.exists
+
+# The GUI and this unit cannot run at once. Leave it installed but off.
+- name: 'disable the headless bridge user unit'
+  ansible.builtin.systemd_service:
+    name: protonmail-bridge
+    scope: user
+    enabled: false
+    state: stopped
+    daemon_reload: true
