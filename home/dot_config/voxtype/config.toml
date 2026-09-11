@@ -140,4 +140,4 @@ enabled = true
 enabled = false
 
 [meeting.audio]
-source = "mic"
+loopback_device = "disabled"
