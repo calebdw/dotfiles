@@ -1,0 +1,5 @@
+# OpenSSH FIDO notify_start execs SSH_ASKPASS (compiled default
+# /usr/lib/ssh/ssh-askpass, which is not installed). true swallows that
+# error; never keeps PIN prompts on the TTY.
+export SSH_ASKPASS=/usr/bin/true
+export SSH_ASKPASS_REQUIRE=never
