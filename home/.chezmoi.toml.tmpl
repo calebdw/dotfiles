@@ -5,6 +5,11 @@
 sourceDir = {{ joinPath .chezmoi.homeDir "sources" "dotfiles" | quote }}
 workingTree = {{ joinPath .chezmoi.homeDir "sources" "dotfiles" | quote }}
 
+encryption = "gpg"
+
+[gpg]
+    recipient = {{ $email | quote }}
+
 [data]
     name = {{ $name | quote }}
     email = {{ $email | quote }}

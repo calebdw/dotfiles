@@ -1,9 +1,9 @@
 ---
-# Only the public key is here -- the secret keys live on the YubiKey and
-# cannot be exported. Setting up a new machine is: import the public key,
-# trust it, and let gpg build the card stubs that point at the hardware.
-# .gnupg/gpg-agent.conf and scdaemon.conf are applied by chezmoi.
-
+# The secret keys live on the YubiKey and cannot be exported. The public key
+# is fetched from the URL stored on the card. Setting up a new machine is:
+# fetch that key, trust it, and let gpg build the card stubs that point at
+# the hardware. .gnupg/gpg-agent.conf and scdaemon.conf are applied by
+# chezmoi.
 - name: 'the key'
   ansible.builtin.set_fact:
     gpg_fingerprint: '99981A649E1CA829A335E77493EDE5A0C788BC38'
@@ -16,25 +16,8 @@
     state: directory
     mode: '0700'
 
-# Imported unconditionally rather than skipped when the key is already
-# present: subkey expiry gets extended roughly yearly, and the whole point of
-# keeping the key here is that re-exporting it and re-running this propagates
-# the new dates. gpg merges rather than replacing, and says "unchanged: 1"
-# when there was nothing new.
-- name: 'import the public key'
-  ansible.builtin.command: 'gpg --import {{ role_path }}/files/public-key.asc'
-  register: gpg_import
-  changed_when: "'unchanged' not in gpg_import.stderr"
-
-# Without this gpg treats your own key as untrusted and warns on every
-# signature it verifies. Setting it again is a no-op.
-- name: 'trust the key ultimately'
-  ansible.builtin.shell:
-    cmd: 'echo {{ gpg_fingerprint }}:6: | gpg --import-ownertrust'
-  changed_when: false
-
 # Recorded before anything touches the card, to compare against afterwards --
-# the next task creates the stubs as a side effect of listing them, so its
+# card-status creates the stubs as a side effect of listing them, so its
 # return code says nothing about whether they are new.
 - name: 'note the card stubs already present'
   ansible.builtin.find:
@@ -42,12 +25,9 @@
     patterns: '*.key'
   register: gpg_stubs_before
 
-# `gpg --card-status` is what writes the secret-key stubs: not keys, just
-# pointers recording that the private halves are on a card. Without them gpg
-# has a public key it cannot sign with.
-- name: 'check for the card stubs'
-  ansible.builtin.command: 'gpg --list-secret-keys {{ gpg_fingerprint }}'
-  register: gpg_stubs
+- name: 'check for the openpgp card'
+  ansible.builtin.command: 'gpg --card-status'
+  register: gpg_card
   changed_when: false
   failed_when: false
 
@@ -55,15 +35,40 @@
   ansible.builtin.pause:
     prompt: |
 
-      No GPG secret-key stubs yet, so gpg cannot sign with the card.
+      No OpenPGP card, so gpg cannot fetch the public key or sign.
 
       Plug the YubiKey in, then press Enter. The next task runs
-      `gpg --card-status`, which creates the stubs.
-  when: gpg_stubs.rc != 0
+      `gpg --card-status`, which also creates the secret-key stubs.
+  when: gpg_card.rc != 0
 
 - name: 'create the card stubs'
   ansible.builtin.command: 'gpg --card-status'
-  when: gpg_stubs.rc != 0
+  when: gpg_card.rc != 0
+
+# Fetched unconditionally rather than skipped when the key is already
+# present: subkey expiry gets extended roughly yearly, and re-running this
+# merges the new dates. gpg says "unchanged: 1" when there was nothing new.
+# `card-edit fetch` uses the URL stored on the card. The fingerprint is the
+# pin so a MITM'd URL cannot become ultimately trusted.
+- name: 'fetch the public key from the card'
+  ansible.builtin.command:
+    cmd: 'gpg --command-fd 0 --no-tty --card-edit'
+    stdin: |
+      fetch
+      quit
+  register: gpg_import
+  changed_when: "'unchanged' not in gpg_import.stderr"
+
+- name: 'assert the fetched key matches the fingerprint'
+  ansible.builtin.command: 'gpg --list-keys {{ gpg_fingerprint }}'
+  changed_when: false
+
+# Without this gpg treats your own key as untrusted and warns on every
+# signature it verifies. Setting it again is a no-op.
+- name: 'trust the key ultimately'
+  ansible.builtin.shell:
+    cmd: 'echo {{ gpg_fingerprint }}:6: | gpg --import-ownertrust'
+  changed_when: false
 
 - name: 'note the card stubs now present'
   ansible.builtin.find:

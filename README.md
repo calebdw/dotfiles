@@ -24,17 +24,20 @@ Install Omarchy, then from a terminal in your Hyprland session:
 # on a YubiKey and is not set up yet. git config rewrites pushes to ssh once
 # it is linked. It will prompt for the email that git/jj templates use.
 sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin" \
-  init --apply --source "$HOME/sources/dotfiles" calebdw
+  init --apply --exclude encrypted --source "$HOME/sources/dotfiles" calebdw
 
 sudo pacman -S ansible
 cd ~/sources/dotfiles
 make ansible
+chezmoi apply
 ```
 
 `init` writes `~/.config/chezmoi/chezmoi.toml` from `home/.chezmoi.toml.tmpl`
 (`sourceDir` / `workingTree`, so later `chezmoi apply` does not need `--source`).
 `--apply` puts the configs in place before the playbook, so `omarchy install ...`
-finds them and leaves them alone.
+finds them and leaves them alone. `--exclude encrypted` skips files that need
+the YubiKey GPG subkey, which is not set up yet. `chezmoi apply` after
+`make ansible` decrypts them.
 
 Two expected interruptions during `make ansible`: `omarchy-sudo-passwordless`
 wants a confirmation and one sudo, and if no FIDO2 key is enrolled the play
@@ -45,13 +48,11 @@ Then, by hand:
 ```bash
 gh auth login
 glab auth login
-cp /path/to/id_ed25519_sk ~/.ssh/ && chmod 600 ~/.ssh/id_ed25519_sk
 ```
 
-That last one cannot be automated or stored here. It is a non-resident FIDO2
-credential -- the private key wrapped with a secret that never leaves the
-YubiKey. The device keeps no copy, so `ssh-keygen -K` cannot recover it and
-the copies you hold are the only ones that exist.
+The FIDO2 SSH key is encrypted in chezmoi and is written on that last
+`chezmoi apply`. The YubiKey is still required to use it; `ssh-keygen -K`
+cannot recover the file, so the encrypted copy is the backup.
 
 Edit files in `home/` (chezmoi names: `dot_config` is `~/.config`,
 `private_dot_gnupg` is `~/.gnupg`), then `chezmoi apply`. `chezmoi edit --apply
@@ -60,19 +61,17 @@ Edit files in `home/` (chezmoi names: `dot_config` is `~/.config`,
 ## After the GPG key changes
 
 Extending the subkeys happens in the offline-primary-key workflow, not here.
-Afterwards:
+Afterwards publish the public key to the URL on the card, then:
 
 ```bash
-gpg --armor --export 99981A649E1CA829A335E77493EDE5A0C788BC38 \
-  > ansible/roles/yubikey/gpg/files/public-key.asc   # commit this
-make ansible                                          # propagates the new dates
+make ansible   # fetches and merges the new dates
 
 # GitHub and GitLab keep their own copy and neither accepts re-adding a key it
 # already has, so delete then add.
 gh gpg-key list && gh gpg-key delete <id>
-gh gpg-key add ansible/roles/yubikey/gpg/files/public-key.asc
+gpg --armor --export 99981A649E1CA829A335E77493EDE5A0C788BC38 | gh gpg-key add -
 glab gpg-key list && glab gpg-key delete <id>
-glab gpg-key add ansible/roles/yubikey/gpg/files/public-key.asc
+gpg --armor --export 99981A649E1CA829A335E77493EDE5A0C788BC38 | glab gpg-key add -
 ```
 
 Deliberately not automated: it deletes remote account state, and most runs the
