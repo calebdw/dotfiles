@@ -127,14 +127,10 @@ on_transcription = false
 
 [parakeet]
 model = "parakeet-tdt-0.6b-v3-int8"
-
-# Auto-detection can't infer this from the model directory and warns while
-# defaulting to tdt, which is what the -tdt- models want anyway. Set it
-# explicitly to keep the warning out of the log.
 model_type = "tdt"
 
 [meeting]
-enabled = true
+enabled = false
 
 [meeting.diarization]
 enabled = false
