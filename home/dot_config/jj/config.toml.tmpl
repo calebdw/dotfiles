@@ -49,7 +49,7 @@ if(parents.len() > 1, join(" ",
   bookmarks_or_hash(parents.first()),
 ))
 '''
-git_push_bookmark = '"calebdw/push-" ++ change_id.short()'
+git_push_bookmark = 'if(git_web_url("origin").contains("calebdw"), "", "calebdw/") ++ "push-" ++ change_id.short()'
 
 [template-aliases]
 'bookmarks_or_hash(c)' = { definition = 'coalesce(c.bookmarks().map(|b| b.name()).join(", "), c.commit_id().short())', doc = "Return joined bookmark names or fallback to short commit id" }
