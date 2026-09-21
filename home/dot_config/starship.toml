@@ -1,4 +1,5 @@
 "$schema" = 'https://starship.rs/config-schema.json'
+format = "$directory$custom$memory_usage$cmd_duration$line_break$character"
 
 [character]
 success_symbol = '[\$](bold green)'
