@@ -32,6 +32,13 @@ keybind = control+insert=copy_to_clipboard
 keybind = shift+enter=csi:13;2u
 # Legacy encoding sends Alt+Shift+Enter the same as Alt+Enter; send CSI-u so tmux can match M-S-Enter.
 keybind = alt+shift+enter=csi:13;4u
+# Backport of upstream PR #12458, which ships in 1.4.0: move_tab takes over
+# ctrl+shift+page_up/down (the Firefox/GNOME convention) and jump_to_prompt
+# relocates to ctrl+shift+arrow_up/down. Delete this block once on 1.4.0.
+keybind = performable:control+shift+page_up=move_tab:-1
+keybind = performable:control+shift+page_down=move_tab:1
+keybind = control+shift+arrow_up=jump_to_prompt:-1
+keybind = control+shift+arrow_down=jump_to_prompt:1
 keybind = super+control+shift+alt+arrow_down=resize_split:down,100
 keybind = super+control+shift+alt+arrow_up=resize_split:up,100
 keybind = super+control+shift+alt+arrow_left=resize_split:left,100
