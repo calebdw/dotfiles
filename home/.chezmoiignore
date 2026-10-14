@@ -4,3 +4,16 @@
 # Xiphos rewrites this on every launch (current verse, pane sizes, accumulating
 # locale tags). Durable prefs are seeded once by ansible/roles/software/xiphos.
 .config/xiphos/**
+
+# Calibre rewrites session state on every launch (gui.json holds window
+# geometry). `chezmoi add ~/.config/calibre` keeps only the exceptions.
+# Plugins are installed by ansible/roles/software/calibre. Auto-convert on
+# add lives in gui.json, so the role sets that one key instead.
+.config/calibre/*
+!.config/calibre/global.py.json
+!.config/calibre/tweaks.json
+!.config/calibre/custom_recipes
+!.config/calibre/conversion
+.config/calibre/conversion/*
+!.config/calibre/conversion/page_setup.py
+!.config/calibre/mtp_devices.json

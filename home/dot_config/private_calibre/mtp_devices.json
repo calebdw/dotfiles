@@ -1,0 +1,33 @@
+{
+  "blacklist": [],
+  "device-B26E1AB6CFA9697991683DDDEF229179": {
+    "format_map": [
+      "pdf",
+      "epub"
+    ],
+    "ignored_folders": {
+      "65537": [
+        "screenshot",
+        "inbox",
+        "note/church/conferences",
+        "note/church/bible studies",
+        "export",
+        "note",
+        "mystyle",
+        "note/church/meetings",
+        "note/church/sermons",
+        "note/church/devotions"
+      ]
+    },
+    "send_template": "{title}",
+    "send_to": [
+      "Document"
+    ]
+  },
+  "history": {
+    "B26E1AB6CFA9697991683DDDEF229179": [
+      "Supernote A5 X2 Manta",
+      "2026-10-14T16:31:03.227187+00:00"
+    ]
+  }
+}

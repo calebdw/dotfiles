@@ -43,6 +43,7 @@ Grouped by subject, referenced by path (`roles_path = ./roles`).
 | `software/tableplus` | current vendor deb; AUR pins a yanked build |
 | `software/tuitube` | vendor installer |
 | `software/xiphos` | package, sword modules, one-shot settings seed |
+| `software/calibre` | official binary via `calibre-bin`; KFX Input; durable prefs only |
 
 One role, one thing, each commentable out of the play on its own. Whatever
 installs something also configures and enables it -- there is no role that

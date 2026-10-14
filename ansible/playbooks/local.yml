@@ -35,5 +35,6 @@
     - software/tableplus
     - software/tuitube
     - software/xiphos
+    - software/calibre
     # - software/cliphist  # omarchy has its own clipboard history
     # - software/hyprwhspr  # voxtype does this job instead

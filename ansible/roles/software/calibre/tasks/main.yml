@@ -1,0 +1,60 @@
+---
+# aur/calibre-bin, not extra/calibre and not the upstream linux-installer.sh.
+# extra/calibre is 9.14.0; calibre-bin is the official binary, currently two
+# releases ahead, and it conflicts with extra/calibre -- do not install both.
+# The installer script unpacks that same tarball into /opt and then nothing
+# updates it. yay does.
+#
+# Durable prefs are chezmoi exceptions (.chezmoiignore). gui.json is not one
+# of them: it is rewritten on every launch with window geometry. The
+# auto-convert checkbox lives in that file, so it is set below instead.
+# Plugins are installed below, not tracked. After further pref changes:
+#   chezmoi add ~/.config/calibre
+#
+# The library stays out of this repo, and out of a live Proton Drive or Mega
+# folder. metadata.db is sqlite. Those clients sync while calibre is open,
+# which corrupts it. A backup is a copy taken while calibre is quit.
+- name: 'install calibre'
+  ansible.builtin.include_role:
+    name: software/packages
+    tasks_from: aur
+  vars:
+    aur_packages: ['calibre-bin']
+
+# --add-plugin replaces a plugin of the same name, but `creates` keeps a
+# converged machine off the index. A running GUI does not see a plugin added
+# this way until it is restarted.
+- name: 'install calibre plugins'
+  ansible.builtin.shell:
+    cmd: |
+      set -euo pipefail
+      work=$(mktemp -d)
+      trap 'rm -rf "$work"' EXIT
+      curl -fsSL -o "$work/plugin.zip" '{{ item.url }}'
+      calibre-customize --add-plugin "$work/plugin.zip"
+    executable: /bin/bash
+    creates: "{{ ansible_facts['env']['HOME'] }}/.config/calibre/plugins/{{ item.name }}.zip"
+  loop: '{{ calibre_plugins }}'
+  loop_control:
+    label: '{{ item.name }}'
+
+# gprefs commits on every set, so the check has to come first or a converged
+# run rewrites gui.json. Importing calibre.gui2 wants a Qt platform; offscreen
+# keeps this from needing the session display.
+- name: 'check auto-convert on add'
+  ansible.builtin.command:
+    cmd: >-
+      calibre-debug -c "from calibre.gui2 import gprefs; raise SystemExit(0 if gprefs.get('manual_add_auto_convert') else 1)"
+  environment:
+    QT_QPA_PLATFORM: offscreen
+  register: calibre_auto_convert
+  changed_when: false
+  failed_when: false
+
+- name: 'enable auto-convert on add'
+  when: calibre_auto_convert.rc != 0
+  ansible.builtin.command:
+    cmd: >-
+      calibre-debug -c "from calibre.gui2 import gprefs; gprefs['manual_add_auto_convert'] = True"
+  environment:
+    QT_QPA_PLATFORM: offscreen
