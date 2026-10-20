@@ -25,3 +25,10 @@ xiphos_modules:
 # installmgr will not touch the network without this, and this is the whole
 # flag -- there is no shorter spelling and no config setting that replaces it.
 xiphos_installmgr_internet: '--allow-internet-access-and-risk-tracing-and-jail-or-martyrdom'
+
+# Xiphos only rewrites a layout key that already exists, and it never creates
+# these two. Missing, the sidebar falls back to 100 and the bible pane to 0.
+# Sized for a tiled 2560x1440 window at 1.25 (~2024 wide).
+xiphos_layout:
+  shortcutbar: 320
+  textpane: 1100
