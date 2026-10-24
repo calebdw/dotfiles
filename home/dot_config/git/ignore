@@ -5,6 +5,7 @@
 .gitconfig
 /_emails
 /scratch
+/workspaces
 *.conform*
 
 **/.claude/settings.local.json
