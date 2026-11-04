@@ -1,0 +1,60 @@
+#!/usr/bin/python3 -I
+import re
+import sys
+
+DOC_COLOR = 0x424242
+FONT_COLOR = 0xEEEEEE
+CALC_GRID = 0x5A5A5A
+
+DARK = "/org.openoffice.Office.UI/ColorScheme/ColorSchemes/org.openoffice.Office.UI:ColorScheme['COLOR_SCHEME_LIBREOFFICE_DARK']"
+TOOLBAR = "/org.openoffice.Office.UI.ToolbarMode"
+APPS = ("Writer", "Calc", "Impress", "Draw")
+
+SETTINGS = [
+    ("/org.openoffice.Office.Common/Appearance", "ApplicationAppearance", "2"),
+    ("/org.openoffice.Office.Common/Appearance", "UseOnlyWhiteDocBackground", "false"),
+    ("/org.openoffice.Office.Common/Accessibility", "IsAutomaticFontColor", "false"),
+    ("/org.openoffice.Office.UI/ColorScheme", "CurrentColorScheme", "COLOR_SCHEME_LIBREOFFICE_DARK"),
+    (f"{DARK}/DocColor", "Color", str(DOC_COLOR)),
+    (f"{DARK}/FontColor", "Color", str(FONT_COLOR)),
+    (f"{DARK}/CalcGrid", "Color", str(CALC_GRID)),
+    *[(TOOLBAR, f"Active{app}", "notebookbar.ui") for app in APPS],
+    *[
+        (f"{TOOLBAR}/Applications/org.openoffice.Office.UI.ToolbarMode:Application['{app}']", "Active", "notebookbar.ui")
+        for app in APPS
+    ],
+]
+
+HEADER = (
+    '<?xml version="1.0" encoding="UTF-8"?>\n'
+    '<oor:items xmlns:oor="http://openoffice.org/2001/registry"'
+    ' xmlns:xs="http://www.w3.org/2001/XMLSchema"'
+    ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n'
+)
+FOOTER = "</oor:items>\n"
+
+
+def item(path, name, value):
+    return f'<item oor:path="{path}"><prop oor:name="{name}" oor:op="fuse"><value>{value}</value></prop></item>\n'
+
+
+def key(line):
+    m = re.match(r'<item oor:path="([^"]*)"><prop oor:name="([^"]*)"', line)
+    return m.groups() if m else None
+
+
+pending = {(path, name): item(path, name, value) for path, name, value in SETTINGS}
+body = []
+for line in sys.stdin.read().splitlines():
+    if line.startswith(("<?xml", "<oor:items", "</oor:items>")):
+        continue
+    k = key(line)
+    if k in pending:
+        body.append(pending.pop(k))
+    elif not any(k == (path, name) for path, name, _ in SETTINGS):
+        body.append(line + "\n")
+
+sys.stdout.write(HEADER)
+sys.stdout.writelines(body)
+sys.stdout.writelines(pending.values())
+sys.stdout.write(FOOTER)
